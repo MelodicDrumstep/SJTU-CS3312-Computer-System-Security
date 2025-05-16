@@ -1,0 +1,57 @@
+# Set PIN_ROOT
+PIN_ROOT ?= /mnt/d/CS3312_wltu/Lab1_Reversing/PIN/pin-3.28-98749-g6643ecee5-gcc-linux
+
+# Compiler settings
+CXX = g++
+CC = gcc
+
+# Compilation flags
+CXXFLAGS = -Wall -Werror -Wno-unknown-pragmas -D__PIN__=1 -DPIN_CRT=1 -fno-stack-protector -fno-exceptions -funwind-tables -fasynchronous-unwind-tables -fno-rtti -fPIC -DTARGET_IA32E -DHOST_IA32E -fPIC -D__PIN__=1 -DPIN_CRT=1 -DTARGET_LINUX -fabi-version=2 -faligned-new -fno-strict-aliasing
+
+# Include paths
+INCLUDES = -I$(PIN_ROOT)/source/include/pin \
+           -I$(PIN_ROOT)/source/include/pin/gen \
+           -I$(PIN_ROOT)/source/include \
+           -I$(PIN_ROOT)/source/tools \
+           -I$(PIN_ROOT)/source/tools/InstLib \
+           -I$(PIN_ROOT)/extras/components/include \
+           -I$(PIN_ROOT)/extras/xed-intel64/include \
+           -I$(PIN_ROOT)/extras/xed-intel64/include/xed \
+           -I$(PIN_ROOT)/extras/xed-ia32/include \
+           -I$(PIN_ROOT)/extras/xed-ia32/include/xed \
+           -I$(PIN_ROOT)/extras/cxx/include \
+           -I$(PIN_ROOT)/extras/libdwarf/include \
+           -I$(PIN_ROOT)/extras/crt/include \
+           -I$(PIN_ROOT)/extras/crt/include/arch-x86_64 \
+           -I$(PIN_ROOT)/extras/crt/include/kernel/uapi \
+           -I$(PIN_ROOT)/extras/crt/include/kernel/uapi/asm-x86 \
+           -I$(PIN_ROOT)/extras/crt/include/kernel/uapi/asm-generic
+
+# Library paths
+LDFLAGS = -L$(PIN_ROOT)/intel64/lib \
+          -L$(PIN_ROOT)/intel64/lib-ext \
+          -L$(PIN_ROOT)/intel64/runtime/glibc \
+          -L$(PIN_ROOT)/intel64/runtime/pincrt \
+          -L$(PIN_ROOT)/extras/xed-intel64/lib \
+          -L$(PIN_ROOT)/extras/xed-intel64/obj \
+          -L$(PIN_ROOT)/extras/xed-ia32/lib \
+          -L$(PIN_ROOT)/extras/xed-ia32/obj \
+          -L$(PIN_ROOT)/extras/libdwarf/lib \
+          -L$(PIN_ROOT)/extras/components/lib/intel64 \
+          -L$(PIN_ROOT)/extras/crt/lib/intel64
+
+# Link libraries
+LIBS = -lpin -lxed -ldwarf -ldl -static-libstdc++ -static-libgcc
+
+# Compilation commands
+COMPILE.cxx = $(CXX) $(CXXFLAGS) $(INCLUDES)
+COMPILE.c = $(CC) $(CFLAGS) $(INCLUDES)
+COMP_OBJ = -c -o
+LINK.cxx = $(CXX) -shared -Wl,--hash-style=sysv -Wl,--no-as-needed -Wl,-rpath,$(PIN_ROOT)/intel64/lib -Wl,-rpath,$(PIN_ROOT)/intel64/runtime/pincrt -Wl,-rpath,$(PIN_ROOT)/intel64/runtime/glibc
+LINK_EXE = -o
+
+# Output directory
+OBJDIR = obj-intel64/
+
+# Set runtime library path
+export LD_LIBRARY_PATH := $(PIN_ROOT)/intel64/lib:$(PIN_ROOT)/intel64/runtime/glibc:$(PIN_ROOT)/intel64/runtime/pincrt:$(LD_LIBRARY_PATH) 
