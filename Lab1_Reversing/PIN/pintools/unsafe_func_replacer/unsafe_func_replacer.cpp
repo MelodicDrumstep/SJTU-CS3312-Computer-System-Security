@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <cstring>
+#include <stdarg.h>
 
 using namespace std;
 
@@ -94,7 +95,7 @@ int scanf_s_safe(const char* format, ...) {
     
     va_list args;
     va_start(args, format);
-    int result = vscanf(format, args);
+    int result = scanf(format, va_arg(args, char*));  // 只处理第一个参数
     va_end(args);
     
     if (result < 0) {
@@ -126,56 +127,81 @@ char* gets_s_safe(char* dest, size_t destSize) {
 
 // Function replacement callback
 VOID ReplaceUnsafeFunction(ADDRINT funcAddr, const string& funcName, ADDRINT* args) {
-    OutFile << "Replacing unsafe function: " << funcName << " with " << unsafeToSafeMap[funcName] << std::endl;
+    OutFile << "==========================================" << std::endl;
+    OutFile << "Function Replacement Detected:" << std::endl;
+    OutFile << "  Unsafe Function: " << funcName << std::endl;
+    OutFile << "  Safe Version: " << unsafeToSafeMap[funcName] << std::endl;
+    OutFile << "  Function Address: 0x" << std::hex << funcAddr << std::dec << std::endl;
     
     if (funcName == "strcpy") {
         char* dest = (char*)args[0];
         const char* src = (const char*)args[1];
+        OutFile << "  Parameters:" << std::endl;
+        OutFile << "    Destination: " << (dest ? dest : "NULL") << std::endl;
+        OutFile << "    Source: " << (src ? src : "NULL") << std::endl;
         strcpy_s_safe(dest, strlen(dest) + 1, src);
     }
     else if (funcName == "strcat") {
         char* dest = (char*)args[0];
         const char* src = (const char*)args[1];
+        OutFile << "  Parameters:" << std::endl;
+        OutFile << "    Destination: " << (dest ? dest : "NULL") << std::endl;
+        OutFile << "    Source: " << (src ? src : "NULL") << std::endl;
         size_t destSize = strlen(dest) + strlen(src) + 1;
         strcat_s_safe(dest, destSize, src);
     }
     else if (funcName == "sprintf") {
         char* dest = (char*)args[0];
         const char* format = (const char*)args[1];
+        OutFile << "  Parameters:" << std::endl;
+        OutFile << "    Destination: " << (dest ? dest : "NULL") << std::endl;
+        OutFile << "    Format: " << (format ? format : "NULL") << std::endl;
         size_t destSize = strlen(dest) + 1;
         sprintf_s_safe(dest, destSize, format);
     }
     else if (funcName == "scanf") {
         const char* format = (const char*)args[0];
+        OutFile << "  Parameters:" << std::endl;
+        OutFile << "    Format: " << (format ? format : "NULL") << std::endl;
         scanf_s_safe(format);
     }
     else if (funcName == "gets") {
         char* dest = (char*)args[0];
+        OutFile << "  Parameters:" << std::endl;
+        OutFile << "    Destination: " << (dest ? dest : "NULL") << std::endl;
         size_t destSize = strlen(dest) + 1;
         gets_s_safe(dest, destSize);
     }
+    
+    OutFile << "  Replacement Completed" << std::endl;
+    OutFile << "==========================================" << std::endl;
 }
 
-// Instruction instrumentation callback
-VOID Instruction(INS ins, VOID *v) {
-    if (INS_IsCall(ins)) {
-        // Get call target address
-        ADDRINT target = INS_Address(ins);
-        RTN rtn = RTN_FindByAddress(target);
-        
-        if (RTN_Valid(rtn)) {
-            string funcName = RTN_Name(rtn);
-            if (unsafeToSafeMap.find(funcName) != unsafeToSafeMap.end()) {
-                // Insert our replacement function before the call
-                INS_InsertCall(ins, IPOINT_BEFORE, (AFUNPTR)ReplaceUnsafeFunction,
-                             IARG_ADDRINT, target,
-                             IARG_PTR, new string(funcName),
-                             IARG_FUNCARG_ENTRYPOINT_REFERENCE, 0,
-                             IARG_FUNCARG_ENTRYPOINT_REFERENCE, 1,
-                             IARG_FUNCARG_ENTRYPOINT_REFERENCE, 2,
-                             IARG_END);
-            }
-        }
+// ImageLoad callback
+VOID ImageLoad(IMG img, VOID *v) {
+    // 替换 strcpy
+    RTN rtn = RTN_FindByName(img, "strcpy");
+    if (RTN_Valid(rtn)) {
+        OutFile << "替换 strcpy in " << IMG_Name(img) << endl;
+        RTN_Replace(rtn, AFUNPTR(ReplaceUnsafeFunction));
+    }
+    // 替换 strcat
+    rtn = RTN_FindByName(img, "strcat");
+    if (RTN_Valid(rtn)) {
+        OutFile << "替换 strcat in " << IMG_Name(img) << endl;
+        RTN_Replace(rtn, AFUNPTR(ReplaceUnsafeFunction));
+    }
+    // 替换 sprintf
+    rtn = RTN_FindByName(img, "sprintf");
+    if (RTN_Valid(rtn)) {
+        OutFile << "替换 sprintf in " << IMG_Name(img) << endl;
+        RTN_Replace(rtn, AFUNPTR(ReplaceUnsafeFunction));
+    }
+    // 替换 gets
+    rtn = RTN_FindByName(img, "gets");
+    if (RTN_Valid(rtn)) {
+        OutFile << "替换 gets in " << IMG_Name(img) << endl;
+        RTN_Replace(rtn, AFUNPTR(ReplaceUnsafeFunction));
     }
 }
 
@@ -192,6 +218,7 @@ INT32 Usage() {
 }
 
 int main(int argc, char *argv[]) {
+    PIN_InitSymbols();
     if (PIN_Init(argc, argv)) return Usage();
     
     OutFile.open(KnobOutputFile.Value().c_str());
@@ -199,7 +226,7 @@ int main(int argc, char *argv[]) {
     // Initialize the map
     InitializeUnsafeToSafeMap();
     
-    INS_AddInstrumentFunction(Instruction, 0);
+    IMG_AddInstrumentFunction(ImageLoad, 0);
     PIN_AddFiniFunction(Fini, 0);
     
     PIN_StartProgram();
