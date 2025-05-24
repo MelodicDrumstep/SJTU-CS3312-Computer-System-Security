@@ -13,17 +13,17 @@
     extern "C" {
 
     char* safe_strcpy(char* dest, const char* src) {
-        cout << "[替换] strcpy -> safe_strcpy" << endl;
+        cout << "[Replace] strcpy -> safe_strcpy" << endl;
         return strncpy(dest, src, 10);
     }
 
     char* safe_strcat(char* dest, const char* src) {
-        cout << "[替换] strcat -> safe_strcat" << endl;
+        cout << "[Replace] strcat -> safe_strcat" << endl;
         return strncat(dest, src, 10);
     }
 
     int safe_sprintf(char* dest, const char* fmt, ...) {
-        cout << "[替换] sprintf -> safe_sprintf" << endl;
+        cout << "[Replace] sprintf -> safe_sprintf" << endl;
         va_list args;
         va_start(args, fmt);
         int ret = _vsnprintf_s(dest, 10, _TRUNCATE, fmt, args);
@@ -32,10 +32,33 @@
     }
 
     char* safe_gets(char* s) {
-        cout << "[替换] gets -> safe_gets" << endl;
+        cout << "[Replace] gets -> safe_gets" << endl;
         return fgets(s, 10, stdin);
     }
+
+    int safe_scanf(const char* fmt, ...) {
+        cout << "[Replace] scanf -> safe_scanf" << endl;
+        char newfmt[256] = {0};
+        int j = 0;
+        for (int i = 0; fmt[i] && j < 250; ++i) {
+            if (fmt[i] == '%' && fmt[i+1] == 's') {
+                newfmt[j++] = '%';
+                newfmt[j++] = '9';
+                newfmt[j++] = 's';
+                ++i;
+            } else {
+                newfmt[j++] = fmt[i];
+            }
+        }
+        newfmt[j] = 0;
+
+        va_list args;
+        va_start(args, fmt);
+        int ret = vscanf(newfmt, args);
+        va_end(args);
+        return ret;
     }
+}
 
     VOID ImageLoad(IMG img, VOID *v)
     {
@@ -43,26 +66,32 @@
 
         rtn = RTN_FindByName(img, "strcpy");
         if (RTN_Valid(rtn) && RTN_IsSafeForProbedReplacement(rtn)) {
-            cout << "替换 strcpy in " << IMG_Name(img) << endl;
+            cout << "Replace strcpy in " << IMG_Name(img) << endl;
             RTN_ReplaceProbed(rtn, AFUNPTR(safe_strcpy));
         }
 
         rtn = RTN_FindByName(img, "strcat");
         if (RTN_Valid(rtn) && RTN_IsSafeForProbedReplacement(rtn)) {
-            cout << "替换 strcat in " << IMG_Name(img) << endl;
+            cout << "Replace strcat in " << IMG_Name(img) << endl;
             RTN_ReplaceProbed(rtn, AFUNPTR(safe_strcat));
         }
 
         rtn = RTN_FindByName(img, "sprintf");
         if (RTN_Valid(rtn) && RTN_IsSafeForProbedReplacement(rtn)) {
-            cout << "替换 sprintf in " << IMG_Name(img) << endl;
+            cout << "Replace sprintf in " << IMG_Name(img) << endl;
             RTN_ReplaceProbed(rtn, AFUNPTR(safe_sprintf));
         }
 
         rtn = RTN_FindByName(img, "gets");
         if (RTN_Valid(rtn) && RTN_IsSafeForProbedReplacement(rtn)) {
-            cout << "替换 gets in " << IMG_Name(img) << endl;
+            cout << "Replace gets in " << IMG_Name(img) << endl;
             RTN_ReplaceProbed(rtn, AFUNPTR(safe_gets));
+        }
+
+        rtn = RTN_FindByName(img, "scanf");
+        if (RTN_Valid(rtn) && RTN_IsSafeForProbedReplacement(rtn)) {
+            cout << "Replace scanf in " << IMG_Name(img) << endl;
+            RTN_ReplaceProbed(rtn, AFUNPTR(safe_scanf));
         }
     }
 

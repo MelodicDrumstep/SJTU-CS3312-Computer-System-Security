@@ -105,7 +105,6 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("username")
 	password := r.FormValue("password")
 
-
 	if username == "" || password == "" {
 		templates.ExecuteTemplate(w, "register.html", "用户名和密码都是必填项")
 		return
@@ -115,6 +114,7 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 
 	// SQL注入点,但是有用吗？
 	sql := fmt.Sprintf("SELECT * FROM users WHERE username = '%s'", filteredUsername)
+	log.Printf("[registerHandler] SQL语句: %s", sql)
 	row := userdb.QueryRow(sql)
 	var user User
 	err := row.Scan(&user.ID, &user.Username, &user.Password, &user.Perm)
@@ -132,7 +132,9 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 
 	// 插入新用户，默认权限为0
 	log.Printf("[registerHandler] 插入新用户: %s", username)
-	log.Printf("[registerHandler] Userdb exec: %s", "INSERT INTO users (username, password, perm) VALUES (?, ?, 0)")
+	// 使用fmt.Sprintf来格式化SQL语句，打印出实际执行的SQL语句
+	execSQL := fmt.Sprintf("INSERT INTO users (username, password, perm) VALUES ('%s', '%s', 0)", username, hashStr)
+	log.Printf("[registerHandler] Userdb exec: %s", execSQL)
 	_, err = userdb.Exec("INSERT INTO users (username, password, perm) VALUES (?, ?, 0)", username, hashStr)
 	if err != nil {
 		log.Printf("[registerHandler] 执行错误: %v", err)
@@ -201,7 +203,6 @@ func authMiddleware(next http.Handler) http.Handler {
 
 
 func checkPermission(username string) bool {
-
 	// 这里还会 filter 一次
 	filteredUsername := simpleSQLFilter(username)
 

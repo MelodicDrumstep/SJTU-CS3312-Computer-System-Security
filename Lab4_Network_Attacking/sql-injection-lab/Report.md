@@ -76,4 +76,6 @@ _, err = userdb.Exec("INSERT INTO users (username, password, perm) VALUES (?, ?,
 
 Therefore, I tried to inject the username as `A, md5(A), 2) ...` format.
 
-I tried `AB, 5d41402abc4b2a76b9719d911017c592, 2)`, but it didn't work.
+I tried `AB', '5d41402abc4b2a76b9719d911017c592', 2) '` and  `AB', '5d41402abc4b2a76b9719d911017c592', 2) OR '`, but they didn't work. It's because before we executing the DB write statement, we have to execute a DB search, and it will failed.
+
+And I tried `admin' OR 1=1 -DROP-`, it cannot be registered successfully.
