@@ -12,13 +12,16 @@ KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
     "o", "unsafe_func_replacer.out", "specify output file name");
 
 // Map of unsafe functions to their safe versions
-std::map<string, string> unsafeToSafeMap = {
-    {"strcpy", "strcpy_s"},
-    {"strcat", "strcat_s"},
-    {"sprintf", "sprintf_s"},
-    {"scanf", "scanf_s"},
-    {"gets", "gets_s"}
-};
+std::map<string, string> unsafeToSafeMap;
+
+// Initialize the map in main function
+void InitializeUnsafeToSafeMap() {
+    unsafeToSafeMap.insert(std::make_pair("strcpy", "strcpy_s"));
+    unsafeToSafeMap.insert(std::make_pair("strcat", "strcat_s"));
+    unsafeToSafeMap.insert(std::make_pair("sprintf", "sprintf_s"));
+    unsafeToSafeMap.insert(std::make_pair("scanf", "scanf_s"));
+    unsafeToSafeMap.insert(std::make_pair("gets", "fgets"));
+}
 
 // File to record replaced function calls
 std::ofstream OutFile;
@@ -82,6 +85,25 @@ int sprintf_s_safe(char* dest, size_t destSize, const char* format, ...) {
     return result;
 }
 
+// Safe version of scanf_s implementation
+int scanf_s_safe(const char* format, ...) {
+    if (!format) {
+        OutFile << "Error: Invalid format string in scanf_s" << std::endl;
+        return -1;
+    }
+    
+    va_list args;
+    va_start(args, format);
+    int result = vscanf(format, args);
+    va_end(args);
+    
+    if (result < 0) {
+        OutFile << "Error: scanf_s failed" << std::endl;
+    }
+    
+    return result;
+}
+
 // Safe version of gets_s implementation
 char* gets_s_safe(char* dest, size_t destSize) {
     if (!dest || destSize == 0) {
@@ -109,54 +131,27 @@ VOID ReplaceUnsafeFunction(ADDRINT funcAddr, const string& funcName, ADDRINT* ar
     if (funcName == "strcpy") {
         char* dest = (char*)args[0];
         const char* src = (const char*)args[1];
-        size_t destSize = 0;
-        
-        // Try to get destination buffer size
-        if (args[2]) {
-            destSize = (size_t)args[2];
-        } else {
-            // If size cannot be determined, use a safe value
-            destSize = 1024;
-        }
-        
-        strcpy_s_safe(dest, destSize, src);
+        strcpy_s_safe(dest, strlen(dest) + 1, src);
     }
     else if (funcName == "strcat") {
         char* dest = (char*)args[0];
         const char* src = (const char*)args[1];
-        size_t destSize = 0;
-        
-        if (args[2]) {
-            destSize = (size_t)args[2];
-        } else {
-            destSize = 1024;
-        }
-        
+        size_t destSize = strlen(dest) + strlen(src) + 1;
         strcat_s_safe(dest, destSize, src);
     }
     else if (funcName == "sprintf") {
         char* dest = (char*)args[0];
         const char* format = (const char*)args[1];
-        size_t destSize = 0;
-        
-        if (args[2]) {
-            destSize = (size_t)args[2];
-        } else {
-            destSize = 1024;
-        }
-        
+        size_t destSize = strlen(dest) + 1;
         sprintf_s_safe(dest, destSize, format);
+    }
+    else if (funcName == "scanf") {
+        const char* format = (const char*)args[0];
+        scanf_s_safe(format);
     }
     else if (funcName == "gets") {
         char* dest = (char*)args[0];
-        size_t destSize = 0;
-        
-        if (args[1]) {
-            destSize = (size_t)args[1];
-        } else {
-            destSize = 1024;
-        }
-        
+        size_t destSize = strlen(dest) + 1;
         gets_s_safe(dest, destSize);
     }
 }
@@ -200,6 +195,9 @@ int main(int argc, char *argv[]) {
     if (PIN_Init(argc, argv)) return Usage();
     
     OutFile.open(KnobOutputFile.Value().c_str());
+    
+    // Initialize the map
+    InitializeUnsafeToSafeMap();
     
     INS_AddInstrumentFunction(Instruction, 0);
     PIN_AddFiniFunction(Fini, 0);
