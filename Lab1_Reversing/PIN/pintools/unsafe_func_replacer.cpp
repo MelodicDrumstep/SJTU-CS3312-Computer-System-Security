@@ -5,6 +5,11 @@
 
     using namespace std;
 
+    // Constants for string length limits and buffer sizes
+    const size_t MAX_STRING_LENGTH = 10;
+    const size_t FORMAT_BUFFER_SIZE = 256;
+    const size_t FORMAT_BUFFER_LIMIT = 250;
+
     // Output file
     KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
         "o", "unsafe_func_replacer.out", "specify output file name");
@@ -13,49 +18,52 @@
 
     char* safe_strcpy(char* dest, const char* src) {
         cout << "[Replace] strcpy -> safe_strcpy" << endl;
-        return strncpy(dest, src, 10);
+        return strncpy(dest, src, MAX_STRING_LENGTH);
     }
 
     char* safe_strcat(char* dest, const char* src) {
         cout << "[Replace] strcat -> safe_strcat" << endl;
-        return strncat(dest, src, 10);
+        return strncat(dest, src, MAX_STRING_LENGTH);
     }
 
     int safe_sprintf(char* dest, const char* fmt, ...) {
         cout << "[Replace] sprintf -> safe_sprintf" << endl;
         va_list args;
         va_start(args, fmt);
-        int ret = _vsnprintf_s(dest, 10, _TRUNCATE, fmt, args);
+        int ret = _vsnprintf_s(dest, MAX_STRING_LENGTH, _TRUNCATE, fmt, args);
         va_end(args);
         return ret;
     }
 
     char* safe_gets(char* s) {
         cout << "[Replace] gets -> safe_gets" << endl;
-        return fgets(s, 10, stdin);
+        return fgets(s, MAX_STRING_LENGTH, stdin);
     }
 
     int safe_scanf(const char* fmt, ...) {
         cout << "[Replace] scanf -> safe_scanf" << endl;
-        char newfmt[256] = {0};
-        int j = 0;
-        for (int i = 0; fmt[i] && j < 250; ++i) {
-            if (fmt[i] == '%' && fmt[i+1] == 's') {
-                newfmt[j++] = '%';
-                newfmt[j++] = '9';
-                newfmt[j++] = 's';
-                ++i;
-            } else {
-                newfmt[j++] = fmt[i];
-            }
+        char input[FORMAT_BUFFER_SIZE] = {0};
+        
+        // Read input safely using fgets
+        if (fgets(input, FORMAT_BUFFER_SIZE, stdin) == NULL) {
+            return EOF;
         }
-        newfmt[j] = 0;
-
+        
+        // Remove newline if present
+        size_t len = strlen(input);
+        if (len > 0 && input[len-1] == '\n') {
+            input[len-1] = '\0';
+        }
+        
+        // For simplicity, we'll only handle string input
+        // This is a basic implementation that can be extended
         va_list args;
         va_start(args, fmt);
-        int ret = vscanf(newfmt, args);
+        char* dest = va_arg(args, char*);
+        strncpy(dest, input, MAX_STRING_LENGTH);
         va_end(args);
-        return ret;
+        
+        return 1; // Return number of items successfully read
     }
 }
 

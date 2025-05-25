@@ -6,9 +6,8 @@ using namespace std;
 
 ADDRINT new_target = 0x00449268;
 
-// Pin calls this function every time a new instruction is encountered
 VOID MyJump(ADDRINT *eip) {
-    *eip = 0x00449268;
+    *eip = new_target;
 }
 
 VOID Instruction(INS ins, VOID *v)

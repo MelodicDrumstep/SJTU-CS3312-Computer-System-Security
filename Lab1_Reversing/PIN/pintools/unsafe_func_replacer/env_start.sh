@@ -1,1 +1,0 @@
-export PIN_ROOT=/mnt/d/CS3312_wltu/Lab1_Reversing/PIN/pin-3.28-98749-g6643ecee5-gcc-linux

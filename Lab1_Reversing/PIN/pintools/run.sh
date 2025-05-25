@@ -1,1 +1,0 @@
-$PIN_ROOT/pin -t ./unsafe_func_replacer.so -- ./test_program

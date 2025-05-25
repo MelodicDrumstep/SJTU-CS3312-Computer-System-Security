@@ -1,10 +1,6 @@
-linux 3.28 pintools
- compile examples
+# Lab Report : PIN lab
 
- $ cd source/tools/ManualExamples
-$ make all TARGET=intel64
+Please refer to [doc.md](doc.md) for documentations and [unsafe_func_replacer.cpp](pintools/unsafe_func_replacer.cpp).
 
-build and run example
 
-$ cd source/tools/ManualExamples
-$ make inscount0.test TARGET=intel64
+
