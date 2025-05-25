@@ -9,7 +9,6 @@
     KNOB<string> KnobOutputFile(KNOB_MODE_WRITEONCE, "pintool",
         "o", "unsafe_func_replacer.out", "specify output file name");
 
-    // 安全实现（签名必须和原函数一致）
     extern "C" {
 
     char* safe_strcpy(char* dest, const char* src) {
