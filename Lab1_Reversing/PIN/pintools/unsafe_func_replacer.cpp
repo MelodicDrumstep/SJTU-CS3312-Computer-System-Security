@@ -6,7 +6,11 @@
     using namespace std;
 
     // Constants for string length limits and buffer sizes
-    const size_t MAX_STRING_LENGTH = 10;
+    const size_t MAX_STRCPY_LENGTH = 10;
+    const size_t MAX_STRCAT_LENGTH = 5;
+    const size_t MAX_SPRINTF_LENGTH = 10;
+    const size_t MAX_GETS_LENGTH = 20;
+    const size_t MAX_SCANF_LENGTH = 20;
     const size_t FORMAT_BUFFER_SIZE = 256;
     const size_t FORMAT_BUFFER_LIMIT = 250;
 
@@ -18,26 +22,26 @@
 
     char* safe_strcpy(char* dest, const char* src) {
         cout << "[Replace] strcpy -> safe_strcpy" << endl;
-        return strncpy(dest, src, MAX_STRING_LENGTH);
+        return strncpy(dest, src, MAX_STRCPY_LENGTH);
     }
 
     char* safe_strcat(char* dest, const char* src) {
         cout << "[Replace] strcat -> safe_strcat" << endl;
-        return strncat(dest, src, MAX_STRING_LENGTH);
+        return strncat(dest, src, MAX_STRCAT_LENGTH);
     }
 
     int safe_sprintf(char* dest, const char* fmt, ...) {
         cout << "[Replace] sprintf -> safe_sprintf" << endl;
         va_list args;
         va_start(args, fmt);
-        int ret = _vsnprintf_s(dest, MAX_STRING_LENGTH, _TRUNCATE, fmt, args);
+        int ret = _vsnprintf_s(dest, MAX_SPRINTF_LENGTH, _TRUNCATE, fmt, args);
         va_end(args);
         return ret;
     }
 
     char* safe_gets(char* s) {
         cout << "[Replace] gets -> safe_gets" << endl;
-        return fgets(s, MAX_STRING_LENGTH, stdin);
+        return fgets(s, MAX_GETS_LENGTH, stdin);
     }
 
     int safe_scanf(const char* fmt, ...) {
@@ -60,7 +64,7 @@
         va_list args;
         va_start(args, fmt);
         char* dest = va_arg(args, char*);
-        strncpy(dest, input, MAX_STRING_LENGTH);
+        strncpy(dest, input, MAX_SCANF_LENGTH);
         va_end(args);
         
         return 1; // Return number of items successfully read
