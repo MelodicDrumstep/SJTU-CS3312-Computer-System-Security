@@ -51,7 +51,9 @@ class MailSender(object):
 			self.print_send_msg("starttls\r\n") 
 			self.print_recv_msg(client_socket)
 
-			tls_socket = ssl.wrap_socket(client_socket, ssl_version=ssl.PROTOCOL_TLS)
+			# 使用新的SSL/TLS API
+			context = ssl.create_default_context()
+			tls_socket = context.wrap_socket(client_socket, server_hostname=self.mail_server[0])
 			self.tls_socket = tls_socket
 
 		self.client_socket = client_socket

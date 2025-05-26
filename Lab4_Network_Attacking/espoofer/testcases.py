@@ -318,7 +318,7 @@ test_cases = {
             "to_header": b"To: <victim@victim.com>\r\n",
             "subject_header": b"Subject: client A3: Spoofing via an email service account\r\n",
             "body": b"Hi, this is a test message! Best wishes.\r\n",
-            "other_headers": b"Date: " + get_date() + b"\r\n" + b'Sender: <s@sender.legitimate.com>\r\nContent-Type: text/plain; charset="UTF-8"\r\nMIME-Version: 1.0\r\nMessage-ID: <1538085644648.096e3d4e-bc38-4027-b57e-' + id_generator() + b'@message-ids.attack.com>\r\nX-Email-Client: https://github.com/chenjj/espoofer\r\n\r\n',
+            "other_headers": b"Date: " + get_date() + b"\r\n" + b'Sender: <JuanruLi@sjtu.edu.cn>\r\nContent-Type: text/plain; charset="UTF-8"\r\nMIME-Version: 1.0\r\nMessage-ID: <1538085644648.096e3d4e-bc38-4027-b57e-' + id_generator() + b'@message-ids.attack.com>\r\nX-Email-Client: https://github.com/chenjj/espoofer\r\n\r\n',
         },
         "description": b"Spoofing via an email service account, refer to section 6.2 in the paper."
     },

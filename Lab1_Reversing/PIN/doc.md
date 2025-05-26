@@ -38,11 +38,11 @@ When the tool intercepts unsafe function calls, it will output messages like:
 
 ## Security Considerations
 - The tool provides basic protection against buffer overflow attacks
-- String operations are limited to 10 characters by default
+- String operations are limited to default buffer sizes
 - Format string vulnerabilities are mitigated in scanf operations
 - All unsafe functions are replaced with bounds-checked versions
 
 ## Limitations
 - The tool only protects against the specified unsafe functions
-- The 10-character limit is a default value and may need adjustment for specific use cases
+- The buffer size limitations are default values and may need adjustment for specific use cases
 - Some programs may not work correctly if they rely on the unsafe behavior of these functions

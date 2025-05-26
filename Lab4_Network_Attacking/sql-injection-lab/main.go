@@ -72,7 +72,7 @@ func simpleSQLFilter(input string) string {
 			// 替换关键字为空
 			// 但是会替换几次？
 			
-			// 这里只会 replae 两次， 我可以利用这个规则
+			// 这里只会 replae 一次， 我可以利用这个规则
 			input = strings.ReplaceAll(input, keyword, "")
 			input = strings.ReplaceAll(input, strings.ToUpper(keyword), "")
 		}

@@ -1,5 +1,11 @@
 # SQL Injection Lab Report
 
+
+select * from user where id=(select id from user where name='Hey');
+
+1' uunionnion selselectect username from users where username = "admin
+
+
 ## Compilation
 
 ```

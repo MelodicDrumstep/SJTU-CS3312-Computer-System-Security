@@ -6,5 +6,3 @@ This pintools will replace the unsafe functions with the safe functions (with ce
 
 Please refer to [doc.md](doc.md) for documentations and [unsafe_func_replacer.cpp](pintools/unsafe_func_replacer.cpp).
 
-
-
