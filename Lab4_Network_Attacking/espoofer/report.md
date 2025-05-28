@@ -1,6 +1,8 @@
 # Lab Report : Espoofer Lab
 
-I can fake an email right now! Please see ![result.png](images/result.png).
+I can fake an email right now! Please check out
+
+<img src="images/result.png" alt="Espoofer Result" width="500" height="auto">.
 
 I use client mode a3 and I modified [config.py](config.py).
 
@@ -58,11 +60,11 @@ Connecting ('mail.sjtu.edu.cn', 587)
 
 >>> 235 2.7.0 Authentication successful
 
-<<< mail from: <twl-twl@sjtu.edu.cn>
+<<< mail from: </*Ommited*/@sjtu.edu.cn>
 
 >>> 250 2.1.0 Ok
 
-<<< rcpt to: <wty500@sjtu.edu.cn>
+<<< rcpt to: </*Ommited*/@sjtu.edu.cn>
 
 >>> 250 2.1.5 Ok
 
@@ -71,7 +73,7 @@ Connecting ('mail.sjtu.edu.cn', 587)
 >>> 354 End data with <CR><LF>.<CR><LF>
 
 <<< From: <JuanruLi@sjtu.edu.cn>
-To: <wty500@sjtu.edu.cn>
+To: </*Ommited*/@sjtu.edu.cn>
 Subject: Hijack!
 Date: Mon, 26 May 2025 14:17:17 +0000
 Sender: <JuanruLi@sjtu.edu.cn>
