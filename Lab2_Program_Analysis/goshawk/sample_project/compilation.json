@@ -1,0 +1,17 @@
+[
+  {
+    "directory": "/workspace/sample_project",
+    "command": "clang -Wall -Wextra -g -c main.c -o main.o",
+    "file": "main.c"
+  },
+  {
+    "directory": "/workspace/sample_project",
+    "command": "clang -Wall -Wextra -g -c memory.c -o memory.o",
+    "file": "memory.c"
+  },
+  {
+    "directory": "/workspace/sample_project",
+    "command": "clang -Wall -Wextra -g -o memory_test main.o memory.o",
+    "file": "memory_test"
+  }
+]

@@ -1,0 +1,156 @@
+Step0: Cleanup start!
+Step0: Cleanup finished!
+-----------------------------------------------
+------------------------------------
+
+
+
+-----------------------------------------------
+
+Step1: Extract Call Graph from source code Start!
+-----------------------------------------------
+
+
+
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/ExtractFunctionPrototypes.so -Xclang -plugin -Xclang extract-funcs -Xclang -plugin-arg-extract-funcs -Xclang /root/Goshawk/temp/call_graph.json -Xclang -plugin-arg-extract-funcs -Xclang /root/Goshawk/temp/indirect_call.json -Wall -Wextra -g -o memory_test main.o memory.o
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/ExtractFunctionPrototypes.so -Xclang -plugin -Xclang extract-funcs -Xclang -plugin-arg-extract-funcs -Xclang /root/Goshawk/temp/call_graph.json -Xclang -plugin-arg-extract-funcs -Xclang /root/Goshawk/temp/indirect_call.json -Wall -Wextra -g -c main.c -o main.o
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/ExtractFunctionPrototypes.so -Xclang -plugin -Xclang extract-funcs -Xclang -plugin-arg-extract-funcs -Xclang /root/Goshawk/temp/call_graph.json -Xclang -plugin-arg-extract-funcs -Xclang /root/Goshawk/temp/indirect_call.json -Wall -Wextra -g -c memory.c -o memory.o
+Waiting... Processing the whole program call graph...
+14
+-----------------------------------------------
+
+
+
+Step1: Extract Call Graph from source code Finished!
+-----------------------------------------------
+
+
+
+
+
+-----------------------------------------------
+
+Step2: Identify Allocation Functions from source code Start!
+-----------------------------------------------
+
+
+
+extracting time: 0.5235154628753662
+alloc similarity score generated time:4.428444862365723
+Call Graph read finished!
+ total func number:14
+initial_strong_belief_alloc_function finished!
+belief_chain_check_1 finished!
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/MemoryDataFlow.so -Xclang -plugin -Xclang point-memory -Xclang -plugin-arg-point-memory -Xclang /root/Goshawk/temp/allocation_set -Xclang -plugin-arg-point-memory -Xclang /root/Goshawk/temp/memory_flow_alloc.json -Wall -Wextra -g -o memory_test main.o memory.o
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/MemoryDataFlow.so -Xclang -plugin -Xclang point-memory -Xclang -plugin-arg-point-memory -Xclang /root/Goshawk/temp/allocation_set -Xclang -plugin-arg-point-memory -Xclang /root/Goshawk/temp/memory_flow_alloc.json -Wall -Wextra -g -c memory.c -o memory.o
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/MemoryDataFlow.so -Xclang -plugin -Xclang point-memory -Xclang -plugin-arg-point-memory -Xclang /root/Goshawk/temp/allocation_set -Xclang -plugin-arg-point-memory -Xclang /root/Goshawk/temp/memory_flow_alloc.json -Wall -Wextra -g -c main.c -o main.o
+[H[2J[3Jfunction similarity about name finished!
+Call Graph read finished!
+ total func number:14
+initial_strong_belief_alloc_function finished!
+belief_chain_check_1 finished!
+
+
+-----------------------------------------------
+
+Step2: Identify Allocation Functions from source code Finished!
+-----------------------------------------------
+
+
+
+
+
+-----------------------------------------------
+
+Step3: Identify Deallocation Functions from source code Start!
+-----------------------------------------------
+
+
+
+extracting time: 0.3385169506072998
+Call Graph read finished!
+ total func number:14
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/FreeNullCheck.so -Xclang -plugin -Xclang free-check -Xclang -plugin-arg-free-check -Xclang /root/Goshawk/temp/candidate_free.txt -Xclang -plugin-arg-free-check  -Xclang /root/Goshawk/temp/free_check.txt -Xclang -plugin-arg-free-check  -Xclang /root/Goshawk/temp/visited.txt -Wall -Wextra -g -o memory_test main.o memory.o
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/FreeNullCheck.so -Xclang -plugin -Xclang free-check -Xclang -plugin-arg-free-check -Xclang /root/Goshawk/temp/candidate_free.txt -Xclang -plugin-arg-free-check  -Xclang /root/Goshawk/temp/free_check.txt -Xclang -plugin-arg-free-check  -Xclang /root/Goshawk/temp/visited.txt -Wall -Wextra -g -c memory.c -o memory.o
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/FreeNullCheck.so -Xclang -plugin -Xclang free-check -Xclang -plugin-arg-free-check -Xclang /root/Goshawk/temp/candidate_free.txt -Xclang -plugin-arg-free-check  -Xclang /root/Goshawk/temp/free_check.txt -Xclang -plugin-arg-free-check  -Xclang /root/Goshawk/temp/visited.txt -Wall -Wextra -g -c main.c -o main.o
+function similarity about name finished!
+Call Graph read finished!
+ total func number:14
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/MemoryDataFlowFree.so -Xclang -plugin -Xclang point-memory-free   -Xclang -plugin-arg-point-memory-free -Xclang 1  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/candidate_free.txt  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/seed_free.txt  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/last_step_mos.json  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/memory_flow_free.json  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/visited.txt -Wall -Wextra -g -c memory.c -o memory.o
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/MemoryDataFlowFree.so -Xclang -plugin -Xclang point-memory-free   -Xclang -plugin-arg-point-memory-free -Xclang 1  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/candidate_free.txt  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/seed_free.txt  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/last_step_mos.json  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/memory_flow_free.json  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/visited.txt -Wall -Wextra -g -o memory_test main.o memory.o
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/MemoryDataFlowFree.so -Xclang -plugin -Xclang point-memory-free   -Xclang -plugin-arg-point-memory-free -Xclang 1  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/candidate_free.txt  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/seed_free.txt  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/last_step_mos.json  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/memory_flow_free.json  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/visited.txt -Wall -Wextra -g -c main.c -o main.o
+[H[2J[3JCurrent iteration:	 1 
+Current number of lines:	 2 
+ number of TUs:	 0
+clang -fsyntax-only -Xclang -load -Xclang /root/Goshawk/plugins/MemoryDataFlowFree.so -Xclang -plugin -Xclang point-memory-free   -Xclang -plugin-arg-point-memory-free -Xclang 2  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/candidate_free.txt  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/seed_free.txt  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/last_step_mos.json  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/memory_flow_free.json  -Xclang -plugin-arg-point-memory-free -Xclang /root/Goshawk/temp/visited.txt -Wall -Wextra -g -c memory.c -o memory.o
+[INFO 2025-06-08 05:47] - CodeChecker analyzer version:
+---------------------------------------------------------------
+Kind                 | Version                                 
+---------------------------------------------------------------
+Base package version | 6.21.0-rc                               
+Package build date   | 2022-11-09T15:50                        
+Git commit ID (hash) | f787140b2320885a63d10a325377c6d3999b2856
+Git tag information  | 6.21                                    
+---------------------------------------------------------------
+[WARNING 2025-06-08 05:47] - This version is only a release candidate! If you encounter any problems, please submit a bug report!
+
+[INFO 2025-06-08 05:47] - CodeChecker web version:
+------------------------------------------------------------------------------
+Kind                                | Version                                 
+------------------------------------------------------------------------------
+Base package version                | 6.21.0-rc                               
+Package build date                  | 2022-11-09T15:50                        
+Git commit ID (hash)                | f787140b2320885a63d10a325377c6d3999b2856
+Git tag information                 | 6.21                                    
+Server supported Thrift API version | 6.51                                    
+Client Thrift API version           | 6.51                                    
+------------------------------------------------------------------------------
+[WARNING 2025-06-08 05:47] - This version is only a release candidate! If you encounter any problems, please submit a bug report!
+[H[2J[3J[INFO 2025-06-08 05:47] - Enabled checkers:
+clangsa: alpha.security.cert.env.InvalidPtr, alpha.security.cert.pos.34c, security.FloatLoopCounter, security.insecureAPI.UncheckedReturn, security.insecureAPI.getpw, security.insecureAPI.gets, security.insecureAPI.mkstemp, security.insecureAPI.mktemp, security.insecureAPI.vfork
+[INFO 2025-06-08 05:47] - Pre-analysis started.
+[INFO 2025-06-08 05:47] - Collecting data for ctu analysis.
+[INFO 2025-06-08 05:47] - [1/2] main.c
+[INFO 2025-06-08 05:47] - [2/2] memory.c
+[INFO 2025-06-08 05:47] - Pre-analysis finished.
+[INFO 2025-06-08 05:47] - Starting static analysis ...
+[INFO 2025-06-08 05:47] - [1/2] clangsa analyzed main.c successfully.
+[INFO 2025-06-08 05:47] - [2/2] clangsa analyzed memory.c successfully.
+[INFO 2025-06-08 05:47] - ----==== Summary ====----
+[INFO 2025-06-08 05:47] - Successfully analyzed
+[INFO 2025-06-08 05:47] -   clangsa: 2
+[INFO 2025-06-08 05:47] - Total analyzed compilation commands: 2
+[INFO 2025-06-08 05:47] - ----=================----
+[INFO 2025-06-08 05:47] - Analysis finished.
+[INFO 2025-06-08 05:47] - To view results in the terminal use the "CodeChecker parse" command.
+[INFO 2025-06-08 05:47] - To store results use the "CodeChecker store" command.
+[INFO 2025-06-08 05:47] - See --help and the user guide for further options about parsing and storing the reports.
+[INFO 2025-06-08 05:47] - ----=================----
+[INFO 2025-06-08 05:47] - Analysis length: 0.5122857093811035 sec.
+[H[2J[3JParsing input file '/root/Goshawk/temp/analyze_cache/main.c_clangsa_8ae971e844f279b99d78eaf0589fb0e9.plist'.
+[INFO 2025-06-08 05:47] - No report data in /root/Goshawk/temp/analyze_cache/main.c_clangsa_8ae971e844f279b99d78eaf0589fb0e9.plist file.
+Parsing input file '/root/Goshawk/temp/analyze_cache/memory.c_clangsa_04a483b0020f7378e1612742b99acf15.plist'.
+[INFO 2025-06-08 05:47] - No report data in /root/Goshawk/temp/analyze_cache/memory.c_clangsa_04a483b0020f7378e1612742b99acf15.plist file.
+
+----======== Summary ========----
+---------------------------------------------
+Number of processed analyzer result files | 2
+Number of analyzer reports                | 0
+---------------------------------------------
+----=================----
+
+To view statistics in a browser run:
+> firefox /root/Goshawk/output/report_html/statistics.html
+
+To view the results in a browser run:
+> firefox /root/Goshawk/output/report_html/index.html
+only param: 1 
+ only member :0 param_member:1
+
+The bug detection phase start!
+
+CodeChecker analyze --analyzers clangsa -j20 /workspace/sample_project/compilation.json --saargs /root/Goshawk/temp/static_analyzer.cfg  -d cplusplus -d nullability -d optin -d valist -d deadcode -d security.insecureAPI.rand -d core -d unix --ctu --output /root/Goshawk/temp/analyze_cache
+
+Parsing the detection result to html report!
+
+CodeChecker parse /root/Goshawk/temp/analyze_cache -e html -o output/report_html

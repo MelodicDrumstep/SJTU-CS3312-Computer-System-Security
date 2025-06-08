@@ -87,3 +87,123 @@ def decrypt(key, iv, cipher):
 		plain += blk
 		iv += 1
 	return plain[0:len(cipher)]
+
+from concurrent.futures import ProcessPoolExecutor, as_completed
+import itertools
+import time
+from typing import Tuple, Optional
+import datetime
+from tqdm import tqdm
+import multiprocessing
+
+def try_decrypt(params: Tuple[int, int], cipher: bytes, known_prefix: bytes) -> Optional[Tuple[int, int, bytes]]:
+    """
+    Try to decrypt with given key and IV.
+    
+    Args:
+        params: Tuple of (key, iv)
+        cipher: The encrypted data
+        known_prefix: Known prefix of the plaintext
+    
+    Returns:
+        Tuple of (key, iv, plaintext) if successful, None otherwise
+    """
+    key, iv = params
+    try:
+        test_plain = decrypt(key, iv, cipher)
+        if test_plain.startswith(known_prefix):
+            return (key, iv, test_plain)
+    except Exception:
+        pass
+    return None
+
+def parallel_decrypt_search(cipher: bytes, known_prefix: bytes = b"https://", 
+                          max_workers: int = None) -> Optional[Tuple[int, int, bytes]]:
+    """
+    Parallel search for the correct key and IV using multiple processes.
+    The key is a timestamp and IV is a random number between 0 and 300000.
+    
+    Args:
+        cipher: The encrypted data
+        known_prefix: Known prefix of the plaintext (default: "https://")
+        max_workers: Number of worker processes (default: CPU count)
+    
+    Returns:
+        Tuple of (key, iv, plaintext) if found, None otherwise
+    """
+    # Use CPU count if max_workers not specified
+    if max_workers is None:
+        max_workers = multiprocessing.cpu_count()
+
+    # Generate possible key-IV pairs with optimized time range
+    time_range = range(1655999720 - 2100, 1655999720 - 1800)  # +1 to include the end value
+    iv_range = range(0, 300000)  # All possible IV values
+    
+    total_combinations = len(time_range) * len(iv_range)
+    print(f"Starting search with {len(time_range)} timestamps and {len(iv_range)} IVs")
+    print(f"Total combinations: {total_combinations}")
+    print(f"Using {max_workers} processes")
+    
+    # Create parameter combinations
+    params = itertools.product(time_range, iv_range)
+    
+    # Use process pool for parallel processing
+    with ProcessPoolExecutor(max_workers=max_workers) as executor:
+        # Submit tasks in batches to avoid memory issues
+        batch_size = 10000  # Increased batch size for better performance
+        param_batches = [list(itertools.islice(params, i, i + batch_size)) 
+                        for i in range(0, total_combinations, batch_size)]
+        
+        # Create progress bar
+        pbar = tqdm(total=total_combinations, desc="Decrypting", unit="combinations")
+        
+        for batch in param_batches:
+            # Submit batch of tasks
+            future_to_params = {
+                executor.submit(try_decrypt, param, cipher, known_prefix): param 
+                for param in batch
+            }
+            
+            # Process results as they complete
+            for future in as_completed(future_to_params):
+                result = future.result()
+                pbar.update(1)  # Update progress bar
+                if result is not None:
+                    # Cancel all other tasks if we found a solution
+                    print(f"\ntry_decrypt: Found solution: {result}")
+                    for f in future_to_params:
+                        f.cancel()
+                    pbar.close()
+                    return result
+        
+        pbar.close()
+    
+    return None
+
+# Example usage:
+if __name__ == "__main__":
+    # Read encrypted file
+    with open("riddle_man.txt", "rb") as f:
+        cipher = f.read()
+    
+    print("Starting decryption search...")
+    start_time = time.time()
+    
+    # Try to find the key and IV
+    result = parallel_decrypt_search(cipher)
+    
+    end_time = time.time()
+    print(f"Search completed in {end_time - start_time:.2f} seconds")
+    
+    if result:
+        key, iv, plain = result
+        print(f"\nFound solution:")
+        print(f"Key (timestamp): {key}")
+        print(f"IV: {iv}")
+        print(f"Plaintext: {plain.decode('ascii')}")
+        
+        # Print the actual date/time of the key
+        key_time = datetime.datetime.fromtimestamp(key)
+        print(f"Encryption time: {key_time}")
+    else:
+        print("No solution found")
