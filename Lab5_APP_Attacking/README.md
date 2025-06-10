@@ -2,13 +2,19 @@
 
 ## Result Screenshots
 
-Successfully reverse the sign generating algorithm:
+1. Successfully capture the packets:
+
+<img src="images/packet_capture.png" width="400" alt="Capture">
+
+2. Successfully reverse the sign generating algorithm:
 
 <img src="images/result.png" width="400" alt="Result">
 
 ## Solution
 
-Just depack the APP program and locate the logic of generating the sign.
+For packet capture, I use "Charles Proxy" software and follow this guide: [https://www.zhihu.com/tardis/zm/art/1896701961547538943?source_id=1005](https://www.zhihu.com/tardis/zm/art/1896701961547538943?source_id=1005).
+
+And in order to reverse the sign generating algorithm, I depack the APP program following this guide : https://www.52pojie.cn/thread-2023369-1-1.html[](https://www.52pojie.cn/thread-2023369-1-1.html), and locate the logic of generating the sign.
 
 ```js
 function l() {
@@ -53,8 +59,9 @@ function l() {
 }
 ```
 
+Then I write a python script for automatically generating the request message : [generate_sign.py](generate_sign.py).
 
-## Request Message
+## My Request Message
 
 ```
 {
