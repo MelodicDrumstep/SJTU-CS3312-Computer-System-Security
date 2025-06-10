@@ -1,0 +1,29 @@
+.tabs {
+    background: #fff;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    top: 0
+}
+
+.tabs-item {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    height: 100%
+}
+
+.tabs-item-img {
+    height: 84rpx;
+    width: 188rpx
+}
+
+.tabs-underline {
+    background-color: #e60012;
+    border-radius: 8rpx;
+    bottom: 0;
+    height: 6rpx;
+    position: absolute;
+    -webkit-transition: left .3s;
+    transition: left .3s
+}

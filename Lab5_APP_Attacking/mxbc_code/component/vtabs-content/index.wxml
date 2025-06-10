@@ -1,0 +1,3 @@
+<view class="vtabs-content__item">
+    <slot></slot>
+</view>

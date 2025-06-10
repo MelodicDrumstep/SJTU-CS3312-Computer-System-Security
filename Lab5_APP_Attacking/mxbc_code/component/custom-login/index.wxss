@@ -1,0 +1,109 @@
+.warp-default {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    font-size: 32rpx;
+    padding-top: 172rpx
+}
+
+.warp-default .logo {
+    height: 136rpx;
+    margin-bottom: 20rpx;
+    width: 136rpx
+}
+
+.warp-default .wx-auth-txt {
+    font-weight: 700;
+    margin: 160rpx 0 80rpx
+}
+
+.warp-default .wx-tip-txt {
+    color: #777;
+    font-size: 22rpx
+}
+
+.warp-default .auth-button {
+    margin: 24rpx 0;
+    width: 590rpx
+}
+
+.warp-default .cancel {
+    bottom: 216rpx;
+    color: #aaa;
+    font-size: 28rpx;
+    position: fixed
+}
+
+.warp-popup {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    font-size: 32rpx;
+    padding: 0 0 46rpx
+}
+
+.warp-popup .cancel {
+    color: #777;
+    font-size: 26rpx;
+    height: 40rpx;
+    left: 28rpx;
+    line-height: 40rpx;
+    position: absolute;
+    top: 28rpx
+}
+
+.warp-popup .login-img {
+    height: 634rpx;
+    width: 750rpx
+}
+
+.warp-popup .auth-button {
+    margin: 0 0 12rpx;
+    width: 702rpx
+}
+
+.mx-hairline--bottom,.mx-hairline--left,.mx-hairline--top {
+    position: relative
+}
+
+.mx-hairline--bottom:after,.mx-hairline--left:after,.mx-hairline--top:after {
+    border: 0 solid #ebedf0;
+    bottom: -50%;
+    box-sizing: border-box;
+    content: " ";
+    left: -50%;
+    pointer-events: none;
+    position: absolute;
+    right: -50%;
+    top: -50%;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    -webkit-transform-origin: center;
+    transform-origin: center
+}
+
+.mx-hairline--top:after {
+    border-top-width: 1px
+}
+
+.mx-hairline--left:after {
+    border-left-width: 1px
+}
+
+.mx-hairline--bottom:after {
+    border-bottom-width: 1px
+}

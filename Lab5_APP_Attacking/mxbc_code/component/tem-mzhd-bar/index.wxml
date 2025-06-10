@@ -1,0 +1,11 @@
+<view class="gift-progress-container {{customClass}}">
+    <view class="gift-icons">
+        <block wx:for="{{progressArray}}" wx:key="*this">
+            <view class="connector-line {{item.active?'active':'inactive'}}" wx:if="{{index!==0}}"></view>
+            <view class="gift-icon-item">
+                <image class="gift-image" mode="aspectFit" src="{{item.active?__static__+'/activity/gift_icon_active.png':__static__+'/activity/gift_icon_inactive.png'}}"></image>
+            </view>
+        </block>
+    </view>
+    <text class="c-theme f12"> {{currentNum}}/{{totalNum}} </text>
+</view>

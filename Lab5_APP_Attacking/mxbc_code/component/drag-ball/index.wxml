@@ -1,0 +1,9 @@
+<movable-area class="movable-area" style="{{moveArea}}">
+    <movable-view class="movable-view" direction="vertical" style="{{style}}" x="{{x}}" y="{{y}}">
+        <view class="btn-container">
+            <view class="btn-main {{btnAnimation}}">
+                <image bindtap="onClick" class="icon" src="{{__static__}}/wallet/questions_icon.png" style="{{style}}"></image>
+            </view>
+        </view>
+    </movable-view>
+</movable-area>

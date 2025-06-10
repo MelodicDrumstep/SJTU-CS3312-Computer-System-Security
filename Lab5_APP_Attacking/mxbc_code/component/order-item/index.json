@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "stair-bar": "component\\order-item\\component\\tem-mzhd-bar\\index"
+  }
+}

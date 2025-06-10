@@ -1,0 +1,41 @@
+<view bindtap="selectedBagTap" class="flower-box flower-bg" wx:if="{{showType==='1'}}">
+    <image lazyLoad class="no-bag-bg" mode="widthFix" src="{{__static__}}/order_detail/no-bag-flower.png"></image>
+    <text class="iconfont checkbox {{selectedNeed?'icon-checked c-theme':'icon-unchecked c-aaa'}} f22"></text>
+</view>
+<view bindtap="receiveFlowerTap" class="mb12 flower-box" wx:if="{{showType==='2'}}">
+    <image lazyLoad class="flower-img" mode="widthFix" src="{{__static__}}/order_detail/flower-bg.png"></image>
+    <image lazyLoad class="flower-text" mode="heightFix" src="{{__static__}}/order_detail/received-flower.png" wx:if="{{isReceived}}"></image>
+    <image lazyLoad class="flower-text box-animation" mode="heightFix" src="{{__static__}}/order_detail/receive-flower.png" wx:else></image>
+</view>
+<view class="mt12" wx:if="{{showType==='3'}}">
+    <image lazyLoad bindtap="toMiniProgramTap" class="flower-img" data-type="3" mode="aspectFill" src="{{__static__}}/main/medal-bg.png"></image>
+</view>
+<mx-popup show="{{showRule}}">
+    <view class="rule-container">
+        <text bindtap="toggleCloseRule" class="iconfont icon-close_circle f24"></text>
+        <view class="rule-box f12 l19">
+            <view class="mb4">1.参与方式：2024年2月27日—— 2024年4月30日期间，通过蜜雪冰城微信小程序下单，在订单支付页面勾选“不要打包袋”，获得领取腾讯公益小红花资格，获得资格后可在取餐页面点击“领取小红花”按钮领取，1单可领取1朵，同一蜜雪冰城微信小程序用户每日最多可领取2朵小红花。</view>
+            <view class="mb4">2.电子勋章奖品：通过该活动领取1朵小红花，可获得腾讯公益平台“环保袋言人·铜”电子勋章；领取5朵小红花，可获得腾讯公益平台“环保袋言人·银”电子勋章；领取20朵小红花，可获得腾讯公益平台“环保袋言人·金”电子勋章；</view>
+            <view class="mb4">3.实物勋章奖品及兑奖方式：活动期间内前2000名集齐3个电子勋章并完整准确填写收货信息的用户，将获得一个“环保袋言人·实物纪念勋章”（定制品，无市场价）的领取资格；请您在获得实物勋章领取资格后尽快在【显示实物勋章地址填写界面】或【通过进入蜜雪冰城微信小程序“订单”界面，点击“领取环保袋言人勋章”】填写您的收货地址，收集完2000个用户收货地址后填写栏将关闭，地址填写后不可修改，请您核对无误后再行提交，如您逾期未填写或填写错误将丧失实物勋章领取资格，实物勋章将顺延发放给其他符合条件的用户；活动期间实物勋章数量共计2000个，先到先得，同一蜜雪冰城微信小程序用户最多可领取1次实物纪念勋章。本活动由蜜雪冰城主办，腾讯公益提供技术支持，如有疑问可咨询【400-700-6146转2】。</view>
+            <view class="mb4">世界地球日特别活动：4月20日-4月22日，活动权益再升级！同一蜜雪冰城微信小程序用户每日最多可领取5朵小红花。</view>
+            <view class="mb4">电子勋章及实物勋章规则升级：领取1朵小红花，可获得腾讯公益平台“环保袋言人·铜”电子勋章；领取3朵小红花，可获得腾讯公益平台“环保袋言人·银”电子勋章；领取6朵小红花，可获得腾讯公益平台“环保袋言人·金”电子勋章；其余活动规则，与主活动一致。</view>
+        </view>
+    </view>
+</mx-popup>
+<mx-popup customStyle="padding: 24rpx 48rpx 80rpx;box-sizing: border-box" position="bottom" show="{{forceChoiceBag}}">
+    <view wx:if="{{forceChoiceBag}}">
+        <view class="flex-sb pt12 pb12 f14 fb5">是否要打包袋<view bindtap="onTipSelect" class="f12 c-777 tip-box">
+                <text>不再提示</text>
+                <image class="tip-icon ml4" mode="aspectFit" src="{{__static__}}{{noTip?'/order_detail/checked.png':'/order_detail/check.png'}}"></image>
+            </view>
+        </view>
+        <view class="flex-sb pt13 pb21">
+            <button bindtap="onTap" class="bag-btn" data-select="0">要打包袋</button>
+            <view bindtap="onTap" class="bag-btn" data-select="1">
+                <view class="flex-center">
+                    <image class="leaf-icon" mode="aspectFit" src="{{__static__}}/order_detail/leaf.png"></image>不要打包袋</view>
+                <view class="f12 mt4" style="font-weight:normal">助力环保，减碳0.1克</view>
+            </view>
+        </view>
+    </view>
+</mx-popup>

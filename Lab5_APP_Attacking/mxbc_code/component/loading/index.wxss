@@ -1,0 +1,25 @@
+.mx-loading_container {
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    background: #fff;
+    bottom: 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    height: 100vh;
+    -webkit-justify-content: center;
+    justify-content: center;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 100vw;
+    z-index: 300
+}
+
+.mx-loading_container .mx-loading_icon {
+    height: 200rpx;
+    width: 200rpx
+}

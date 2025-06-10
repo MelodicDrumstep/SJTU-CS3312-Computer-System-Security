@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mx-dialog": "component\\join-group-guide\\component\\dialog\\index"
+  }
+}

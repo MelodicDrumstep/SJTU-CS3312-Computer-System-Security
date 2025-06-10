@@ -1,0 +1,135 @@
+.flower-bg {
+    border-radius: 16rpx;
+    height: 112rpx;
+    margin: 24rpx 24rpx 22rpx;
+    overflow: hidden;
+    width: 702rpx
+}
+
+.flower-bg .icon-doubt {
+    color: #fff;
+    position: absolute;
+    right: 178rpx;
+    top: 84rpx
+}
+
+.flower-bg .checkbox {
+    left: auto;
+    position: absolute;
+    right: 24rpx;
+    top: 30rpx
+}
+
+.flower-bg .icon-unchecked:after {
+    background: -webkit-repeating-radial-gradient(center,circle,hsla(0,0%,100%,.4) 0,hsla(0,0%,100%,.4) 60%,transparent 0,transparent 100%);
+    background: repeating-radial-gradient(circle at center,hsla(0,0%,100%,.4) 0,hsla(0,0%,100%,.4) 60%,transparent 0,transparent 100%);
+    border-radius: 50%
+}
+
+.no-bag-bg {
+    height: 112rpx;
+    width: 702rpx
+}
+
+.flower-box {
+    position: relative
+}
+
+.flower-img {
+    display: block;
+    height: 136rpx;
+    margin: 0 24rpx;
+    width: 702rpx
+}
+
+.flower-text {
+    height: 44rpx;
+    position: absolute;
+    right: 44rpx;
+    top: calc(50% - 22rpx)
+}
+
+.rule-container {
+    padding: 40rpx 32rpx;
+    position: relative
+}
+
+.rule-box {
+    -webkit-overflow-scrolling: touch;
+    max-height: 800rpx;
+    overflow-y: scroll;
+    text-align: justify
+}
+
+@-webkit-keyframes box-ani {
+    0% {
+        transform: scale(.9);
+        -webkit-transform: scale(.9)
+    }
+
+    100% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes box-ani {
+    0% {
+        transform: scale(.9);
+        -webkit-transform: scale(.9)
+    }
+
+    100% {
+        transform: scale(1);
+        -webkit-transform: scale(1)
+    }
+}
+
+.box-animation {
+    -webkit-animation: box-ani .5s infinite alternate;
+    animation: box-ani .5s infinite alternate
+}
+
+.bag-btn {
+    font-size: 32rpx;
+    font-weight: 500;
+    height: 142rpx;
+    padding: 32rpx;
+    width: 315rpx
+}
+
+.bag-btn:first-child {
+    background-color: #fff;
+    border: 1rpx solid #aaa;
+    color: #333
+}
+
+.bag-btn:nth-child(2) {
+    background-color: #fff8f8;
+    border: 1rpx solid #fc3f41;
+    border-radius: 16rpx;
+    box-sizing: border-box;
+    color: #fc3f41;
+    text-align: center
+}
+
+.leaf-icon {
+    height: 40rpx;
+    margin-right: 16rpx;
+    width: 40rpx
+}
+
+.tip-box {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    font-weight: 400
+}
+
+.tip-icon {
+    height: 28rpx;
+    width: 28rpx
+}

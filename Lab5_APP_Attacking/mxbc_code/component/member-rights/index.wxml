@@ -1,0 +1,41 @@
+<view bindtap="clickTap" class="member-rights-box f12 flex-sb {{page}}" style="{{customStyle}}">
+    <image class="privilege-icon" mode="aspectFill" src="{{__static__}}/main/privilege.png" wx:if="{{page=='index'}}"></image>
+    <image mode="heightFix" src="{{__static__}}/main/rights_bar.png" style="height:28rpx" wx:else></image>
+    <text class="{{page=='menu'?'ml4 f11':''}}" style="flex:1" wx:if="{{showTitle}}">{{title}}</text>
+    <text class="iconfont icon-arrow_up"></text>
+</view>
+<mx-popup bind:close="onClose" position="bottom" show="{{visible}}" zIndex="299" wx:if="{{display}}">
+    <view class="pop-header">
+        <text bindtap="onClose" class="iconfont icon-close"></text>
+        <view class="flex align-start">
+            <text class="mx-ellipsis f16 fb6" style="max-width:484rpx">Hi，{{customer.nickname||customer.mobilePhone}}</text>
+            <text class="level-tag level-{{customer.customerLevel}}">{{customer.customerLevelVo.levelName}}会员</text>
+        </view>
+        <text class="f11 c-777">您有{{customer.mainPageRightsNum}}项权益，开启提醒不错过</text>
+    </view>
+    <scroll-view scrollY class="rights-popup">
+        <view class="rights-card mb12" wx:for="{{rightsList}}" wx:key="index">
+            <image class="rights-title" mode="aspectFill" src="{{__static__}}/main/gift_{{item.category}}.png"></image>
+            <view class="mx-hairline--bottom pt16 pb16 flex-sb" wx:for="{{item.rights}}" wx:for-index="rightIndex" wx:for-item="right" wx:key="rightIndex">
+                <image class="right-icon_popup" mode="aspectFill" src="{{right.imgs}}"></image>
+                <view class="mx-ellipsis mr8" style="flex:1">
+                    <text class="f14 c-333">{{right.rightName}}</text>
+                    <view class="f12 c-aaa mt4 mx-ellipsis">{{right.assistDesc}}</view>
+                </view>
+                <block wx:if="{{right.showButtonFlag}}">
+                    <button bindtap="setBirthday" class="right-button {{customer.birthday?'default-btn':'active-btn'}}" wx:if="{{right.selectType==3}}">{{customer.birthday?'到账提醒':'设置生日'}}</button>
+                    <button bindtap="toMenu" class="right-button active-btn" wx:elif="{{right.selectType==2}}">去下单</button>
+                    <block wx:elif="{{right.selectType==0}}">
+                        <button bindtap="toLink" class="right-button active-btn" data-url="{{right.jumpUrl}}" wx:if="{{right.isCurrentDay==1}}">{{right.buttonText}}</button>
+                        <button bindtap="remindRightUse" class="right-button default-btn" wx:else>提醒我</button>
+                    </block>
+                    <button bindtap="onReceive" class="right-button active-btn" data-i="{{index}}" data-id="{{right.id}}" data-j="{{rightIndex}}" wx:elif="{{right.receivedStatus==0}}">待领取</button>
+                    <button bindtap="toMenu" class="right-button active-btn" wx:elif="{{right.receivedStatus==1}}">去下单</button>
+                    <button bindtap="remindRightUse" class="right-button default-btn" wx:elif="{{right.category==1}}">提醒我</button>
+                </block>
+            </view>
+        </view>
+    </scroll-view>
+    <view bindtap="toRightCenter" class="right-tips f12">到「会员中心」查看权益详情<text class="iconfont icon-arrow_up"></text>
+    </view>
+</mx-popup>

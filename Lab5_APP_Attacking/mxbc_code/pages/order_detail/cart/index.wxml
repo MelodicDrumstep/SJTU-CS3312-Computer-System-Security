@@ -1,0 +1,314 @@
+<view class="header-box">
+    <view class="header-card">
+        <image lazyLoad class="tag-lace" src="{{__static__}}/main/lace_white.png"></image>
+        <view class="order-type fb5 c-theme">{{cartData.orderType==1?'自提':'外送'}}</view>
+        <block wx:if="{{cartData.orderType==2}}">
+            <view bindtap="toAddress" class="fb5" wx:if="{{currentAddress.address===undefined}}">请选择收货地址<text class="iconfont icon-arrow_right f13"></text>
+            </view>
+            <view bindtap="toAddress" class="fb5" wx:else>
+                <text class="mx-ellipsis current_address">{{currentAddress.address+'，'+currentAddress.detailAddress}}</text>
+                <text class="iconfont icon-arrow_right f13" wx:if="{{cartData.orderSource!==1}}"></text>
+            </view>
+            <view class="f14 c-777 pt8 pb12">{{currentAddress.consigneeName||''}} {{currentAddress.mobilePhone}}</view>
+            <view class="flex-sb pt12 mx-hairline--top">
+                <text class="c-777 f13 mx-ellipsis">{{selectedStore.shopName}}</text>
+                <text class="c-danger f13" style="white-space:nowrap">{{cartData.deliveryType==1?'订单由门店自行配送':'订单由三方骑手配送'}}</text>
+            </view>
+        </block>
+        <block wx:else>
+            <view bindtap="selectStore" class="fb5" wx:if="{{cartData.orderSource!==1&&!useProductExchangeMode}}">
+                <text class="mx-ellipsis current_address">{{selectedStore.shopName}}</text>
+                <text class="iconfont icon-arrow_right f13"></text>
+            </view>
+            <view class="fb5" wx:else>
+                <text class="mx-ellipsis current_address">{{selectedStore.shopName}}</text>
+            </view>
+            <view class="f14 c-777 pt8 mx-ellipsis">
+                <text>直线距离{{selectedStore.distance||'--'}}</text>
+                <text decode class="c-aaa">&nbsp;|&nbsp;</text>
+                <text>{{selectedStore.shopAddress}}</text>
+            </view>
+        </block>
+    </view>
+</view>
+<view class="card">
+    <block wx:if="{{cartData.orderSource!==1}}">
+        <view style="margin-bottom:24rpx;" wx:for="{{cartData.products}}" wx:for-item="product" wx:key="cartProductViewId">
+            <product-item product="{{product}}" wx:if="{{index<2||index>=2&&isShowDetail}}"></product-item>
+        </view>
+        <view bindtap="toggle" class="c-aaa f12" style="text-align:center" wx:if="{{cartData.products.length>2}}">
+            <text class="iconfont {{isShowDetail?'icon-arrow_up':'icon-arrow_down'}}">{{isShowDetail?'收起更多 ':'展开全部 '}}</text>
+        </view>
+        <view class="border-bottom-dashed"></view>
+    </block>
+    <block wx:else>
+        <product-item-user productContainerClass="no_border" userProduct="{{cartData.partitions[0]}}">
+            <view slot="header_other" wx:if="{{cartData.partitions[0].isMine===1}}">
+                <text class="header_tag">我</text>
+            </view>
+        </product-item-user>
+        <product-item-user productContainerClass="mt12" userProduct="{{product}}" wx:if="{{(index<2||index>=2&&isShowDetail)&&index!==0}}" wx:for="{{cartData.partitions}}" wx:for-item="product" wx:key="index">
+            <view slot="header_other" wx:if="{{product.isMine===1}}">
+                <text class="header_tag">我</text>
+            </view>
+        </product-item-user>
+        <view bindtap="toggle" class="c-aaa f12 mt12" style="text-align:center;" wx:if="{{cartData.partitions.length>2}}">
+            <text class="iconfont {{isShowDetail?'icon-arrow_up':'icon-arrow_down'}}">{{isShowDetail?'收起更多 ':'展开全部 '}}</text>
+        </view>
+        <view class="border-bottom-dashed"></view>
+    </block>
+    <block wx:if="{{cartData.orderType==2}}">
+        <view class="flex-sb pt12 f14">
+            <view bindtap="showTakeOutInfo" class="f13 c-777 flex-a-center">配送费<text class="iconfont icon-doubt"></text>
+            </view>
+            <view>
+                <text class="disabled-price mr5" wx:if="{{cartData.deliveryFeeMerchant>cartData.deliveryFee}}">
+                    <text class="f12">¥</text>{{cartData.deliveryFeeMerchant/100}}</text>
+                <text>
+                    <text class="f12">¥</text>{{cartData.deliveryFee/100||0}}</text>
+            </view>
+        </view>
+        <view class="flex-sb pt12 f14">
+            <text class="f13 c-777">打包费</text>
+            <text>
+                <text class="f12">¥</text>{{cartData.mealFee/100||0}}</text>
+        </view>
+        <view class="border-bottom-dashed"></view>
+    </block>
+    <view class="f13 pt12" wx:if="{{pointDeductMarketing.marketingId&&!useProductExchangeMode}}">
+        <view class="flex-sb c-777">
+            <view class="flex-a-center">
+                <text>{{pointDeductMarketing.marketingName}}</text>
+                <text class="iconfont icon-doubt" data-rule-id="showPointDeductRule" ontap="toOpenRule"></text>
+            </view>
+            <text bindtap="pointDeduceTap" class="iconfont {{pointDeductMarketing.isPointDed?'icon-checked c-theme':'icon-unchecked c-aaa'}} f22 flex-center" wx:if="{{pointDeductMarketing.available}}"></text>
+        </view>
+        <view class="flex-sb">
+            <image lazyLoad class="shrink mb2 mr2" src="{{__static__}}/main/warning.png" style="width:30rpx;height:30rpx;position:absolute"></image>
+            <text class="c-warn f11 pl17">{{pointDeductMarketing.discountDesc}}</text>
+            <text class="c-theme-light f14" wx:if="{{pointDeductMarketing.isPointDed}}">-¥{{pointDeductMarketing.pointDed/100}}</text>
+        </view>
+    </view>
+    <view class="flex-sb pt12" wx:if="{{cartData.marketingDiscount&&cartData.marketingId}}">
+        <text class="f13 c-777">优惠活动</text>
+        <view class="c-theme-light">
+            <text class="activityName f11" wx:if="{{cartData.marketingName}}">{{cartData.marketingName}}</text>
+            <text class="activityDiscount f14">-¥{{cartData.marketingDiscount/100||0}}</text>
+        </view>
+    </view>
+    <view class="flex-sb pt12 f13 c-777">
+        <text>优惠券</text>
+        <text bindtap="toRegister" class="c-theme" wx:if="{{!userInfo.mobilePhone}}">{{regGuidanceSettingVo.settlementNoCouponsTip}}</text>
+        <text bindtap="updDiscounts" class="c-theme" wx:elif="{{!totalCouponsNum&&cartData.selectedCouponCategory==null}}">查看详情</text>
+        <view bindtap="updDiscounts" class="flex-sb pl16" wx:else>
+            <text class="text-tag" wx:if="{{exchangeMarketingCouponName}}">{{exchangeMarketingCouponName}}</text>
+            <block wx:elif="{{cartData.couponDiscount}}">
+                <text class="text-tag" wx:if="{{cartData.couponName}}">{{cartData.couponName}}</text>
+                <text class="f14 c-theme-light">- ¥{{cartData.couponDiscount/100||0}}</text>
+            </block>
+            <text class="flex-center theme-bg" wx:else>{{totalCouponsNum}}张可用</text>
+            <text class="iconfont icon-arrow_right fb" wx:if="{{!useProductExchangeMode}}"></text>
+        </view>
+    </view>
+    <view class="tips f11 c-warn flex" wx:if="{{cartData.discountDesc}}">
+        <image lazyLoad class="shrink mb2 mr2" src="{{__static__}}/main/warning.png" style="width:30rpx;height:30rpx;"></image>
+        <text>{{cartData.discountDesc}}</text>
+    </view>
+    <view class="flex-sb pt12 f13 c-777" wx:if="{{luckyCutDiscount}}">
+        <view>
+            <text>拼单随机立减</text>
+            <text catchtap="toOpenRule" class="iconfont icon-doubt" data-rule-id="showJointDiscountRule"></text>
+        </view>
+        <text wx:if="{{luckyCutDiscount.discountPrice==0}}">暂无可享</text>
+        <text class="f14 c-theme-light" wx:else>- ¥{{luckyCutDiscount.discountPrice/100||0}}</text>
+    </view>
+    <view class="border-bottom-dashed"></view>
+    <view class="pt12" style="text-align:right">
+        <text class="f13 c-777">共 {{cartData.productAmount||''}} 件，合计</text>
+        <text class="f16 fb">
+            <text class="f14">￥</text>{{cartData.total/100||0}}</text>
+    </view>
+    <view bindtap="toRegister" class="coin-number f11 mt8 c-warn" wx:if="{{!userInfo.mobilePhone}}">{{regGuidanceSettingVo.settlementOrderPointTip}}</view>
+    <view class="coin-number f11 mt8 c-aaa" wx:elif="{{orderPoint&&growth}}">
+        <text>本单预计可得（以实际到账为准）</text>
+        <text class="c-warn">{{orderPoint}}雪王币</text>
+        <image lazyLoad class="snow_icon" mode="widthFix" src="{{__static__}}/order_detail/snow_icon.png"></image>
+        <text class="c-warn">+{{growth}}甜蜜值</text>
+        <image lazyLoad bindtap="toggleCoinRule" class="rule_icon" mode="aspectFill" src="{{__static__}}/order_detail/rule_icon.png"></image>
+    </view>
+</view>
+<view bindtap="selectGiftCard" class="card flex-a-center f12" wx:if="{{cartData.orderSource!==1&&cartData.total&&cartData.orderType==1&&giftCardDeduct.useOpen}}">
+    <image src="{{__static__}}/wallet/gift_card_icon.png" style="width:40rpx;height:40rpx"></image>
+    <text class="ml8 f13" style="flex:1">礼品卡</text>
+    <text class="c-aaa" wx:if="{{!giftCardDeduct.supportGiftCard}}">门店暂不支持礼品卡支付</text>
+    <block wx:else>
+        <text class="c-aaa" wx:if="{{giftCardDeduct.giftCardDeductTotalPrice}}">已选择礼品卡抵扣<text class="ml4 f14 c-theme-light">- ¥{{giftCardDeduct.giftCardDeductTotalPrice/100}}</text>
+        </text>
+        <text class="c-theme f13" wx:elif="{{giftCardDeduct.totalNum}}">{{giftCardDeduct.totalNum}}张可用</text>
+        <text class="c-theme f13" wx:else>点击查看</text>
+        <text class="iconfont icon-arrow_right c-aaa f13"></text>
+    </block>
+</view>
+<mx-mzhd bind:selectDiscount="selectDiscount" bind:selectMzhd="selectMzhd" data="{{mzhdData}}" type="cart" wx:if="{{!useProductExchangeMode}}"></mx-mzhd>
+<pay-gift-card customClass="card" payGiftData="{{payGiftData}}" wx:if="{{payGiftData.open}}"></pay-gift-card>
+<view class="card add-more" wx:if="{{isShowAddMore&&!useProductExchangeMode}}">
+    <image lazyLoad class="add-more-bg" src="{{__static__}}/order_detail/add-more-bg.png"></image>
+    <image lazyLoad class="add-more-title" src="{{__static__}}/order_detail/add-more-title.png"></image>
+    <scroll-view scrollX class="add-more-cards">
+        <view class="pl12 pr12" style="width:{{292*addMoreMarketingData.products.length-20}}rpx;">
+            <view class="item-goods-card" wx:for="{{addMoreMarketingData.products}}" wx:for-item="goods" wx:key="cartViewId">
+                <image lazyLoad class="goods-img" src="{{goods.productLogoOriginal}}"></image>
+                <view class="goods-title mx-ellipsis">{{goods.productNameShow}}</view>
+                <view class="goods-price">
+                    <text class="fb5 f14 mr2">¥</text>
+                    <text class="fb5 f14">{{goods.splitSprice[0]}}</text>
+                    <text class="fb5 f12" wx:if="{{goods.splitSprice[1]}}">.{{goods.splitSprice[1]}}</text>
+                    <text class="disabled-price f12" wx:if="{{goods.originPrice&&goods.originPrice!==goods.productPrice}}">¥ {{goods.originPrice/100}}</text>
+                </view>
+                <view class="number-buttons flex-sb" style="width:{{goods.addNum?'160rpx':'auto'}};">
+                    <block wx:if="{{goods.addNum}}">
+                        <text catchtap="removeGoods" class="icon-btn iconfont icon-remove c-theme" data-index="{{index}}" data-is-submit="{{true}}"></text>
+                        <text class="f14">{{goods.addNum}}</text>
+                    </block>
+                    <text catchtap="addGoodsAtCartPage" class="icon-btn iconfont icon-add c-theme" data-index="{{index}}" data-is-submit="{{true}}" data-name="{{goods.productNameShow}}"></text>
+                </view>
+            </view>
+        </view>
+    </scroll-view>
+</view>
+<mx-tencent-flower bind:forceselect="onForceSelect" bind:select="selectFlower" id="flowerTencent" pageType="cart" shopCode="{{selectedStore.shopCode}}" wx:if="{{cartData.orderType==1&&packBagInfo.enabled}}"></mx-tencent-flower>
+<view class="card">
+    <view bindtap="changeTableWarePopup" class="p-name flex-sb" wx:if="{{cartData.orderType==2}}">
+        <text>餐具数量</text>
+        <view class="right-text flex align-center flex-end">
+            <image lazyLoad src="{{tableWareList[tableware].image}}" style="width:40rpx;height:40rpx;" wx:if="{{tableWareList[tableware].image}}"></image>
+            <text>{{tableWareList[tableware].text}}</text>
+            <text class="iconfont icon-arrow_right f12 fb"></text>
+        </view>
+    </view>
+    <view bindtap="goRemark" class="p-name flex-sb">
+        <text>备注</text>
+        <view class="right-text {{remarkStr.length>0?'c-333':'c-999'}}">
+            <text class="text-ellipsis">{{remarkStr||'特殊需求请与门店提前沟通'}}</text>
+            <text class="iconfont icon-arrow_right f12 fb"></text>
+        </view>
+    </view>
+</view>
+<view class="bottom mx-hairline--top safe-bottom f12">
+    <view bind:tap="toPackDetail" class="flex-sb f12 pl16 pr16 b-primary-1" style="height:80rpx;" wx:if="{{showPackGuide&&!useProductExchangeMode}}">
+        <text class="c-333">{{options.productPrice/100}}元购买门店券包，最多节省<text class="c-theme-light">{{options.maxDiscount/100}}</text>元</text>
+        <text class="c-theme-light iconfont icon-arrow_right">查看详情</text>
+    </view>
+    <view class="discount-tip" wx:if="{{cartData.cartTip}}">
+        <rich-text nodes="{{cartTipText}}"></rich-text>
+    </view>
+    <view class="flex-sb" style="padding:20rpx 32rpx;">
+        <view>实付：<text class="fb">￥<text class="f18">{{cartData.price/100||0}}</text>
+            </text>
+        </view>
+        <button disabled style="min-width:240rpx" wx:if="{{cartData.orderType==2&&cartData.minDeliveryType==3&&!currentAddress.consigneeAddressId}}">请选择地址</button>
+        <button disabled style="min-width:240rpx" wx:elif="{{cartData.orderType==2&&(cartData.minDeliveryType==1||cartData.minDeliveryType==3)&&!cartData.canBeDelivered}}">差¥{{(cartData.minDeliveryAmount-cartData.originPriceNoDeliveryFee)/100}}起送</button>
+        <button disabled style="min-width:240rpx" wx:elif="{{cartData.orderType==2&&cartData.minDeliveryType==2&&!cartData.canBeDelivered}}">差{{cartData.minDeliveryNum-cartData.productAmount}}件起送</button>
+        <button disabled style="min-width:240rpx" wx:elif="{{cartData.orderType==2&&cartData.singleNotDelivery}}">单点不配送</button>
+        <button bindtap="confirmPay" style="min-width:240rpx" wx:else>确认支付</button>
+    </view>
+</view>
+<mx-popup show="{{showClosedPopup}}">
+    <mx-tem-store-error bind:close="closePopup" operationTime="{{selectedStore.operationTime}}" showClosed="{{showClosedPopup}}"></mx-tem-store-error>
+</mx-popup>
+<mx-popup bind:close="hideTakeOutInfo" show="{{isShowTakeOutInfo}}">
+    <mx-tem-defee-info bind:close="hideTakeOutInfo" data="{{cartData}}"></mx-tem-defee-info>
+</mx-popup>
+<mx-picker bind:change="changeTableWareValue" bind:close="changeTableWarePopup" checked="{{tableware}}" data="{{tableWareList}}" show="{{isShowtableWarePopup}}">
+    <view class="c-333 fb5 f16" slot="header">是否需要餐具</view>
+    <view class="c-777 f12 mt6" slot="header">应管理条例，商家不得主动提供一次性餐具</view>
+</mx-picker>
+<mx-popup customStyle="background-color: transparent;" show="{{isShowPopupAddMore}}" wx:if="{{!cleanVersionFlag&&isShowPopupAddMore&&!useProductExchangeMode}}">
+    <swiper indicatorDots class="goods-cards-swiper" current="{{currentIndexPlus}}" indicatorActiveColor="#FFFFFF" indicatorColor="rgba(255, 255, 255, .4)" nextMargin="81rpx" previousMargin="81rpx">
+        <swiper-item class="goods-swiper-item" wx:for="{{addMoreMarketingData.products}}" wx:for-index="goodsIndex" wx:for-item="goods" wx:key="cartViewId">
+            <image lazyLoad class="plus-discount-img" mode="aspectFill" src="{{__static__}}/order_detail/plus_discount.png"></image>
+            <image lazyLoad bindtap="closeAddMorePopup" class="close-button" mode="aspectFill" src="{{__static__}}/main/close.png"></image>
+            <view class="goods-card {{goods.productAttrs.length?'':'big-goods-card'}}">
+                <image lazyLoad class="goods-img" src="{{goods.productLogoOriginal}}"></image>
+                <view class="goods-title fb mx-ellipsis">{{goods.productNameShow}}</view>
+                <block wx:if="{{goods.productAttrs.length}}">
+                    <block wx:for="{{goods.productAttrs}}" wx:key="attributeId">
+                        <view class="select-item-title">{{item.attributeName}}</view>
+                        <view class="goods-attrs">
+                            <view bindtap="selectAttr" class="select-item {{goods.disabledIdsObj[spec.attributeId]?'disabled':''}} {{attr_idx===item.selectAttr?'active':''}}" data-indexs="{{[goodsIndex,index,attr_idx]}}" data-mutex-attrs="{{spec.mutexAttrs}}" wx:for="{{item.productAttrs}}" wx:for-index="attr_idx" wx:for-item="spec" wx:key="attributeId">
+                                <text>{{spec.attributeName}}</text>
+                                <text style="opacity:0;position:absolute;top:0;width:100%;height:100%;" wx:if="{{goods.disabledIdsObj[spec.attributeId]}}">{{goods.disabledIdsObj[spec.attributeId]}}</text>
+                            </view>
+                        </view>
+                    </block>
+                </block>
+            </view>
+            <view class="plus-cart-box flex-sb mx-hairline--top">
+                <view class="goods-price">
+                    <text class="fb5 f16 mr2">¥</text>
+                    <text class="fb5 f18">{{goods.splitSprice[0]}}</text>
+                    <text class="fb5 f12" wx:if="{{goods.splitSprice[1]}}">.{{goods.splitSprice[1]}}</text>
+                    <text class="disabled-price f12" wx:if="{{goods.originPrice&&goods.originPrice!==goods.productPrice}}">¥ {{goods.originPrice/100}}</text>
+                </view>
+                <view class="number-buttons flex-sb" style="width:{{goods.addNum?'160rpx':'auto'}};">
+                    <block wx:if="{{goods.addNum}}">
+                        <text catchtap="addGoodsAtPopUp" class="icon-btn iconfont icon-remove c-theme" data-index="{{goodsIndex}}" data-product-amount="{{-1}}"></text>
+                        <text class="f14">{{goods.addNum}}</text>
+                    </block>
+                    <text catchtap="addGoodsAtPopUp" class="icon-btn iconfont icon-add c-theme" data-index="{{goodsIndex}}" data-product-amount="{{1}}"></text>
+                </view>
+            </view>
+        </swiper-item>
+    </swiper>
+    <view class="add-more-tips mx-multi-ellipsis--l2" wx:if="{{warningText}}">已选：{{warningText}}</view>
+    <button bindtap="updateAddMoreToCart" class="add-more-confirm" disabled="{{!warningText}}">确认加购</button>
+</mx-popup>
+<mx-dialog bindcancel="cancelSettle" confirmText="继续结算" content="已选购商品存在异常，是否继续结算" id="confirmDialog" title="提示"></mx-dialog>
+<mx-dialog bindcancel="selectStore" bindconfirm="onBeforePay" cancelText="更换门店" closeOnClickOverlay="true" confirmText="确认并支付" id="confirmStore" useCustomBody="true">
+    <view class="c-333 pt20 pb16 mx-hairline--bottom " slot="content">
+        <view class="f16 fb5 pb12">请确认您的下单门店<text decode class="c-theme">&nbsp;到店取餐</text>
+        </view>
+        <view class="confirm-box">
+            <image lazyLoad class="shop-logo" mode="aspectFit" src="{{selectedStore.shopLogo}}" wx:if="{{selectedStore.shopLogo}}"></image>
+            <view class="b-theme-light f12 confirm-store-body {{selectedStore.shopLogo?'':'radius24'}}">
+                <image lazyLoad class="position-icon" mode="aspectFill" src="{{__static__}}/order_detail/position.png"></image>
+                <view class="f14 fb5 mb8 l20" style="word-break:break-word;position:relative;">{{selectedStore.shopName}}</view>
+                <view class="distance f11 b-theme mb6 c-fff">直线距离{{selectedStore.distance||'--'}}</view>
+                <view class="l20 c-777" style="position:relative;">{{selectedStore.shopAddress}}</view>
+            </view>
+        </view>
+    </view>
+</mx-dialog>
+<mx-popup customStyle="overflow: visible" show="{{showCoinRule}}">
+    <view bindtap="toggleCoinRule" class="coin-rule-box f12 l19">
+        <text class="iconfont icon-close_circle f24"></text>
+        <view class="fb5 mb4">下单返雪王币规则</view>
+        <view class="">①首单用户每支付1元，返20雪王币；</view>
+        <view class="">②除首单外，用户每支付1 元可得10雪王币；</view>
+        <view class="mb12">③完成订单每日上限可得500雪王币，每月上限可得3000雪王币</view>
+        <view class="fb5 mb4">下单可累计甜蜜值，达到对应等级可享受相应会员权益</view>
+        <view>【0-30】微雪花会员</view>
+        <view>【31-100】小雪球会员</view>
+        <view>【101-1000】大雪球会员</view>
+        <text decode="{{true}}">&nbsp;&nbsp;1000以上为冰雪王会员</text>
+    </view>
+</mx-popup>
+<mx-popup show="{{isShowGoodsError}}">
+    <view class="confirm-dialog f14">
+        <view class="mx-hairline--bottom" style="padding:40rpx 30rpx;line-height:40rpx;">{{goodsErrorMsg}}</view>
+        <view bindtap="goBack" class="confirm-btn c-theme" style="line-height:88rpx;">确定</view>
+    </view>
+</mx-popup>
+<mx-popup customStyle="overflow: visible" show="{{showPointDeductRule||showJointDiscountRule}}">
+    <view bindtap="toCloseRule" class="coin-rule-box l19">
+        <text class="iconfont icon-close_circle f24"></text>
+        <block wx:if="{{ruleTypeName==='showPointDeductRule'}}">
+            <view class="fb5 mb4 f14">{{coinName}}抵现规则</view>
+            <view class="f12 rule-content l17">{{pointDeductMarketing.ruleDesc}}</view>
+        </block>
+        <block wx:if="{{ruleTypeName==='showJointDiscountRule'}}">
+            <view class="fb5 mb4 f14">拼单随机减规则</view>
+            <view class="f12 rule-content l17">{{luckyCutDiscount.ruleDesc}}</view>
+        </block>
+    </view>
+</mx-popup>

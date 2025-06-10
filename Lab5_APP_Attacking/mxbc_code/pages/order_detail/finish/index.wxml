@@ -1,0 +1,314 @@
+<scroll-view scrollY bindscroll="onScroll" class="finish-container" enablePassive="{{true}}" showScrollbar="{{false}}">
+    <view class="page_bar_container__copy mx-hairline--bottom {{showNavCopy?'show-nav':''}}" style="height:{{statusBarHeight+42}}px;">
+        <view class="page_bar flex-sb" style="padding-top:{{statusBarHeight+10}}px;color:#333;">
+            <text bindtap="pageBack" class="iconfont icon-home f20 fb" wx:if="{{fromApp}}"></text>
+            <text bindtap="pageBack" class="iconfont icon-arrow_left f20 fb" wx:else></text>
+            <text class="f17 fb5">{{orderStatusText}}</text>
+            <text style="width:20px;height:20px;"></text>
+        </view>
+        <image lazyLoad bindtap="toKeFu" class="contactUs" src="{{__static__}}/order_detail/contact_us_copy.png" style="top:{{statusBarHeight+8}}px;right:{{menuButtonWidth+17}}px"></image>
+    </view>
+    <view class="top">
+        <image lazyLoad class="header-bg" src="{{__static__}}/order_detail/bg.png"></image>
+        <view class="page_bar_container" style="z-index:10">
+            <view style="height:{{statusBarHeight+42}}px;z-index:10;"></view>
+            <view class="page_bar" style="padding-top:{{statusBarHeight+10}}px">
+                <text bindtap="pageBack" class="iconfont icon-home f20 fb" wx:if="{{fromApp}}"></text>
+                <text bindtap="pageBack" class="iconfont icon-arrow_left f20 fb" wx:else></text>
+            </view>
+        </view>
+        <image lazyLoad bindtap="toKeFu" class="contactUs" src="{{__static__}}/order_detail/contact_us.png" style="top:{{statusBarHeight+6}}px;right:{{menuButtonWidth+17}}px"></image>
+        <block wx:if="{{orderDetail.isRefund==0}}">
+            <view bindtap="toKeFu" class="order-title" wx:if="{{orderDetail.orderStatus==70}}">订单已完成 取餐码:{{orderDetail.takeNo}}<view class="order-title-sub">{{orderFinishText}}</view>
+            </view>
+            <view class="order-title" wx:if="{{orderDetail.orderStatus==80}}">订单已取消</view>
+        </block>
+        <block wx:if="{{orderDetail.isRefund==1}}">
+            <view class="order-title" wx:if="{{orderDetail.refundStatus==10}}">退单申请中<view class="order-title-sub" wx:if="{{orderDetail.orderType!=3}}">⻔店将于当天24点前审核完成，请耐⼼等待或直接致电⻔店协商退款</view>
+            </view>
+            <view class="order-title" wx:if="{{orderDetail.refundStatus==20}}">已同意退款<view class="order-title-sub" wx:if="{{orderDetail.orderType!=3}}">正在申请金额原路返回</view>
+            </view>
+            <view class="order-title" wx:if="{{orderDetail.refundStatus==30}}">已退单<view class="order-title-sub">订单金额已原路返回，请及时查看</view>
+            </view>
+            <view class="order-title" wx:if="{{orderDetail.refundStatus==31}}">退单失败 取餐码 {{orderDetail.takeNo||''}}<view class="order-title-sub" wx:if="{{orderDetail.orderType!=3}}">{{orderDetail.refundFailType==1?'⻔店拒绝退款，':'退款失败，'}}如有疑问请联系⻔店沟通或及时到店取餐</view>
+            </view>
+        </block>
+        <image lazyLoad class="img-order-status" src="{{__static__}}/order_detail/order_cancel.png" wx:if="{{orderDetail.isRefund==0&&orderDetail.orderStatus==80||orderDetail.isRefund==1&&orderDetail.refundStatus==31}}"></image>
+        <image lazyLoad class="img-order-status" src="{{__static__}}/order_detail/order_pay.png" wx:if="{{orderDetail.isRefund==0&&orderDetail.orderStatus==10||orderDetail.isRefund==1&&orderDetail.refundStatus<=20}}"></image>
+        <image lazyLoad class="img-order-status" src="{{__static__}}/order_detail/order_finish.png" wx:if="{{orderDetail.isRefund==0&&orderDetail.orderStatus==70||orderDetail.isRefund==1&&orderDetail.refundStatus==30}}"></image>
+    </view>
+    <view class="bottom pt12 safe-bottom">
+        <view class="card order_total" wx:if="{{orderSource===1&&orderDetail.orderStatus!==80}}">
+            <view class="mx-ellipsis">账单总计<text class="fb5" style="font-size:36rpx;">￥{{orderDetail.price/100||0}}</text>
+            </view>
+            <button class="share_btn" openType="share" size="mini">
+                <text style="vertical-align:middle;color:#777777;">分享账单</text>
+                <image lazyLoad class="share_img" src="{{__static__}}/main/order_share.png"></image>
+            </button>
+        </view>
+        <mx-shop-icc-code shopId="{{orderDetail.shopId}}" wx:if="{{orderDetail.shopId&&orderDetail.orderStatus!=80}}"></mx-shop-icc-code>
+        <pay-gift-card customClass="card mb11" payGiftData="{{payGiftData}}" wx:if="{{payGiftData.open}}"></pay-gift-card>
+        <view class="card mb11">
+            <view class="coin-exchange flex-sb" wx:if="{{orderPoint&&orderDetail.orderStatus==70&&orderDetail.refundStatus!==30}}">
+                <view class="flex-center">
+                    <image lazyLoad class="coin-icon" mode="aspectFill" src="{{__static__}}/activity/coin_img.png"></image>
+                    <text class="">{{coinGainTip.pointTextAfterOrder}}<text class="coin-num">{{orderPoint}}</text>雪王币</text>
+                </view>
+                <text bindtap="advertiseTap" class="to-exchange iconfont icon-arrow_right" data-area="积分兑换入口" data-event="coin_exchange_entrance" data-url="{{coinGainTip.pointExchangeLink}}">{{coinGainTip.pointEntranceText}}</text>
+            </view>
+            <view class="flex-sb mb12" style="position:relative;">
+                <view class="shop-address">
+                    <view catchtap="toMenuPage" class="flex title f16 fb5 mb4" data-shopid="{{orderDetail.shopId}}">
+                        <text class="mx-ellipsis">{{orderDetail.shopName}}</text>
+                        <text class="iconfont icon-arrow_right fb f13 shrink ml4" wx:if="{{!fromApp&&orderDetail.shopName}}"></text>
+                    </view>
+                    <text class="f12 c-777 mx-multi-ellipsis--l2">
+                        <text>直线距离{{shop.distance||'--'}}</text>
+                        <text decode class="c-aaa">&nbsp;|&nbsp;</text>
+                        <text>{{shop.shopAddress}}</text>
+                    </text>
+                </view>
+                <view class="flex-sb">
+                    <image lazyLoad catchtap="goNavigate" class="shop_item_contact_icon" data-shopid="{{shop.shopId}}" src="{{__static__}}/main/icon_navigate.png"></image>
+                    <image lazyLoad catchtap="clickContactShop" class="shop_item_contact_icon" data-contact-phone="{{shop.contactPhone}}" data-contact-phone2="{{shop.contactPhone2}}" src="{{__static__}}/main/icon_phone.png"></image>
+                </view>
+            </view>
+            <view class="skeleton" wx:if="{{isLoading}}">
+                <view class="mt12 flex-sb">
+                    <text class="b-eee skeleton-title"></text>
+                    <text class="b-eee skeleton-price"></text>
+                </view>
+                <view class="flex-sb">
+                    <text class="b-eee skeleton-sub-title"></text>
+                    <text class="b-eee skeleton-amount"></text>
+                </view>
+                <view class=" mt12 flex-sb">
+                    <text class="b-eee skeleton-title"></text>
+                    <text class="b-eee skeleton-price"></text>
+                </view>
+                <view class="flex-sb">
+                    <text class="b-eee skeleton-sub-title"></text>
+                    <text class="b-eee skeleton-amount"></text>
+                </view>
+            </view>
+            <block wx:else>
+                <block wx:if="{{orderSource!==1}}">
+                    <view class="border-bottom-dashed"></view>
+                    <product-item customClass="pt12" product="{{product}}" wx:if="{{index<2||index>=2&&isShowDetail}}" wx:for="{{orderDetail.orderDetailList}}" wx:for-item="product" wx:key="index"></product-item>
+                    <view bindtap="toggle" class="c-aaa f12 mt12" style="text-align:center;" wx:if="{{orderDetail.orderDetailList.length>2}}">
+                        <text class="iconfont {{isShowDetail?'icon-arrow_up':'icon-arrow_down'}}">{{isShowDetail?'收起更多 ':'展开全部 '}}</text>
+                    </view>
+                    <view class="border-bottom-dashed"></view>
+                </block>
+                <block wx:if="{{orderSource===1}}">
+                    <product-item-user userProduct="{{product}}" wx:if="{{index<2||index>=2&&isShowDetail}}" wx:for="{{partitions}}" wx:for-item="product" wx:key="index">
+                        <view slot="header_other" wx:if="{{product.isMine===1}}">
+                            <text class="header_tag">我</text>
+                        </view>
+                        <view slot="footer">
+                            <block wx:if="{{orderDetail.orderType==2}}">
+                                <view class="product_footer">
+                                    <view class="product_label_l">配送费</view>
+                                    <view class="product_label_r">¥ {{product.shareDeliveryFee/100||0}}</view>
+                                </view>
+                                <view class="product_footer">
+                                    <view class="product_label_l">打包费</view>
+                                    <view class="product_label_r">¥ {{product.mealFee/100||0}}</view>
+                                </view>
+                            </block>
+                            <view class="product_footer">
+                                <view class="product_label_l">分摊优惠</view>
+                                <view class="product_label_r" style="color:#FF5254;">-¥ {{product.shareDiscountPrice/100||0}}</view>
+                            </view>
+                            <view class="product_footer" style="margin:0;">
+                                <view></view>
+                                <view style="display:flex;align-items:center;line-height:20px;">
+                                    <text style="font-size:24rpx;color:#777777;">小计</text>
+                                    <text catchtap="openOrderRule" class="iconfont icon-doubt"></text>
+                                    <text class="fb5">¥ {{product.price/100||0}}</text>
+                                </view>
+                            </view>
+                        </view>
+                    </product-item-user>
+                    <view bindtap="toggle" class="c-aaa f12 mt12" style="text-align:center;" wx:if="{{partitions.length>2}}">
+                        <text class="iconfont {{isShowDetail?'icon-arrow_up':'icon-arrow_down'}}">{{isShowDetail?'收起更多 ':'展开全部 '}}</text>
+                    </view>
+                    <view class="border-bottom-dashed" style="margin:0;"></view>
+                </block>
+            </block>
+            <view class="flex-sb pt12" wx:if="{{orderDetail.orderType==2}}">
+                <view bindtap="showTakeOutInfo" class="f13 c-777 flex-a-center">配送费<text class="iconfont icon-doubt"></text>
+                </view>
+                <view class="f14">
+                    <text class="disabled-price mr5" wx:if="{{orderDetail.deliveryFeeMerchant>orderDetail.deliveryFee}}">¥{{orderDetail.deliveryFeeMerchant/100}}</text>
+                    <text>¥{{orderDetail.deliveryFee/100||0}}</text>
+                </view>
+            </view>
+            <view class="flex-sb pt12" wx:if="{{orderDetail.orderType==2}}">
+                <text class="f13 c-777">打包费</text>
+                <text class="c-333 f14">¥{{orderDetail.mealFee/100||0}}</text>
+            </view>
+            <view class="border-bottom-dashed" wx:if="{{orderDetail.orderType==2}}"></view>
+            <view class="f13 pt12" wx:if="{{orderDetail.pointDed}}">
+                <view class="flex-sb c-777">
+                    <view>
+                        <text>{{coinName}}抵现活动</text>
+                    </view>
+                    <view class="c-theme-light">-¥{{orderDetail.pointDed/100||0}}</view>
+                </view>
+            </view>
+            <view class="flex-sb pt12" wx:if="{{orderDetail.marketingDiscount&&orderDetail.marketingId}}">
+                <text class="f13 c-777">优惠活动</text>
+                <view class="c-theme-light">
+                    <text class="activityName" wx:if="{{orderDetail.marketingName}}">{{orderDetail.marketingName}}</text>
+                    <text class="f14 ml8">-¥{{orderDetail.marketingDiscount/100||0}}</text>
+                </view>
+            </view>
+            <view bindtap="showCouponDetail" class="flex-sb pt12 c-777 f13" wx:if="{{orderDetail.couponDiscount}}">
+                <text>优惠券</text>
+                <view class="f14">
+                    <text class="c-theme-light mr4">-¥{{orderDetail.couponDiscount/100||0}}</text>
+                    <text class="c-theme-light f13"> 详情</text>
+                    <text class="iconfont icon-arrow_right"></text>
+                </view>
+            </view>
+            <view class="flex-sb pt12 f13 c-777" wx:if="{{orderDetail.luckyCutDiscount}}">
+                <text>拼单随机立减</text>
+                <text wx:if="{{orderDetail.luckyCutDiscount.discountPrice==0}}">暂无可享</text>
+                <text class="f14 c-theme-light" wx:else>- ¥{{orderDetail.luckyCutDiscount.discountPrice/100||0}}</text>
+            </view>
+            <view class="border-bottom-dashed" wx:if="{{orderDetail.couponDiscount||orderDetail.marketingDiscount&&orderDetail.marketingId||orderDetail.pointDed}}"></view>
+            <view class="sum">
+                <text class="f13 c-333">共{{orderDetail.productCount||''}}件，合计</text>
+                <text class="f16 fb6 c-333">￥{{orderDetail.price/100||0}}</text>
+                <block wx:if="{{(orderDetail.isRefund==0&&orderDetail.orderStatus==70||orderDetail.isRefund==1&&orderDetail.refundStatus==10||orderDetail.isRefund==1&&orderDetail.refundStatus==31)&&orderPoint}}">
+                    <block wx:if="{{orderDetail.orderType!=3}}">
+                        <view class="coin-number f11 mt8 c-aaa" wx:if="{{orderPoint&&growth}}">
+                            <text class="c-warn">奖励{{orderPoint}}雪王币</text>
+                            <image lazyLoad class="snow_icon" mode="widthFix" src="{{__static__}}/order_detail/snow_icon.png"></image>
+                            <text class="c-warn">+{{growth}}甜蜜值</text>
+                            <text>(1分钟后发放奖励)</text>
+                        </view>
+                    </block>
+                    <view class="f11 c-aaa mt6 l16" wx:else>
+                        <text class="c-warn">奖励{{orderPoint}}{{coinName}}</text>（完成订单后奖励次日到账）</view>
+                </block>
+            </view>
+        </view>
+        <gift-card-detail customClass="card mb11" giftCardData="{{orderDetail.giftCardTradeVo}}" wx:if="{{orderDetail.giftCardTradeVo&&orderDetail.giftCardTradeVo.giftCardDeductTotalPrice}}">
+            <view class="flex-a-center mt20">
+                <image src="{{__static__}}/wallet/{{orderDetail.payType==1?'wechat':'alipay'}}.png" style="width:40rpx;height:40rpx"></image>
+                <text class="f13 ml8" style="flex:1">{{orderDetail.payType==1?'微信':'支付宝'}}支付</text>
+                <text class="fb5">￥{{orderDetail.realPrice/100||0}}</text>
+            </view>
+        </gift-card-detail>
+        <view class="card mb12" wx:if="{{orderDetail.isRefund==1&&orderDetail.refundStatus!=31&&orderDetail.orderType==2&&orderDetail.deliveryType==2}}">
+            <view class="f13 fb c-333 mb12 flex-sb">
+                <text>配送违约金</text>
+                <text class="c-theme">-¥ {{orderDetail.cancelFee/100}}</text>
+            </view>
+            <view class="f13 fb c-333 flex-sb">
+                <text>实际退款金额</text>
+                <text class="">¥ {{orderDetail.refundPay/100}}</text>
+            </view>
+        </view>
+        <mx-tencent-flower noBag="{{orderDetail.orderExtVo&&!!orderDetail.orderExtVo.noBag}}" orderCode="{{orderDetail.orderCode}}" pageType="detail" wx:if="{{orderDetail.refundStatus!==30}}"></mx-tencent-flower>
+        <mx-ad adData="{{swiperList}}" adEvent="detail_banner" adType="banner" customClass="order-ad" wx:if="{{swiperList.length>0}}"></mx-ad>
+        <view class="card mb11" wx:if="{{orderDetail.orderType==2}}">
+            <view class="f13 c-333 flex align-start mb11">
+                <text class="c-777 left-width">配送地址</text>
+                <text>{{orderDetail.consigneeAddress?orderDetail.consigneeAddress:''}}{{orderDetail.consigneeAddressDetail?orderDetail.consigneeAddressDetail:''}}</text>
+            </view>
+            <view class="f13 c-333 flex align-start mb11">
+                <text class="c-777 left-width">联系人</text>
+                <text>{{orderDetail.consignee?orderDetail.consignee:''}} {{orderDetail.consigneePhone?orderDetail.consigneePhone:''}}</text>
+            </view>
+        </view>
+        <view class="card mb11">
+            <view class="f13 c-333 flex align-start mb11">
+                <text class="c-777 left-width">下单时间</text>
+                <text>{{orderDetail.orderTime}}</text>
+            </view>
+            <view class="f13 c-333 flex align-start mb11">
+                <text class="c-777 left-width">订单编号</text>{{orderDetail.orderCode}}<text bindtap="copy" class="copy f11">复制</text>
+            </view>
+            <view class="f13 c-333 flex align-start mb11" wx:if="{{orderDetail.takeNo&&orderDetail.refundStatus!==31}}">
+                <text class="c-777 left-width">取餐号码</text>
+                <text>{{orderDetail.takeNo}}</text>
+            </view>
+            <view class="f13 c-333 flex align-start mb11" wx:if="{{orderDetail.orderType==2}}">
+                <text class="c-777 left-width">餐具数量</text>
+                <text>{{orderDetail.tableware?'无需餐具':'按餐量提供'}}</text>
+            </view>
+            <view class="f13 c-333 flex align-start mb11" wx:if="{{orderDetail.orderExtVo&&orderDetail.orderExtVo.noBag!==null}}">
+                <text class="c-777 left-width">是否打包</text>
+                <text>{{orderDetail.orderExtVo.noBag?'不要打包袋':'要打包袋'}}</text>
+            </view>
+            <view class="f13 c-333 flex align-start mb11" wx:if="{{orderDetail.orderType!=3}}">
+                <text class="c-777 left-width">备注</text>
+                <text>{{orderDetail.remark?orderDetail.remark:'无'}}</text>
+            </view>
+            <view class="f13 c-333 flex align-start mb11">
+                <text class="c-777 left-width">门店编码</text>
+                <text>{{orderDetail.shopCode}}</text>
+            </view>
+            <view class="f13 c-333 flex align-start mb11" wx:if="{{orderDetail.orderType!=3&&orderDetail.isRefund==1}}">
+                <text class="c-777 left-width">退单原因</text>
+                <text>{{refundReasonStr?refundReasonStr:'无'}}</text>
+            </view>
+            <block wx:if="{{orderDetail.orderType==3&&orderDetail.isRefund==0&&orderDetail.orderStatus==70&&inThisDay}}">
+                <view class="border-bottom-dashed"></view>
+                <view bindtap="openRefundOrderDialog" class="refund c-danger">申请退单</view>
+            </block>
+        </view>
+        <block wx:if="{{orderDetail.orderRefundRecordVoList&&orderDetail.orderRefundRecordVoList.length}}">
+            <view class="card mb11" wx:for="{{orderDetail.orderRefundRecordVoList}}" wx:key="refundId">
+                <view class="f13 c-333 flex align-start mb11">
+                    <text class="c-777 left-width">退款金额</text>
+                    <text>{{item.refundPay/100}}</text>
+                </view>
+                <view class="f13 c-333 flex align-start mb11">
+                    <text class="c-777 left-width">退款方式</text>
+                    <text>原路返回</text>
+                </view>
+                <view class="f13 c-333 flex align-start mb11">
+                    <text class="c-777 left-width">退款状态</text>
+                    <text>退款成功</text>
+                </view>
+                <view class="f13 c-333 flex align-start mb11">
+                    <text class="c-777 left-width">操作时间</text>
+                    <text>{{item.refundPayTime}}</text>
+                </view>
+                <view class="f13 c-333 flex align-start mb11">
+                    <text class="c-777 left-width">退款类型</text>
+                    <text>部分退款</text>
+                </view>
+            </view>
+        </block>
+        <view class="flex-center f13 c-777 mb11" wx:if="{{orderDetail.orderStatus!=80}}">
+            <text>如有售后或退款问题，请</text>
+            <text catchtap="clickContactShop" data-contact-phone="{{shop.contactPhone}}" data-contact-phone2="{{shop.contactPhone2}}" style="text-decoration:underline;">联系门店</text>
+        </view>
+    </view>
+    <block wx:if="{{!fromApp&&orderSource!=1&&orderDetail.orderType!=3&&orderDetail.orderStatus!=10&&orderDetail.orderSource!=4}}">
+        <view class="steppig-stone"></view>
+        <view catchtap="OneMoreTap" class="bottom-area safe-bottom mx-hairline--top ">
+            <view class="one-more c-theme f12">再来一单</view>
+        </view>
+    </block>
+</scroll-view>
+<mx-popup bind:close="hideTakeOutInfo" show="{{isShowTakeOutInfo}}">
+    <mx-tem-defee-info bind:close="hideTakeOutInfo" data="{{orderDetail}}"></mx-tem-defee-info>
+</mx-popup>
+<mx-popup bind:close="closeConfirmPopup" position="bottom" show="{{showPhoneConfirm}}" style="line-height:104rpx" zIndex="199">
+    <view class="flex-center f14 c-777 mx-hairline--bottom">联系电话</view>
+    <view bind:tap="selectPhone" class="flex-center mx-hairline--bottom" data-phone-number="{{item}}" wx:for="{{contactPhone}}" wx:key="*this">{{item}}</view>
+    <view bind:tap="closeConfirmPopup" class="flex-center mx-hairline--bottom">取消</view>
+    <view class="safe-bottom"></view>
+</mx-popup>
+<mx-popup bind:close="closeOrderRule" show="{{orderRule}}" wx:if="{{orderRule}}">
+    <mx-tem-join-rule bind:close="closeOrderRule" data="{{jointOrderConfig.ruleDesc}}"></mx-tem-join-rule>
+</mx-popup>
+<mx-dialog bindconfirm="refundOrder" content="券包退款后，所发放优惠券将全部失效，是否确认退款？" id="refundOrderDialog" title="温馨提示"></mx-dialog>
+<mx-dialog canCancel="{{false}}" content="{{errMsg}}" id="confirmDialog" title="温馨提示"></mx-dialog>
+<order-coupon-popup id="couponPopup" orderDetailList="{{orderDetail.orderDetailList}}" orderId="{{orderDetail.orderId}}"></order-coupon-popup>

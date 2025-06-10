@@ -1,0 +1,9 @@
+<page-container bind:afterleave="closePopup" closeOnSlideDown="{{false}}" customStyle="position:absolute;top:0;left:0;width:100vw;height:100vh;z-index:999;" position="right" show="{{openPopup}}" zIndex="999" wx:if="{{position==='right'}}">
+    <slot wx:if="{{createDom}}"></slot>
+</page-container>
+<view class="popup custom-class {{animation?'animation':''}} {{openPopup?'popup-show':''}}" wx:elif="{{createDom}}">
+    <view bindtap="closePopup" catchtouchmove="preventDefault" class="popup-mask" style="z-index:{{zIndex}};" wx:if="{{mask}}"></view>
+    <view class="popup-content popup-position_{{position}}" style="z-index:{{zIndex}};{{customStyle}}">
+        <slot></slot>
+    </view>
+</view>

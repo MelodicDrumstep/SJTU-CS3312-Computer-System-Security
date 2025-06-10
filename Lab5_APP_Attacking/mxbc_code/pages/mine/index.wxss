@@ -1,0 +1,404 @@
+page {
+    -webkit-overflow-scrolling: touch;
+    background: #fff;
+    padding: 192rpx 24rpx 0
+}
+
+.container-top {
+    position: relative
+}
+
+.header-bg {
+    bottom: 298rpx;
+    height: calc(100% - 100rpx);
+    left: -24rpx;
+    opacity: 0;
+    position: absolute;
+    -webkit-transition: opacity .4s linear;
+    transition: opacity .4s linear;
+    width: 750rpx
+}
+
+.header-bg.header-img-opacity {
+    opacity: 1
+}
+
+.header-bg.level0 {
+    bottom: -16rpx;
+    height: calc(100% + 208rpx);
+    opacity: 1;
+    position: absolute
+}
+
+.userInfo {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    position: relative
+}
+
+.avatar {
+    border-radius: 100%;
+    height: 96rpx;
+    overflow: hidden;
+    width: 96rpx
+}
+
+.birthday-hat::after {
+    height: 87rpx;
+    left: -16rpx;
+    top: -50rpx;
+    width: 93rpx
+}
+
+.nickname {
+    max-width: 360rpx
+}
+
+.progress-bar {
+    display: block;
+    margin: 8rpx 0
+}
+
+.auth-btn {
+    font-size: 24rpx;
+    height: 48rpx;
+    padding: 0 16rpx
+}
+
+.auth-btn,.sign-img {
+    border-radius: 8rpx;
+    position: absolute;
+    right: 0
+}
+
+.sign-img {
+    height: 56rpx;
+    line-height: 56rpx;
+    text-align: center;
+    width: 104rpx
+}
+
+.rights-container {
+    height: 608rpx;
+    margin: 0 -24rpx
+}
+
+.rights-container .level1 {
+    box-shadow: 0 0 16rpx #d4e3ff
+}
+
+.rights-container .level2 {
+    box-shadow: 0 0 16rpx #fff2db
+}
+
+.rights-container .level3 {
+    box-shadow: 0 0 16rpx #ede0ff
+}
+
+.rights-container .level4 {
+    box-shadow: 0 0 16rpx #ffecd1
+}
+
+.level-card {
+    border-radius: 24rpx;
+    margin-bottom: 24rpx;
+    position: relative;
+    z-index: 9
+}
+
+.level-card-img {
+    height: 276rpx;
+    position: absolute;
+    right: -18rpx;
+    top: -28rpx;
+    width: 312rpx;
+    z-index: 1
+}
+
+.level-card-top {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    border-top-left-radius: 24rpx;
+    border-top-right-radius: 24rpx;
+    box-sizing: border-box;
+    color: #fff;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    font-size: 22rpx;
+    height: 252rpx;
+    margin-top: 24rpx;
+    padding: 32rpx 36rpx
+}
+
+.level1 .level-card-top {
+    background: -webkit-linear-gradient(left,#57a4ff,#3078ff,#305dff);
+    background: linear-gradient(90deg,#57a4ff,#3078ff,#305dff)
+}
+
+.level2 .level-card-top {
+    background: -webkit-linear-gradient(left,#ffb74a,#ffc939,#ffa14b);
+    background: linear-gradient(90deg,#ffb74a,#ffc939,#ffa14b)
+}
+
+.level3 .level-card-top {
+    background: -webkit-linear-gradient(left,#c07afb,#b380fa,#b16dfc);
+    background: linear-gradient(90deg,#c07afb,#b380fa,#b16dfc)
+}
+
+.level4 .level-card-top {
+    background: -webkit-linear-gradient(left,#242222,#342f28,#312c2a);
+    background: linear-gradient(90deg,#242222,#342f28,#312c2a);
+    color: #ddc5a9
+}
+
+.level-text {
+    display: block;
+    width: 400rpx
+}
+
+.level1 .level-card-bottom {
+    border: 1rpx solid #57a4ff;
+    border-top: none
+}
+
+.level2 .level-card-bottom {
+    border: 1rpx solid #ffa849;
+    border-top: none
+}
+
+.level3 .level-card-bottom {
+    border: 1rpx solid #bf7bfb;
+    border-top: none
+}
+
+.level4 .level-card-bottom {
+    border: 1rpx solid #e8ce9d;
+    border-top: none
+}
+
+.level-card-bottom {
+    background: #fff;
+    border-radius: 0rpx 0rpx 24rpx 24rpx;
+    border-top: 0;
+    border-top-left-radius: 24rpx;
+    border-top-right-radius: 24rpx;
+    box-sizing: border-box;
+    height: 348rpx;
+    margin-top: -24rpx;
+    padding: 24rpx 36rpx;
+    position: relative
+}
+
+.right-tab {
+    border: 1rpx solid #eee;
+    border-radius: 54rpx;
+    box-sizing: border-box;
+    color: #333;
+    font-size: 22rpx;
+    height: 58rpx;
+    line-height: 58rpx;
+    margin-right: 24rpx;
+    text-align: center;
+    width: 114rpx
+}
+
+.level1 .right-tab.active {
+    background-color: #f1f6ff;
+    border-color: transparent
+}
+
+.level2 .right-tab.active {
+    background-color: #fff7e8;
+    border-color: transparent
+}
+
+.level3 .right-tab.active {
+    background-color: #efe5ff;
+    border-color: transparent
+}
+
+.level4 .right-tab.active {
+    background-color: #fcf1e5;
+    border-color: transparent
+}
+
+.level-box {
+    border-radius: 30rpx;
+    overflow: hidden
+}
+
+.to-rights {
+    position: absolute;
+    right: 36rpx;
+    top: 10rpx
+}
+
+.rights-box {
+    white-space: nowrap
+}
+
+.rights-card {
+    display: inline-block;
+    padding-bottom: 16rpx;
+    position: relative;
+    text-align: center;
+    vertical-align: top;
+    width: 128rpx
+}
+
+.rights-card:not(:last-child) {
+    margin-right: 40rpx
+}
+
+.rights-img {
+    height: 76rpx;
+    width: 76rpx
+}
+
+.rights-img.locked-right {
+    -webkit-filter: blur(1px);
+    filter: blur(1px);
+    opacity: .5;
+    will-change: transform
+}
+
+.locked-img {
+    height: 76rpx;
+    left: calc(50% - 38rpx);
+    position: absolute;
+    top: 0;
+    width: 76rpx
+}
+
+.level-card-bottom .scrollbar {
+    background-color: rgba(0,0,0,.2);
+    border-radius: 2rpx;
+    height: 4rpx;
+    margin: auto;
+    width: 40rpx
+}
+
+.level-card-bottom .scrollbar-thumb {
+    background-color: #333;
+    border-radius: 2rpx;
+    height: 4rpx;
+    left: 60%;
+    position: relative;
+    width: 40%
+}
+
+.panel {
+    background: #f9f9fa;
+    border-radius: var(--card-radius);
+    box-sizing: border-box;
+    height: 152rpx;
+    padding: 24rpx 0 16rpx 32rpx;
+    width: 222rpx
+}
+
+.panel.two-item {
+    background: -webkit-linear-gradient(right,#fff9f9,hsla(24,71%,99%,0));
+    background: linear-gradient(270deg,#fff9f9,hsla(24,71%,99%,0));
+    border: 1rpx solid #fcf1f1;
+    height: 128rpx;
+    padding: 24rpx 36rpx;
+    width: 340rpx
+}
+
+.card-balance {
+    left: 0;
+    position: absolute;
+    top: 8rpx;
+    z-index: 1
+}
+
+.item-icon {
+    height: 72rpx;
+    width: 108rpx
+}
+
+.panel.two-item .item-icon {
+    height: 100rpx;
+    width: 100rpx
+}
+
+.navigations {
+    border-radius: var(--card-radius);
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    overflow: hidden
+}
+
+.cell {
+    background: #fff;
+    font-size: 28rpx;
+    height: 138rpx;
+    margin-bottom: 48rpx;
+    position: relative;
+    text-align: center;
+    width: 158rpx
+}
+
+.icon-box {
+    background-color: #f4f4f7;
+    border-radius: 50%;
+    margin: 0 auto 16rpx
+}
+
+.cell-icon,.icon-box {
+    height: 88rpx;
+    text-align: center;
+    width: 88rpx
+}
+
+.cell::after {
+    color: #aaa
+}
+
+.cell-sub {
+    border-radius: 8rpx 8rpx 8rpx 0;
+    font-size: 18rpx;
+    padding: 2rpx 8rpx;
+    position: absolute;
+    right: 0;
+    top: 8rpx
+}
+
+.block-title {
+    height: 88rpx;
+    line-height: 88rpx
+}
+
+.medal-box {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    white-space: pre-line
+}
+
+.medal-content {
+    font-size: 0;
+    margin-left: 8rpx;
+    padding-left: 20rpx
+}
+
+.medal-img {
+    height: 36rpx;
+    margin-left: -12rpx;
+    position: relative;
+    width: 36rpx
+}
+
+.task-area {
+    height: 220rpx
+}

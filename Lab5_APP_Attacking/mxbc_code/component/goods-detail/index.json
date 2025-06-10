@@ -1,0 +1,9 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mx-nav-bar": "component\\goods-detail\\component\\nav-bar\\index",
+    "mx-ad": "component\\goods-detail\\component\\custom-ad\\index",
+    "mx-points-redemption-voucher": "component\\goods-detail\\component\\points-redemption-voucher\\index",
+    "mx-popup": "component\\goods-detail\\component\\popup\\index"
+  }
+}

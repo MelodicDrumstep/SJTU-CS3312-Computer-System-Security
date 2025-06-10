@@ -1,0 +1,15 @@
+.guide-to-app {
+    background-color: #fff;
+    border: 1rpx solid #eee;
+    border-radius: var(--card-radius);
+    box-sizing: border-box;
+    height: 128rpx;
+    margin-top: 24rpx;
+    padding: 0 28rpx
+}
+
+.logo {
+    height: 52rpx;
+    margin-right: 16rpx;
+    width: 52rpx
+}

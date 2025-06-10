@@ -1,0 +1,13 @@
+<view class="navigator {{inline?'inline':''}} custom-class" style="padding-top:{{statusBarHeight}}px;height:{{navBarHeight}}px;{{customStyle}}">
+    <view class="flex align-center">
+        <text bind:tap="pageBack" class="iconfont icon-home f20 fb" style="padding:20rpx" wx:if="{{useHome}}"></text>
+        <text bind:tap="pageBack" class="iconfont icon-arrow_left f20 fb" style="padding:20rpx" wx:if="{{useBack}}"></text>
+        <image lazyLoad bind:tap="pageBack" class="back-img" src="{{__static__}}/main/back.png" wx:if="{{useDialog}}"></image>
+        <slot name="leftButton"></slot>
+        <text class="{{titlePostion}}-title">{{title}}</text>
+    </view>
+    <view class="flex-sb">
+        <slot></slot>
+        <view class="placeholder" style="width:{{menuButtonWidth+17}}px"></view>
+    </view>
+</view>

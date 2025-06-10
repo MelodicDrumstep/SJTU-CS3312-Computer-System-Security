@@ -1,0 +1,208 @@
+<import src="./component/shop-notice/index.wxml"></import>
+<view class="goods-detail fullPage" wx:if="{{type=='default'}}">
+    <template is="skeleton" data wx:if="{{loading}}"></template>
+    <view>
+        <view class="goods-detail-content">
+            <mx-nav-bar useDialog bindback="close" customClass="mx-nav-bar">
+                <button class="share-btn" openType="share" wx:if="{{!goodsCopy.exchangeMarketingId}}">
+                    <image lazyLoad class="share-img" src="{{__static__}}/main/goods_share2.png"></image>
+                </button>
+            </mx-nav-bar>
+            <mx-ad adData="{{goodsCopy.productImages}}" adInterval="{{2000}}" adType="banner" customClass="goods-img"></mx-ad>
+            <view class="goods-section-top {{goodsCopy.cups.length||goodsCopy.productSpecs.length||goodsCopy.productAttrs.length?'mb15 mx-hairline--bottom':''}} flex-sb" style="padding-top:calc({{statusBarHeight+navBarHeight}}px + var(--theme-padding));margin-top:-{{statusBarHeight+navBarHeight}}px;">
+                <view wx:if="{{!isShowEstimatedPrice&&!goodsCopy.exchangeMarketingId}}">
+                    <view class="goods-name f17 fb">{{goodsCopy.productName}}</view>
+                    <block wx:if="{{!goodsCopy.cups||!goodsCopy.cups.length}}">
+                        <text class="text-tag mr4 mt4" wx:for="{{goodsCopy.productLabels}}" wx:for-item="label" wx:key="*this">{{label}}</text>
+                    </block>
+                    <block wx:elif="{{goodsCopy.cups[goodsCopy.selectCup].promotionLabels}}">
+                        <text class="text-tag mr4 mt4" wx:for="{{goodsCopy.cups[goodsCopy.selectCup].promotionLabels}}" wx:for-item="label" wx:key="*this">{{label}}</text>
+                    </block>
+                    <text class="text-tag mt4" style="color:#777;background:#F6F6F6" wx:if="{{goodsCopy.singleNotDelivery}}">单点不送</text>
+                </view>
+                <view class="goods-name f17 fb" wx:else>
+                    <view>{{goodsCopy.productName}}</view>
+                    <text class="text-tag mt4" style="color:#777;background:#F6F6F6" wx:if="{{goodsCopy.singleNotDelivery&&!goodsCopy.exchangeMarketingId}}">单点不送</text>
+                </view>
+                <view bindtap="onCollectTaste" class="favorite-taste_box mx-hairline--left" wx:if="{{goodsCopy.cups.length||goodsCopy.productSpecs.length||goodsCopy.productAttrs.length}}">
+                    <image lazyLoad class="favorite-taste" mode="aspectFill" src="{{__static__}}/main/{{favoriteTaste?'favorited':'unfavorited'}}.png"></image>
+                    <view class="c-777 f11">{{favoriteTaste?'已收藏':'收藏口味'}}</view>
+                    <view class="auto-select-taste f11 c-fff" wx:if="{{favoritedTip}}">{{favoritedTip}}<view class="triangle-up"></view>
+                    </view>
+                </view>
+            </view>
+            <mx-points-redemption-voucher bind:exchange="onExchange" data-action="buyNow" exchangeMarketingId="{{goodsCopy.exchangeMarketingId}}" orderType="{{goodsCopy.orderType}}" productId="{{goodsCopy.productId}}" shopId="{{goodsCopy.shopId}}" wx:if="{{goodsCopy.productOriginType&&goodsCopy.productOriginType==12}}"></mx-points-redemption-voucher>
+            <view class="goods-section-spec" wx:if="{{goodsCopy.cups.length}}">
+                <view class="select-item-title fb">杯型</view>
+                <view class="goods-cups">
+                    <view bindtap="selectCup" class="select-item {{disabledIdsObj[item.specId]?'disabled':''}} {{index===goodsCopy.selectCup?'active':''}}" data-index="{{index}}" data-mutex-attrs="{{item.mutexAttrs}}" wx:for="{{goodsCopy.cups}}" wx:key="specId">{{item.specName}}<text class="normal-corner-mark" style="{{_.setCornerTagStyle(item.cornerTag)}}" wx:if="{{item.cornerTag}}">{{item.cornerTag.content}}</text>
+                        <text style="opacity:0;position:absolute;top:0;width:100%;height:100%;" wx:if="{{disabledIdsObj[item.specId]}}">{{disabledIdsObj[item.specId]}}</text>
+                    </view>
+                </view>
+            </view>
+            <block wx:if="{{goodsCopy.productAttrs.length}}">
+                <view class="goods-section-spec" wx:for="{{goodsCopy.productAttrs}}" wx:key="attributeId">
+                    <view class="select-item-title fb">{{item.attributeName}}</view>
+                    <view class="goods-attrs">
+                        <view bindtap="selectAttr" class="select-item {{disabledIdsObj[spec.attributeId]?'disabled':''}} {{attr_idx===item.selectAttr?'active':''}}" data-indexs="{{[index,attr_idx]}}" data-mutex-attrs="{{spec.mutexAttrs}}" wx:for="{{item.productAttrs}}" wx:for-index="attr_idx" wx:for-item="spec" wx:key="attributeId">
+                            <text>{{spec.attributeName}}</text>
+                            <text class="normal-corner-mark" style="{{_.setCornerTagStyle(spec.cornerTag)}}" wx:if="{{spec.cornerTag}}">{{spec.cornerTag.content}}</text>
+                            <text style="opacity:0;position:absolute;top:0;width:100%;height:100%;" wx:if="{{disabledIdsObj[spec.attributeId]}}">{{disabledIdsObj[spec.attributeId]}}</text>
+                        </view>
+                    </view>
+                </view>
+            </block>
+            <block wx:if="{{goodsCopy.productSpecs.length}}">
+                <view class="goods-section-spec" wx:for="{{goodsCopy.productSpecs}}" wx:key="specId">
+                    <view class="select-item-title fb">{{item.specName}}</view>
+                    <view class="goods-specs">
+                        <block wx:if="{{item.maxSelect>1}}">
+                            <view class="spec-item {{spec.addNum?'active':''}}" wx:for="{{item.specs}}" wx:for-index="spec_idx" wx:for-item="spec" wx:key="specId">
+                                <view class="spec-item-name">{{spec.specName}}<block wx:if="{{spec.specPrice>0}}">¥{{spec.specPrice/100}}</block>
+                                    <text class="normal-corner-mark multi-spec-corner-mark" style="{{_.setCornerTagStyle(spec.cornerTag)}}" wx:if="{{spec.cornerTag}}">{{spec.cornerTag.content}}</text>
+                                </view>
+                                <view class="spec-item-icon flex-sb">
+                                    <text bindtap="removeSpec" class="icon-btn iconfont icon-remove c-theme" data-indexs="{{[index,spec_idx]}}" style="visibility:{{spec.addNum?'visible':'hidden'}}"></text>
+                                    <text class="f14 c-333" style="visibility:{{spec.addNum?'visible':'hidden'}}">{{spec.addNum}}</text>
+                                    <text bindtap="addSpec" class="icon-btn iconfont icon-add c-theme" data-indexs="{{[index,spec_idx]}}"></text>
+                                </view>
+                            </view>
+                        </block>
+                        <block wx:else>
+                            <view bindtap="selectSpec" class="select-item {{spec_idx===item.selectSpec?'active':''}}" data-indexs="{{[index,spec_idx]}}" wx:for="{{item.specs}}" wx:for-index="spec_idx" wx:for-item="spec" wx:key="specId">{{spec.specName}}<text style="white-space:pre" wx:if="{{spec.specPrice>0}}"> ¥{{spec.specPrice/100}}</text>
+                                <text class="normal-corner-mark" style="{{_.setCornerTagStyle(spec.cornerTag)}}" wx:if="{{spec.cornerTag}}">{{spec.cornerTag.content}}</text>
+                            </view>
+                        </block>
+                    </view>
+                </view>
+            </block>
+            <view class="goods-section-grey" wx:if="{{goodsCopy.detailImages.length||goodsCopy.productDesc}}"></view>
+            <view class="goods-section-other mx-hairline--bottom" wx:if="{{goodsCopy.detailImages.length||goodsCopy.productDesc}}">商品详情</view>
+            <view class="pt12 pb12" wx:if="{{goodsCopy.productDesc}}">
+                <text class="goods-desc">{{goodsCopy.productDesc}}</text>
+            </view>
+            <image lazyLoad mode="widthFix" src="{{item}}" style="width:100%" wx:for="{{goodsCopy.detailImages}}" wx:key="*this"></image>
+            <view class="goods-section-grey" wx:if="{{goodsCopy.materialDesc}}"></view>
+            <view class="goods-section-other mx-hairline--bottom" wx:if="{{goodsCopy.materialDesc}}">商品原料</view>
+            <view class="pt12 pb12" wx:if="{{goodsCopy.materialDesc}}">
+                <text class="f11 c-aaa mt12">{{goodsCopy.materialDesc}}</text>
+            </view>
+            <view class="goods-section-grey" wx:if="{{goodsCopy.priceDesc}}"></view>
+            <view class="goods-section-other mx-hairline--bottom" wx:if="{{goodsCopy.priceDesc}}">价格说明</view>
+            <view class="pt12 pb12" wx:if="{{goodsCopy.priceDesc}}">
+                <text class="f11 c-aaa mt12">{{goodsCopy.priceDesc}}</text>
+            </view>
+        </view>
+    </view>
+    <view class="add-to-cart mx-hairline--top safe-bottom" wx:if="{{goodsCopy.exchangeMarketingId}}">
+        <view class="flex-sb pb12 mt4">
+            <view class="f12 pr12 flex-a-center" style="width:340rpx;">
+                <image mode="aspectFill" src="{{__static__}}/activity/coupon-tag.png" style="width:24rpx;height:24rpx;"></image>
+                <text class="f14 c-theme"> 仅供兑换</text>
+                <text bindtap="onToggleRule" class="iconfont icon-doubt ml4" wx:if="{{productExchangeDetail.marketingDesc}}"></text>
+            </view>
+            <button bindtap="dialogAddGoods" data-action="buyNow" disabled="{{productExchangeDetail.buttonStatus!=0}}" style="width:340rpx;">{{productExchangeDetail.buttonStatusText}}</button>
+        </view>
+    </view>
+    <view class="add-to-cart mx-hairline--top safe-bottom" wx:else>
+        <view class="flex-sb pt12 pb12">
+            <view class="f12 pr12 {{isShowEstimatedPrice||!!goodsCopy.productLabels?'c-theme':''}}">
+                <text class="mr2 fb">¥</text>
+                <text class="f18 fb">{{detailPrice[0]}}</text>
+                <text class="fb" wx:if="{{detailPrice[1]}}">.{{detailPrice[1]}}</text>{{isShowEstimatedPrice?'券后价':''}} <view class="c-aaa f11" style="color:#aaa">{{selectNames}}</view>
+            </view>
+            <view class="number-buttons flex-sb shrink">
+                <text bindtap="updCurrentAddNum" class="icon-btn iconfont icon-remove {{currentAddNum===1?'disabled':'c-theme'}}" data-num="-1"></text>
+                <text class="f14">{{currentAddNum||1}}</text>
+                <text bindtap="updCurrentAddNum" class="icon-btn iconfont icon-add c-theme" data-num="1"></text>
+            </view>
+        </view>
+        <view class="flex-sb pb12">
+            <button bindtap="dialogAddGoods" class="default mr11" data-action="buyNow" style="width:100%;" wx:if="{{useBuyNow}}">立即购买</button>
+            <button bindtap="dialogAddGoods" style="width:100%">加入购物车</button>
+        </view>
+    </view>
+    <mx-popup show="{{showExchangeRulePop}}">
+        <view class="rule-box">
+            <view class="text-center f16 fb5 pb10">兑换规则</view>
+            <view decode class="rule-body f12">{{productExchangeDetail.marketingDesc}}</view>
+            <view bindtap="onToggleRule" class="close-btn">关闭</view>
+        </view>
+    </mx-popup>
+</view>
+<view class="goods-detail center" style="display:{{show?'block':'none'}}" wx:else>
+    <view class="img-text-row f11">
+        <image lazyLoad class="goods-img" src="{{goodsCopy.productLogoOriginal}}"></image>
+        <view class="f14 fb" style="width:300rpx">{{goodsCopy.productName}}</view>
+        <view class="c-aaa product-desc">{{goodsCopy.productDesc||''}}</view>
+        <block wx:if="{{!goodsCopy.cups||!goodsCopy.cups.length}}">
+            <view class="text-tag" wx:for="{{goodsCopy.productLabels}}" wx:for-item="label" wx:key="*this">{{label}}</view>
+        </block>
+        <block wx:elif="{{goodsCopy.cups[goodsCopy.selectCup].promotionLabels}}">
+            <view class="text-tag mr4" wx:for="{{goodsCopy.cups[goodsCopy.selectCup].promotionLabels}}" wx:for-item="label" wx:key="*this">{{label}}</view>
+        </block>
+    </view>
+    <view class="attrs-item">
+        <block wx:if="{{goodsCopy.cups.length&&type!=='combo'}}">
+            <view class="select-item-title f12 c-333">杯型</view>
+            <view class="goods-cups">
+                <view bindtap="selectCup" class="select-item {{disabledIdsObj[item.specId]?'disabled':''}} {{index===goodsCopy.selectCup?'active':''}}" data-index="{{index}}" data-mutex-attrs="{{item.mutexAttrs}}" wx:for="{{goodsCopy.cups}}" wx:key="specId">{{item.specName}}<text class="normal-corner-mark" style="{{_.setCornerTagStyle(item.cornerTag)}}" wx:if="{{item.cornerTag}}">{{item.cornerTag.content}}</text>
+                </view>
+            </view>
+        </block>
+        <block wx:if="{{goodsCopy.productSpecs.length}}">
+            <block wx:for="{{goodsCopy.productSpecs}}" wx:key="specId">
+                <view class="select-item-title f12 c-333">
+                    <text>{{item.specName}}</text>
+                    <text class="f11" wx:if="{{item.maxSelect>1}}">（多选，{{item.multiSelect?'可':'不可'}}重复）</text>
+                </view>
+                <view class="goods-specs">
+                    <block wx:if="{{item.maxSelect>1}}">
+                        <view class="spec-item {{spec.addNum?'active':''}}" wx:for="{{item.specs}}" wx:for-index="spec_idx" wx:for-item="spec" wx:key="specId">
+                            <text bindtap="removeSpec" class="icon-btn iconfont icon-remove c-theme" data-indexs="{{[index,spec_idx]}}"></text>{{spec.specName}}<text style="white-space:pre" wx:if="{{spec.specPrice>0}}"> ¥{{spec.specPrice/100}}</text>
+                            <text bindtap="addSpec" class="icon-btn iconfont icon-add c-theme" data-indexs="{{[index,spec_idx]}}"></text>
+                            <text class="number-icon" style="display:{{spec.addNum?'block':'none'}}">{{spec.addNum}}</text>
+                        </view>
+                    </block>
+                    <block wx:else>
+                        <view bindtap="selectSpec" class="select-item {{spec_idx===item.selectSpec?'active':''}}" data-indexs="{{[index,spec_idx]}}" wx:for="{{item.specs}}" wx:for-index="spec_idx" wx:for-item="spec" wx:key="specId">{{spec.specName}}<text style="white-space:pre" wx:if="{{spec.specPrice>0}}"> ¥{{spec.specPrice/100}}</text>
+                            <text class="normal-corner-mark" style="{{_.setCornerTagStyle(spec.cornerTag)}}" wx:if="{{spec.cornerTag}}">{{spec.cornerTag.content}}</text>
+                        </view>
+                    </block>
+                </view>
+            </block>
+        </block>
+        <block wx:if="{{goodsCopy.productAttrs.length}}">
+            <block wx:for="{{goodsCopy.productAttrs}}" wx:key="attributeId">
+                <view class="select-item-title">{{item.attributeName}}</view>
+                <view class="goods-attrs">
+                    <view bindtap="selectAttr" class="select-item {{disabledIdsObj[spec.attributeId]?'disabled':''}} {{attr_idx===item.selectAttr?'active':''}}" data-indexs="{{[index,attr_idx]}}" data-mutex-attrs="{{spec.mutexAttrs}}" wx:for="{{item.productAttrs}}" wx:for-index="attr_idx" wx:for-item="spec" wx:key="attributeId">
+                        <text>{{spec.attributeName}}</text>
+                        <text class="normal-corner-mark" style="{{_.setCornerTagStyle(spec.cornerTag)}}" wx:if="{{spec.cornerTag}}">{{spec.cornerTag.content}}</text>
+                        <text style="opacity:0;position:absolute;top:0;width:100%;height:100%;" wx:if="{{disabledIdsObj[spec.attributeId]}}">{{disabledIdsObj[spec.attributeId]}}</text>
+                    </view>
+                </view>
+            </block>
+        </block>
+    </view>
+    <button bindtap="confirmSelect" style="width:280rpx;margin:32rpx auto 0;" wx:if="{{type==='combo'}}">确定</button>
+    <view class="add-to-cart flex-sb" wx:else>
+        <text class="f12 fb">
+            <text class="mr2">¥</text>
+            <text class="f18">{{detailPrice[0]}}</text>
+            <text wx:if="{{detailPrice[1]}}">.{{detailPrice[1]}}</text>
+        </text>
+        <text class="f11 c-aaa" wx:if="{{goodsCopy.productStatus==3}}">已售罄</text>
+        <text class="f11 c-aaa" wx:elif="{{cart.orderType==1&&goodsCopy.orderType==2}}">不支持自提</text>
+        <text class="f11 c-aaa" wx:elif="{{cart.orderType==2&&goodsCopy.orderType==1}}">不支持外送</text>
+        <view class="number-buttons flex-sb" wx:elif="{{idsMap[currentIds]}}">
+            <text bindtap="dialogRemoveGoods" class="icon-btn iconfont icon-remove c-theme"></text>
+            <text class="f14">{{idsMap[currentIds]}}</text>
+            <text bindtap="dialogAddGoods" class="icon-btn iconfont icon-add c-theme"></text>
+        </view>
+        <button bindtap="dialogAddGoods" style="width:240rpx" wx:else>确定</button>
+    </view>
+    <image lazyLoad bindtap="close" class="close-img" src="{{__static__}}/main/close.png"></image>
+</view>
+
+<wxs module="_" src="..\..\utils\tools.wxs"/>

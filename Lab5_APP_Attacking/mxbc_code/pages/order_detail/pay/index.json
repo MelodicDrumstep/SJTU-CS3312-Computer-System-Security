@@ -1,0 +1,13 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "product-item": "pages\\order_detail\\pay\\component\\product-item\\index",
+    "product-item-user": "pages\\order_detail\\pay\\component\\product-item-user\\index",
+    "mx-popup": "pages\\order_detail\\pay\\component\\popup\\index",
+    "mx-tem-defee-info": "pages\\order_detail\\pay\\component\\tem-defee-info\\index",
+    "mx-tem-join-rule": "pages\\order_detail\\pay\\component\\tem-join-rule\\index",
+    "order-coupon-popup": "pages\\order_detail\\pay\\component\\order-coupon-popup\\index",
+    "gift-card-detail": "pages\\order_detail\\pay\\component\\gift-card-detail\\index"
+  }
+}

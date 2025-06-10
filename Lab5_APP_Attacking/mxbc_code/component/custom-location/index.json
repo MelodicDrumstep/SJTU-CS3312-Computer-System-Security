@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mx-nav-bar": "component\\custom-location\\component\\nav-bar\\index"
+  }
+}

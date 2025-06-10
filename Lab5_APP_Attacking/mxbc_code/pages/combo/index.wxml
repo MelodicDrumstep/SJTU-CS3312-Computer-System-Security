@@ -1,0 +1,50 @@
+<mx-nav-bar useDialog bindback="goBack">
+    <button class="share-btn" openType="share">
+        <image lazyLoad class="share-icon" src="{{__static__}}/main/goods_share2.png" style="width:56rpx;height:56rpx"></image>
+    </button>
+</mx-nav-bar>
+<view class="scroll-box">
+    <mx-ad adData="{{comboData.productImages}}" adInterval="{{2000}}" adType="banner" customClass="combo-img"></mx-ad>
+    <view class="f12 combo-product_name">
+        <view class="f16 fb5 mx-ellipsis">{{comboData.productName}}</view>
+        <text class="text-tag mt4" style="color:#777;background:#F6F6F6" wx:if="{{comboData.singleNotDelivery}}">单点不送</text>
+        <view class="c-777 mt8" wx:if="{{comboData.productDesc}}">{{comboData.productDesc}}</view>
+    </view>
+    <view class="pr12 pl12">
+        <view class="panel" style="margin-top:24rpx">
+            <view class="goods-item" wx:for="{{comboData.combos}}" wx:key="productId">
+                <image lazyLoad class="goods-img" src="{{item.productLogo}}"></image>
+                <view style="flex:1">
+                    <view class="f14 mx-ellipsis" style="max-width:510rpx">{{item.productNameShow}}</view>
+                    <view class="attr c-777 f11">{{comboComputed.selectNames[index]}}</view>
+                    <text class="f12">x {{item.productNum||1}}</text>
+                </view>
+                <view bindtap="showDetail" class="select-btn b-theme f12" data-index="{{index}}" wx:if="{{item.detailType}}">选口味</view>
+            </view>
+        </view>
+        <view style="height:50rpx"></view>
+    </view>
+</view>
+<view class="add-to-cart mx-hairline--top safe-bottom">
+    <view class="flex-sb pt12 pb12">
+        <view class="f12 pr12">
+            <text class="mr2 fb">¥</text>
+            <text class="f18 fb">{{comboComputed.totalPrice[0]}}</text>
+            <text class="fb" wx:if="{{comboComputed.totalPrice[1]}}">.{{comboComputed.totalPrice[1]}}</text>
+            <text class="ml7 disabled-price" wx:if="{{comboData.originPrice&&comboData.originPrice!==comboData.productPrice}}">¥{{comboComputed.originPrice/100}}</text>
+        </view>
+        <view class="number-buttons flex-sb shrink">
+            <text bindtap="updCurrentAddNum" class="icon-btn iconfont icon-remove {{currentAddNum===1?'disabled':'c-theme'}}" data-num="-1"></text>
+            <text class="f14">{{currentAddNum||1}}</text>
+            <text bindtap="updCurrentAddNum" class="icon-btn iconfont icon-add c-theme" data-num="1"></text>
+        </view>
+    </view>
+    <view class="flex-sb pb12">
+        <button bindtap="updateCart" class="default mr11" data-action="buyNow" style="width:100%;" wx:if="{{!isJointOrder&&!comboData.singleNotDelivery}}">立即购买</button>
+        <button bindtap="updateCart" style="width:100%">加入购物车</button>
+    </view>
+</view>
+<mx-popup bind:close="closeTap" show="{{isShowDetail}}" zIndex="99">
+    <goods-detail bind:close="closeTap" bind:updateGoods="confirmSelect" goods="{{currentGoods}}" show="{{isShowDetail}}" type="combo"></goods-detail>
+</mx-popup>
+<mx-join-group-guide cancelJump="{{false}}" cancelText="暂不添加" content="添加福利官或进群成功后，再次加购即可" id="joinGroupGuide" title="该商品仅限社群用户购买"></mx-join-group-guide>

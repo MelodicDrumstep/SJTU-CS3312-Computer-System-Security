@@ -1,0 +1,31 @@
+<swiper autoplay circular class="ad-banner custom-class" current="{{current}}" indicatorActiveColor="#fff" indicatorColor="rgba(255,255,255,.3)" indicatorDots="{{adData.length>1}}" interval="{{adInterval}}" wx:if="{{adType==='banner'&&adData.length>0}}">
+    <swiper-item bindtap="advertiseTap" class="flex" data-event="{{adEvent}}" data-url="{{item.adUrl}}" wx:if="{{index<adLimit}}" wx:for="{{adData}}" wx:key="index">
+        <image lazyLoad class="ad-img" mode="widthFix" src="{{item.adImg}}"></image>
+    </swiper-item>
+</swiper>
+<mx-popup customStyle="background-color: transparent;border-radius: 0" position="{{adPosition}}" show="{{showPopupAd}}" zIndex="200" wx:if="{{adType==='popup'&&adData.length>0&&showPopupAd}}">
+    <view class="ad-popup ad-popup__{{adPosition}}">
+        <block wx:if="{{adPosition==='center'}}">
+            <image lazyLoad bindtap="advertiseTap" class="ad-img" data-event="{{adEvent}}" data-url="{{adData[0].adUrl}}" mode="widthFix" src="{{adData[0].adImg}}"></image>
+            <text bindtap="closeAd" class="ad-close f30 iconfont icon-close_circle c-fff"></text>
+        </block>
+        <block wx:if="{{adPosition==='bottom'}}">
+            <text bindtap="closeAd" class="ad-close f30 iconfont icon-close_circle c-fff"></text>
+            <image lazyLoad bindtap="advertiseTap" class="ad-img" data-event="{{adEvent}}" data-url="{{adData[0].adUrl}}" mode="widthFix" src="{{adData[0].adImg}}" style="margin-top:85rpx;"></image>
+        </block>
+    </view>
+</mx-popup>
+<view class="ad-suspension {{adAniFold?'ani-fold':''}}" wx:if="{{adType==='suspensionAd'&&adData.length>0&&showPopupAd}}">
+    <image bindtap="closeAd" class="close-img" mode="aspectFill" src="{{__static__}}/main/close.png"></image>
+    <image lazyLoad bindtap="advertiseTap" class="ad-img" data-event="{{adEvent}}" data-index="{{0}}" data-url="{{adData[0].adUrl}}" mode="aspectFit" src="{{adData[0].adImg}}"></image>
+</view>
+<view class="ad-suspension_ad_banner {{adAniFold?'ani-show-popup':''}}" wx:if="{{adType==='suspensionAdBanner'&&adData.length>0&&showPopupAd}}">
+    <image bindtap="closeAd" class="close-img" mode="aspectFill" src="{{__static__}}/main/close.png"></image>
+    <image lazyLoad bindtap="advertiseTap" class="ad-img" data-event="{{adEvent}}" data-index="{{0}}" data-title="{{adData[0].adTitle}}" data-url="{{adData[0].adUrl}}" mode="widthFix" src="{{adData[0].adImg}}"></image>
+</view>
+<view bindtap="advertiseTap" class="index-take_no {{adAniFold?'take_no-fold':''}}" data-event="{{adEvent}}" data-url="{{adData[0].adUrl}}" wx:if="{{adType==='takeNo'&&adData.length>0}}">
+    <image class="take-no-icon" mode="aspectFill" src="{{__static__}}/main/take_no_icon.png"></image>
+    <image catchtap="closeTakeNo" class="close-img" mode="aspectFill" src="{{__static__}}/main/close.png"></image>
+    <view class="take-no-text f18 fb6">{{adData[0].content}}</view>
+    <text class="f10">取餐码</text>
+</view>

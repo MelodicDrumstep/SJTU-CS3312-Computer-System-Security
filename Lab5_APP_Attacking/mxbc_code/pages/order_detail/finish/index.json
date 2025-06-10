@@ -1,0 +1,18 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "mx-tencent-flower": "pages\\order_detail\\finish\\component\\tencent-flower\\index",
+    "product-item": "pages\\order_detail\\finish\\component\\product-item\\index",
+    "product-item-user": "pages\\order_detail\\finish\\component\\product-item-user\\index",
+    "mx-popup": "pages\\order_detail\\finish\\component\\popup\\index",
+    "mx-dialog": "pages\\order_detail\\finish\\component\\dialog\\index",
+    "mx-tem-defee-info": "pages\\order_detail\\finish\\component\\tem-defee-info\\index",
+    "mx-ad": "pages\\order_detail\\finish\\component\\custom-ad\\index",
+    "order-coupon-popup": "pages\\order_detail\\finish\\component\\order-coupon-popup\\index",
+    "mx-tem-join-rule": "pages\\order_detail\\finish\\component\\tem-join-rule\\index",
+    "mx-shop-icc-code": "pages\\order_detail\\finish\\component\\shop-icc-code\\index",
+    "pay-gift-card": "pages\\order_detail\\finish\\component\\pay-gift-card\\index",
+    "gift-card-detail": "pages\\order_detail\\finish\\component\\gift-card-detail\\index"
+  }
+}

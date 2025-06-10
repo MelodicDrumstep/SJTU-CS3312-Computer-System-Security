@@ -1,0 +1,93 @@
+<template is="cellItem" data="{{...orderDetail,productLimit:productLimit,fromPage:fromPage,__static__:__static__}}" wx:if="{{fromPage==='order'}}"></template>
+<template is="cellMenuItem" data="{{...orderDetail,productLimit:productLimit,fromPage:fromPage,__static__:__static__}}" wx:else></template>
+<slot></slot>
+<template name="cellItem">
+    <view class="flex-sb">
+        <view catchtap="toMenuPage" class="shop mx-ellipsis" data-shopid="{{shopId}}">
+            <text class="out" wx:if="{{orderSource==1}}">拼</text>
+            <text class="out" wx:elif="{{orderType==3}}">券包</text>
+            <block wx:else>
+                <text class="out" wx:if="{{orderType==1}}">自提</text>
+                <text class="out" wx:if="{{orderType==2}}">外送</text>
+            </block>
+            <text class="shopName">{{shopName}}</text>
+            <text class="iconfont icon-arrow_right f13 fb5" wx:if="{{fromPage==='order'}}"></text>
+        </view>
+        <view class="order-status" wx:if="{{fromPage==='order'}}">
+            <block wx:if="{{isRefund==0}}">
+                <text wx:if="{{orderStatus==70}}">已完成</text>
+                <text wx:elif="{{orderStatus==80}}">已取消</text>
+                <text class="c-theme" wx:elif="{{orderStatus==10}}">待支付</text>
+                <text wx:elif="{{orderType==2}}">等待送达</text>
+            </block>
+            <block wx:else>
+                <text class="c-aaa" wx:if="{{refundStatus==10}}">退单申请中</text>
+                <text wx:if="{{refundStatus==20}}">已同意退款</text>
+                <text wx:if="{{refundStatus==30}}">已退单</text>
+                <text wx:if="{{refundStatus==31}}">退单失败</text>
+            </block>
+        </view>
+    </view>
+    <view class="f10 mt3 flex-a-center" style="color:#FF5254" wx:if="{{mzhdData&&mzhdData.cupNum&&fromPage==='order'}}">
+        <view class="flex-sb" wx:if="{{mzhdData.rankType!=2}}">
+            <text class="mr5" wx:if="{{mzhdData.currentNum||!mzhdData.totalNum}}">本店再集{{mzhdData.needNum}}{{['杯','单'][mzhdData.manZengType-1]}}得{{mzhdData.awardDesc}}</text>
+            <text class="mr5" wx:else>集{{['杯','单'][mzhdData.manZengType-1]}}成功，新的集{{['杯','单'][mzhdData.manZengType-1]}}任务已开启</text>
+            <view class="bar-bg">
+                <view class="bar" style="width:100%" wx:if="{{mzhdData.interactiveStatus===5}}"></view>
+                <view class="bar" style="width:{{100*mzhdData.currentNum/mzhdData.cupNum}}%;" wx:else></view>
+            </view>
+            <text class="f12 c-theme">{{mzhdData.currentNum}}/{{mzhdData.cupNum}}</text>
+        </view>
+        <block wx:else>
+            <text class="mr5">{{mzhdData.activityName}}</text>
+            <stair-bar array="{{mzhdData.needPointList}}" currentNum="{{mzhdData.currentNum}}" threshold="{{mzhdData.currentNum}}" totalNum="{{mzhdData.cupNum}}"></stair-bar>
+        </block>
+    </view>
+    <view class="order-takeno mt12 fb" wx:if="{{fromPage==='order'&&orderStatus!==70&&orderStatus!=80&&orderStatus!==10&&orderType==1}}">
+        <view class="flex-a-center l23">
+            <image class="order-takeno_text" mode="scaleToFill" src="{{__static__}}/order_detail/take_no_text.png"></image>
+            <text class="f20 c-theme-light">{{takeNo||''}}</text>
+        </view>
+    </view>
+    <view bindtap="onAddGoodsToCart" class="products">
+        <image lazyLoad class="productImg" mode="aspectFill" src="{{productItem.productLogo}}" wx:if="{{index<productLimit}}" wx:for="{{orderDetailList}}" wx:for-item="productItem" wx:key="unique"></image>
+        <view class="priceBox flex-center" wx:if="{{orderDetailList.length>productLimit}}">···</view>
+    </view>
+    <view bindtap="onAddGoodsToCart" class="flex-sb f11 mt12">
+        <text class="c-aaa">{{orderTime}}</text>
+        <view class="flex-center">
+            <text class="f11 c-999">共{{productCount}}件</text>
+            <text class="f14 c-333 ml4 fb" wx:if="{{fromPage==='order'}}">¥ {{price/100}}</text>
+            <view class="iconfont icon-add c-theme f20 ml8" wx:else></view>
+        </view>
+    </view>
+</template>
+<template name="cellMenuItem">
+    <view class="menu_cell-shop_name mx-ellipsis b-theme-light">
+        <text class="c-theme f10" wx:if="{{orderSource==1}}">拼</text>
+        <text class="out" wx:elif="{{orderType==3}}">券包</text>
+        <block wx:else>
+            <text class="c-theme f10" wx:if="{{orderType==1}}">自提</text>
+            <text class="c-theme f10" wx:if="{{orderType==2}}">外送</text>
+        </block>
+        <text class="c-333 f12 mx-ellipsis ml4" style="color:#875962">{{shopName}}</text>
+    </view>
+    <view class="menu_cell-body">
+        <view class="flex-sb pb12 mx-hairline--bottom">
+            <image lazyLoad class="productImg" mode="aspectFill" src="{{orderDetailList[0].productLogo}}"></image>
+            <view class="menu_cell-body_products_detail">
+                <view class="f14 mx-ellipsis mb4 fb5">{{orderDetailList[0].productName}}</view>
+                <view class="f10 c-777 mx-multi-ellipsis--l2">{{orderDetailList[0].productSepcsAndAttrsName}}</view>
+            </view>
+            <view class="priceBox">x {{orderDetailList[0].productAmount}}</view>
+        </view>
+        <view bindtap="onAddGoodsToCart" class="flex-sb f11 mt12">
+            <text class="c-aaa mx-ellipsis" style="flex:1;margin-right:16rpx">{{productAllNames}}</text>
+            <view class="flex-center">
+                <text class="f11 c-999">共<text class="c-theme">{{productCount}}</text>件</text>
+                <text class="f14 c-333 ml4 fb" wx:if="{{fromPage==='order'}}">¥ {{price/100}}</text>
+                <view class="iconfont icon-add c-theme f20 ml8" wx:else></view>
+            </view>
+        </view>
+    </view>
+</template>

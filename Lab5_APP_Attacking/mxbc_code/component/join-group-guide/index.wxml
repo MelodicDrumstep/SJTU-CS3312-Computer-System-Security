@@ -1,0 +1,1 @@
+<mx-dialog bindcancel="toHome" bindconfirm="toWelfare" cancelText="{{cancelText||'暂不参与'}}" confirmText="{{confirmText||'去添加'}}" content="{{content||'*添加福利官或进群成功后再次回到活动页即可参与'}}" id="comfirmWelfare" title="{{title||'该活动仅限社群用户参与'}}"></mx-dialog>

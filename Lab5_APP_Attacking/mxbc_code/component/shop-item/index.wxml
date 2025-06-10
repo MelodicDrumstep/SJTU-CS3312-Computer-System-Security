@@ -1,0 +1,41 @@
+<view bind:tap="shopTap" class="shop-item {{selected?'selected':''}} {{data.operationStatus==1&&!data.isOutRange&&!(orderType==2&&data.takeoutOperationStatus==2)?'c-777':'disabled'}}" style="background-image:url({{data.shopListBgImage||''}})">
+    <view class="shop-item-detail">
+        <view class="c-333 f14 fb mb8 mx-ellipsis">{{data.shopName}}</view>
+        <view class="shop-tags mb8">
+            <block wx:if="{{data.operationStatus==1}}">
+                <text class="shop-status-tag busy" wx:if="{{orderType==2&&data.takeoutOperationStatus==2}}">未到外送营业时间</text>
+                <block wx:else>
+                    <text class="shop-status-tag normal">营业中</text>
+                    <text class="shop-status-tag pink" wx:if="{{data.takeoutStatus}}">可外送</text>
+                </block>
+            </block>
+            <text class="shop-status-tag close" wx:elif="{{data.operationStatus==2}}">门店休息</text>
+            <text class="shop-status-tag busy" wx:elif="{{data.operationStatus==0}}">繁忙置休</text>
+        </view>
+        <view class="mb mx-multi-ellipsis--l2" wx:if="{{orderType==2}}">外送营业时间: {{data.takeoutOperationTime||'今日休息'}}</view>
+        <view class="mb8 info-text mx-multi-ellipsis--l2" wx:else>营业时间: {{data.operationTime||'今日休息'}}</view>
+        <view class="info-text mx-multi-ellipsis--l3" style="line-height:36rpx;">
+            <block wx:if="{{isShowDistance}}">直线距离{{data.distance||'未知'}}<text decode class="c-aaa">&nbsp;|&nbsp;</text>
+            </block>{{data.shopAddress}}</view>
+    </view>
+    <view class="shop-item-contact flex-center f11">
+        <block wx:if="{{operateType==='default'}}">
+            <view catch:tap="clickFavorite" class="favorite">
+                <image lazyLoad src="{{__static__}}/main/{{data.hasCollectShop?'favorited':'unfavorited'}}.png" style="width:36rpx;height:36rpx;"></image>
+            </view>
+            <view class="c-aaa" wx:if="{{data.isOutRange}}">超出配送范围</view>
+            <view class="c-333" wx:else>去下单</view>
+            <view class="mt12">
+                <image lazyLoad catch:tap="clickNavigate" class="shop-item-contact_icon mr10" src="{{__static__}}/main/icon_navigate.png"></image>
+                <image lazyLoad catch:tap="clickContactShop" class="shop-item-contact_icon" src="{{__static__}}/main/icon_phone.png"></image>
+            </view>
+        </block>
+        <slot wx:elif="{{operateType==='ShopSelectWarn'}}"></slot>
+    </view>
+</view>
+<mx-popup bind:close="closeConfirmPopup" position="bottom" show="{{showPhoneConfirm}}" style="line-height:104rpx" zIndex="199">
+    <view class="select-phone flex-center f14 c-777 mx-hairline--bottom">联系电话</view>
+    <view bind:tap="selectPhone" class="select-phone flex-center mx-hairline--bottom" data-phone-number="{{item}}" wx:for="{{contactPhone}}" wx:key="*this">{{item}}</view>
+    <view bind:tap="closeConfirmPopup" class="select-phone flex-center mx-hairline--bottom">取消</view>
+    <view class="safe-bottom"></view>
+</mx-popup>

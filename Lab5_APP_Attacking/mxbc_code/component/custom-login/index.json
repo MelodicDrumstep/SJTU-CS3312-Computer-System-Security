@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mx-popup": "component\\custom-login\\component\\popup\\index"
+  }
+}

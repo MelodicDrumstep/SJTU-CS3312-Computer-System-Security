@@ -1,0 +1,99 @@
+.medal-task {
+    -webkit-box-align: center;
+    -webkit-box-pack: justify;
+    -webkit-align-items: center;
+    align-items: center;
+    border: 2rpx solid #fff;
+    border-radius: 26rpx 26rpx 26rpx 26rpx;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    height: 220rpx;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    padding: 32rpx 24rpx 44rpx
+}
+
+.medal-task,.medal-task.index {
+    background: -webkit-linear-gradient(left,#fff 45%,#ffeaee);
+    background: linear-gradient(90deg,#fff 45%,#ffeaee)
+}
+
+.medal-task.mine {
+    background: #fff8f8;
+    border: 1rpx solid #fcf1f1
+}
+
+.medal-task-info {
+    -webkit-box-flex: 1;
+    -webkit-box-pack: justify;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex: 1;
+    flex: 1;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    overflow: hidden
+}
+
+.medal-task-icon {
+    height: 104rpx;
+    width: 104rpx
+}
+
+.medal-task-name {
+    line-height: 40rpx
+}
+
+.bar-bg {
+    background: #ffe1e3;
+    height: 12rpx;
+    margin-right: 16rpx;
+    overflow: hidden;
+    width: 276rpx
+}
+
+.bar,.bar-bg {
+    border-radius: 6rpx
+}
+
+.bar {
+    background: #fc3f41;
+    height: 100%
+}
+
+.mzhd-btn {
+    background: var(--theme-color);
+    height: 60rpx
+}
+
+.mzhd-btn,.task-btn {
+    border-radius: 30rpx;
+    font-size: 24rpx;
+    font-weight: 500;
+    padding: 0;
+    width: 128rpx
+}
+
+.task-btn {
+    height: 48rpx;
+    line-height: 48rpx
+}
+
+.medal-task-progress {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    height: 36rpx;
+    margin: 14rpx 0
+}

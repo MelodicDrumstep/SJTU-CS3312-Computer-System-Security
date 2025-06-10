@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mx-popup": "component\\tem-mzhd\\component\\popup\\index",
+    "mx-dialog": "component\\tem-mzhd\\component\\dialog\\index",
+    "stair-bar": "component\\tem-mzhd\\component\\tem-mzhd-bar\\index"
+  }
+}

@@ -1,0 +1,41 @@
+<view class="container">
+    <view class="card">
+        <view class="title">
+            <text>退款须知</text>
+        </view>
+        <view class="pt12 pb12">
+            <view class="cont">1、如餐品已制作，⻔店有权拒绝退款，且⽆法再次发起退款申请，建议您到店取餐或与⻔店协商后再申请退款；</view>
+            <view class="cont">2、⻔店会在当天24点前处理您的退款申请，请您耐⼼等待；</view>
+            <view class="cont">3、⻔店同意退款后，退款⾦额将在24⼩时内按⽀付账户原路径返还。</view>
+        </view>
+    </view>
+    <view class="card">
+        <view class="title">
+            <text>选择退款原因</text>
+        </view>
+        <radio-group bindchange="onClickRadio">
+            <block wx:for="{{typeMap}}" wx:key="reasonId">
+                <view class="radio-sel" wx:if="{{item.child&&item.child.length>0}}">
+                    <view class="sel-1">{{item.name}}</view>
+                    <view class="mx-hairline--bottom {{index==0?'mx-hairline--top':''}}" wx:for="{{item.child}}" wx:for-item="item1" wx:key="index">
+                        <label class="radio-label pt9 pb9" key="label-{{index}}">
+                            <text class="radio-text">{{item1.name}}</text>
+                            <radio checked="{{!!item1.checked}}" color="{{themeColor}}" disabled="{{item1.disabled}}" value="{{[item1.parentId,item1.reasonId]}}"></radio>
+                        </label>
+                    </view>
+                </view>
+                <view class="other-reason" wx:else>
+                    <label bindtap="isFold" class="radio-label sel-1">
+                        <text>{{item.name}}</text>
+                        <radio checked="{{!!item.child[0].checked}}" color="{{themeColor}}" disabled="{{item.child[0].disabled}}" style="visibility:hidden;" value="{{[item.parentId,item.reasonId,'其他']}}"></radio>
+                        <text class="iconfont icon-arrow_down {{foldVal?'rotate-270':''}}"></text>
+                    </label>
+                    <mx-field customClass="reason" maxlength="20" value="{{refundRemark}}" placeholder="填写真实退单原因，⽅便⻔店更快处理退单申请哦" wx:if="{{!foldVal}}"></mx-field>
+                </view>
+            </block>
+        </radio-group>
+    </view>
+    <view class="bottom flex-center mx-hairline--top safe-bottom">
+        <button bindtap="refund" style="width:680rpx">提交</button>
+    </view>
+</view>

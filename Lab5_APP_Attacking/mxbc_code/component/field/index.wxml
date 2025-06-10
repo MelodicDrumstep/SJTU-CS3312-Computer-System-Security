@@ -1,0 +1,13 @@
+<view class="textarea-container custom-class" wx:if="{{type=='textarea'}}">
+    <textarea disableDefaultPadding bindinput="onInput" class="textarea" cursorSpacing="140" maxlength="{{maxLength}}" value="{{value}}" placeholder="{{placeholder}}" placeholderClass="placeholder" showConfirmBar="{{false}}"></textarea>
+    <view class="limitTip">
+        <text style="color:{{value.length>=maxLength?'red':''}}">{{value.length>=maxLength?maxLength:value.length}}</text>/{{maxLength}}</view>
+    <slot></slot>
+</view>
+<view class="input-container custom-class" wx:else>
+    <input bindinput="onInput" class="input" cursorSpacing="140" maxlength="{{maxLength}}" value="{{value}}" placeholder="{{placeholder}}" placeholderClass="placeholder"></input>
+    <view bindtap="clearValue" class="clear-btn" hidden="{{!value.length||!clearable}}">
+        <image lazyLoad class="clear-icon" src="{{__static__}}/main/close.png"></image>
+    </view>
+    <slot></slot>
+</view>

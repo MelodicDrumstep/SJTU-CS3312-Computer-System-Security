@@ -1,0 +1,47 @@
+<view class="debug custom-class">
+    <image lazyLoad bind:tap="updModel" class="debug-badge" mode="widthFix" src="{{__static__}}/main/logo.png"></image>
+</view>
+<mx-popup bind:close="updModel" position="bottom" show="{{showDebugModel}}" zIndex="200">
+    <view class="debug-popup">
+        <view class="table-title">调试面板</view>
+        <view class="table-cell flex-sb">
+            <text class="cell-icon iconfont">切换环境</text>
+            <view class="flex-sb">
+                <text bind:tap="changeEnv" class="select-item {{env==='dev'?'active':''}}" data-env="dev">dev</text>
+                <text bind:tap="changeEnv" class="select-item {{env==='qa'?'active':''}}" data-env="qa">qa</text>
+                <text bind:tap="changeEnv" class="select-item {{env==='uat'?'active':''}}" data-env="uat">uat</text>
+                <text bind:tap="changeEnv" class="select-item {{env==='pro'?'active':''}}" data-env="pro">pro</text>
+            </view>
+        </view>
+        <view class="align-center table-cell flex-sb">
+            <text class="cell-icon iconfont">API版本号</text>
+            <view class="flex-sb" style="position:relative;">
+                <input bindinput="onInput" class="vertion-input f13" cursorSpacing="140" value="{{apiVersion}}" placeholder="{{'请输入版本号'}}" placeholderClass="c-aaa" type="text"></input>
+                <view bindtap="clearApiVersion" class="icon-clear flex-center" hidden="{{!apiVersion}}">
+                    <icon size="14" type="clear"></icon>
+                </view>
+                <button bind:tap="saveApiVersion" class="small mt5 mb5 ml10">保存</button>
+            </view>
+        </view>
+        <view class="align-center table-cell flex-sb">
+            <view class="cell-icon iconfont">
+                <view>解绑三方账号</view>
+            </view>
+            <view class="flex-sb">
+                <button bind:tap="unBindPhone" class="small mt5 mb5" disabled="{{!userInfo.mobilePhone}}">解绑</button>
+            </view>
+        </view>
+        <view class="align-center table-cell flex-sb">
+            <text class="cell-icon iconfont">生成未消费AuthCode（log中查看）</text>
+            <view class="flex-sb">
+                <button bind:tap="getAuthCode" class="small mt5 mb5">生成</button>
+            </view>
+        </view>
+        <view class="align-center table-cell flex-sb">
+            <text class="cell-icon iconfont">清除缓存</text>
+            <view class="flex-sb">
+                <button bind:tap="clearStorage" class="small mt5 mb5">清除</button>
+            </view>
+        </view>
+    </view>
+</mx-popup>

@@ -1,0 +1,10 @@
+<view class="container f14">
+    <view class="f16 fb5 mt8 mb8">商品异常提醒</view>
+    <view class="mt8 mb8">以下商品信息发生变更,请您重新选购。如有社群商品，请前往微信单独购买。</view>
+    <view class="flex-sb mt8 mb8" wx:for="{{data}}" wx:key="index">
+        <view class="flex-sb">
+            <text class="mx-ellipsis" style="max-width:360rpx;">{{item.productName}}</text>x{{item.productAmount}}</view>
+        <text>{{item.productStatusText}}</text>
+    </view>
+    <view bindtap="close" class="know-btn mx-hairline--top c-theme f16">我知道了</view>
+</view>

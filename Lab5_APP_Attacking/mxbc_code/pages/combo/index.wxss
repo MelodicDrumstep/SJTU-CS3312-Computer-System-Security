@@ -1,0 +1,106 @@
+page {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    background: #f8f8f8;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    font-size: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative
+}
+
+.share-btn {
+    background: transparent;
+    box-shadow: none;
+    line-height: 0;
+    z-index: 10
+}
+
+.scroll-box {
+    -webkit-box-flex: 1;
+    -webkit-overflow-scrolling: touch;
+    box-sizing: border-box;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow-y: scroll
+}
+
+.panel {
+    background: #fff;
+    border-radius: var(--card-radius);
+    padding: 24rpx
+}
+
+.goods-item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    position: relative
+}
+
+.goods-item+.goods-item {
+    margin-top: 24rpx
+}
+
+.goods-img {
+    border-radius: 10rpx;
+    height: 120rpx;
+    margin-right: 16rpx;
+    width: 120rpx
+}
+
+.attr {
+    margin: 10rpx 0;
+    min-height: 26rpx
+}
+
+.select-btn {
+    border-radius: 22px;
+    bottom: 0;
+    color: #fff;
+    line-height: 44rpx;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    width: 120rpx
+}
+
+.add-to-cart {
+    background: #fff;
+    box-sizing: border-box;
+    padding-left: var(--theme-padding);
+    padding-right: var(--theme-padding)
+}
+
+.number-buttons {
+    font-size: 48rpx;
+    position: relative;
+    width: 170rpx
+}
+
+.icon-btn {
+    padding: 10rpx
+}
+
+.disabled.icon-btn {
+    color: #ccc;
+    pointer-events: none
+}
+
+.combo-img {
+    height: 564rpx;
+    width: 100%
+}
+
+.combo-img.ad-banner .ad-img {
+    border-radius: 0
+}
+
+.combo-product_name {
+    background: #fff;
+    padding: 24rpx
+}

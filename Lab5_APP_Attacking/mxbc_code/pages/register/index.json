@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "mx-login": "pages\\register\\component\\custom-login\\index"
+  }
+}

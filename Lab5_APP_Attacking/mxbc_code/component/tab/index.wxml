@@ -1,0 +1,8 @@
+<view class="tabs f15 custom-class" style="position:{{sticky?'sticky':'relative'}};width:{{width?width:'100%'}};height:{{height?height:'88rpx'}}">
+    <view bindtap="toggleTab" class="tabs-item flex-center {{activeIndex==index?'fb5':'c-777'}}" data-index="{{index}}" wx:for="{{tabs}}" wx:key="*this">
+        <image lazyLoad class="tabs-item-img" src="{{item.path}}" wx:if="{{item&&item.type=='img'}}"></image>
+        <text wx:elif="{{item&&item.type=='text'}}">{{item.name}}</text>
+        <text wx:else>{{item}}</text>
+    </view>
+    <view class="tabs-underline" style="width:{{lineWidth}}px;left:calc({{(activeIndex*2+1)*50/tabs.length}}% - {{lineWidth/2}}px)"></view>
+</view>

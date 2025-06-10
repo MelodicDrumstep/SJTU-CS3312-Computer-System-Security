@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "mx-popup": "pages\\combo\\component\\popup\\index",
+    "goods-detail": "pages\\combo\\component\\goods-detail\\index",
+    "mx-ad": "pages\\combo\\component\\custom-ad\\index",
+    "mx-nav-bar": "pages\\combo\\component\\nav-bar\\index",
+    "mx-join-group-guide": "pages\\combo\\component\\join-group-guide\\index"
+  }
+}

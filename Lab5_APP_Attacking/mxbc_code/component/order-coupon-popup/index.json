@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mx-popup": "component\\order-coupon-popup\\component\\popup\\index"
+  }
+}

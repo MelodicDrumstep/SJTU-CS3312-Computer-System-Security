@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mx-popup": "component\\picker\\component\\popup\\index"
+  }
+}

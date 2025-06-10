@@ -1,0 +1,117 @@
+<block wx:if="{{type==='menu'&&data.activityName}}">
+    <view bind:tap="advertiseTap" class="mzhd-card {{type}} flex-sb custom-class mb12" wx:if="{{data.rankType!=2}}">
+        <image lazyLoad class="mzhd-bg" src="{{__static__}}/main/mzhd_bg.png"></image>
+        <image lazyLoad src="{{__static__}}/main/mzhd.png" style="width:36rpx;height:50rpx"></image>
+        <view style="flex:1;margin-left:16rpx">
+            <view class="f13">
+                <text style="margin-right:8rpx">{{data.activityName}}</text>
+                <text class="iconfont icon-doubt c-aaa"></text>
+            </view>
+            <text class="f10" wx:if="{{!data.currentNum&&data.totalNum}}">集{{['杯','单'][data.manZengType-1]}}成功，新的集{{['杯','单'][data.manZengType-1]}}任务已开启</text>
+            <text class="f10" wx:else>本店再集<text class="c-theme">{{data.needNum}}{{['杯','单'][data.manZengType-1]}}</text>得<text class="c-theme">{{data.awardDesc}}</text>
+            </text>
+        </view>
+        <view class="mzhd-bar flex-sb f12 c-theme">
+            <view class="bar-bg">
+                <view class="bar" style="width:{{100*data.currentNum/data.cupNum}}%;"></view>
+            </view>
+            <text>{{data.currentNum}}/{{data.cupNum}}</text>
+        </view>
+    </view>
+    <view bindtap="advertiseTap" class="mzhd-card {{type}} flex-sb mb12 stairs-card" wx:else>
+        <image class="mzhd-img mr6" mode="aspectFill" src="{{data.pointIcon}}"></image>
+        <view class="flex1" style="flex:1">
+            <text class="f13" style="margin-bottom:2rpx"> {{data.activityName}} <text class="iconfont icon-doubt c-aaa ml2"></text>
+            </text>
+            <stair-bar array="{{data.needPointList}}" currentNum="{{data.currentNum}}" threshold="{{data.currentNum}}" totalNum="{{data.cupNum}}"></stair-bar>
+        </view>
+        <button catchtap="openRewardTap" class="mzhd-btn c-theme-light">{{data.isFinish?'已结束':'兑换奖励'}}</button>
+    </view>
+</block>
+<block wx:elif="{{type==='cart'&&data.activityName}}">
+    <view class="mzhd-card {{type}} custom-class f14" wx:if="{{data.curOrderNum}}">
+        <block wx:if="{{data.hasDiscount}}">
+            <view bindtap="selectDiscount" class="flex-sb">
+                <text class="activity-tag">惠</text>
+                <text style="flex:1">我要优惠，不集{{['杯','单'][data.manZengType-1]}}</text>
+                <text class="f22 iconfont {{data.discountsType==1?'icon-checked c-theme':'icon-unchecked c-aaa'}}"></text>
+            </view>
+            <view bindtap="selectMzhd" class="flex-sb" style="margin-top:40rpx">
+                <text class="activity-tag">集</text>
+                <view style="flex:1">
+                    <text>我要集{{['杯','单'][data.manZengType-1]}}，不享受优惠</text>
+                    <text catchtap="advertiseTap" class="iconfont icon-doubt"></text>
+                </view>
+                <text class="f22 iconfont {{data.discountsType==2?'icon-checked c-theme':'icon-unchecked c-aaa'}}"></text>
+            </view>
+            <text class="f11 c-aaa" style="margin-left:64rpx">已集{{data.currentNum||0}}{{['杯','单'][data.manZengType-1]}}，当前订单可集{{data.curOrderNum||0}}{{['杯','单'][data.manZengType-1]}}</text>
+        </block>
+        <view wx:else>
+            <text class="activity-tag">集</text>
+            <text>已集{{data.currentNum||0}}{{['杯','单'][data.manZengType-1]}}，当前订单可集{{data.curOrderNum||0}}{{['杯','单'][data.manZengType-1]}}</text>
+            <text bindtap="advertiseTap" class="iconfont icon-doubt"></text>
+        </view>
+    </view>
+</block>
+<view bind:tap="advertiseTap" class="mzhd-card {{type}} flex-sb custom-class mb12" wx:elif="{{data.activityName}}">
+    <image lazyLoad class="mzhd-img mr12" src="{{data.pointIcon}}"></image>
+    <view class="mzhd-content">
+        <view class="mzhd-title iconfont icon-arrow_right mb5">{{data.activityName}}</view>
+        <view class="mzhd-bar flex-sb f12 c-theme" wx:if="{{data.rankType!=2}}">
+            <view class="bar-bg">
+                <view class="bar" style="width:100%" wx:if="{{data.interactiveStatus===5}}"></view>
+                <view class="bar" style="width:{{100*data.currentNum/data.cupNum}}%;" wx:else></view>
+            </view>
+            <text>{{data.currentNum}}/{{data.cupNum}}</text>
+        </view>
+        <stair-bar array="{{data.needPointList}}" currentNum="{{data.currentNum}}" customClass="disabled_{{data.interactiveStatus}}" threshold="{{data.currentNum}}" totalNum="{{data.cupNum}}" wx:else></stair-bar>
+        <view class="mzhd-time mt5" wx:if="{{data.interactiveStatus===1}}">{{data.startTimeDesc+'开始'}}</view>
+        <view class="mzhd-time mt5" wx:elif="{{data.interactiveStatus===2}}">{{data.startTimeDesc+'-'+data.endTimeDesc+'可领'}}</view>
+        <view class="mzhd-time mt5" wx:elif="{{data.interactiveStatus===3}}">
+            <text class="mr6" wx:if="{{data.totalNum>=data.cupNum&&data.rankType!==2}}">集{{['杯','单'][data.manZengType-1]}}成功，进度已重置</text>
+            <text>{{data.expireTimeDesc}}到期</text>
+        </view>
+    </view>
+    <button catchtap="remindMe" class="mzhd-btn" wx:if="{{data.interactiveStatus===1}}">提醒我</button>
+    <button catchtap="receiveActivity" class="mzhd-btn" wx:elif="{{data.interactiveStatus===2}}">领任务</button>
+    <button catchtap="toMenu" class="mzhd-btn" wx:elif="{{data.interactiveStatus===3}}">{{data.rankType==2?'查看详情':'去完成'}}</button>
+    <button class="mzhd-btn disabled" wx:elif="{{data.interactiveStatus===4}}">已过期</button>
+    <button class="mzhd-btn disabled" wx:elif="{{data.interactiveStatus===5}}">已完成</button>
+    <button class="mzhd-btn disabled" wx:elif="{{data.interactiveStatus===9}}">已结束</button>
+</view>
+<mx-popup show="{{showRule}}">
+    <view class="rule-box">
+        <view class="text-center f16 fb5 pb10">活动规则</view>
+        <view decode class="rule-body f12">{{data.ruleDesc}}</view>
+        <view bindtap="onClose" class="close-btn">关闭</view>
+    </view>
+</mx-popup>
+<mx-popup bindclose="onClose" customStyle="background: transparent;" position="bottom" show="{{showReward}}">
+    <image class="stairs-reward_img" mode="aspectFill" src="{{__static__}}/activity/reward-image.png"></image>
+    <view class="mzhd-stairs-reward f12">
+        <image bindtap="onClose" class="float-right close-icon" src="{{__static__}}/activity/close_icon.png"></image>
+        <view class="stairs-reward_title flex-a-center c-aaa" style="align-items:baseline">
+            <image mode="aspectFill" src="{{__static__}}/activity/star-icon.png" style="width:36rpx;height:36rpx;"></image>
+            <text class="c-theme-light f20 ml2 mr4">{{rewardInfo.availableNum}}</text>
+            <text class="fb5">可用点数</text>
+        </view>
+        <view class="c-aaa">当前点数{{rewardInfo.totalNum}}，订单支付完成1分钟后点数可用<text bindtap="onExchangeRewardRecord" class="float-right iconfont icon-arrow_right">兑换记录</text>
+        </view>
+        <view class="stairs-reward_list pt12">
+            <view class="reward_list-item flex-sb mb12" wx:for="{{rewardInfo.rewardList}}" wx:key="id">
+                <image class="mzhd-img mr8" mode="scaleToFill" src="{{item.rewardUrl||__static__+'/order_detail/mzhd_star.png'}}"></image>
+                <view style="flex:1">
+                    <view class="f13">{{item.rewardName}}</view>
+                    <view class="f11 c-aaa">{{item.rewardDesc}}</view>
+                    <view class="flex-a-center f16 c-theme" style="align-items:baseline;">
+                        <image mode="aspectFill" src="{{__static__}}/activity/star-icon.png" style="width:28rpx;height:28rpx;margin-right:4rpx"></image>
+                        <text class="fb5">{{item.needPointNum}}</text>
+                        <text class="ml12 f11 ml4" style="color:#CA8184">剩余{{item.remainNum}}</text>
+                    </view>
+                </view>
+                <button bindtap="onExchangeReward" class="mzhd-btn f12 status_{{item.status}}" data-id="{{item.id}}" data-status="{{item.status}}">{{item.status===2?'已兑换':'兑换'}}</button>
+            </view>
+        </view>
+    </view>
+</mx-popup>
+<mx-dialog bindconfirm="onConfirm" confirmText="确认兑换" content="兑换奖励后，将消耗奖励对应的点数，您是否继续兑换？" id="exchangeDialog" title="兑换提醒"></mx-dialog>

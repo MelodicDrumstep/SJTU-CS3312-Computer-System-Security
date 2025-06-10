@@ -1,0 +1,229 @@
+<view class="top">
+    <image lazyLoad class="header-bg" src="{{__static__}}/order_detail/bg.png"></image>
+    <view class="page_bar_container" style="z-index:10">
+        <view style="height:{{statusBarHeight+42}}px;z-index:10;"></view>
+        <view class="page_bar" style="padding-top:{{statusBarHeight+10}}px">
+            <text bindtap="pageBack" class="iconfont icon-home f20 fb" wx:if="{{fromApp}}"></text>
+            <text bindtap="pageBack" class="iconfont icon-arrow_left f18 fb" wx:else></text>
+        </view>
+    </view>
+    <image lazyLoad bindtap="toKeFu" class="contactUs" src="{{__static__}}/order_detail/contact_us.png" style="top:{{statusBarHeight+6}}px;right:{{menuButtonWidth+17}}px"></image>
+    <view class="order-title" wx:if="{{orderData.isRefund==0&&orderData.orderStatus==10}}">待支付<view class="order-title-sub mt8">剩余支付时间：{{countdownStr}}</view>
+    </view>
+    <image lazyLoad class="img-order-status" src="{{__static__}}/order_detail/order_pay.png" wx:if="{{orderData.isRefund==0&&orderData.orderStatus==10}}"></image>
+</view>
+<view class="bottom pt12 safe-bottom">
+    <view class="card mb11">
+        <view class="flex-sb">
+            <view class="shop-address">
+                <view catchtap="toMenuPage" class="flex title f16 fb5 mb4" data-shopid="{{orderData.shopId}}">
+                    <text class="mx-ellipsis">{{orderData.shopName}}</text>
+                    <text class="iconfont icon-arrow_right fb f13 shrink ml4" wx:if="{{!fromApp&&orderData.shopName}}"></text>
+                </view>
+                <text class="f12 c-777 mx-multi-ellipsis--l2">
+                    <text>直线距离{{shop.distance||'--'}}</text>
+                    <text decode class="c-aaa">&nbsp;|&nbsp;</text>
+                    <text>{{shop.shopAddress}}</text>
+                </text>
+            </view>
+            <view class="flex-sb">
+                <image lazyLoad catchtap="goNavigate" class="shop_item_contact_icon" data-shopid="{{shop.shopId}}" src="{{__static__}}/main/icon_navigate.png"></image>
+                <image lazyLoad catchtap="clickContactShop" class="shop_item_contact_icon" data-contact-phone="{{shop.contactPhone}}" data-contact-phone2="{{shop.contactPhone2}}" src="{{__static__}}/main/icon_phone.png"></image>
+            </view>
+        </view>
+        <view class="flex-sb mt4" wx:if="{{orderData.orderType==2}}">
+            <block wx:if="{{orderData.deliveryType==1}}">
+                <text></text>
+                <text class="f13 c-danger">订单由门店自行配送</text>
+            </block>
+            <block wx:if="{{orderData.deliveryType==2}}">
+                <text class="f13 c-777">预计送达时间</text>
+                <text class="f13 c-danger">约{{orderData.sendTime||'00:00'}}送达</text>
+            </block>
+        </view>
+        <view class="c-text-color f12 flex-sb mt4" wx:if="{{orderData.orderType==1}}">
+            <text>自提时间</text>
+            <text class="c-danger">{{orderData.takeType==1?'立即取餐':orderData.takeTime}}</text>
+        </view>
+        <view class="f12 c-warn mt4 flex align-center" wx:if="{{orderData.takeType==2}}">
+            <image lazyLoad class="mb2 mr2" src="{{__static__}}/main/warning.png" style="width:30rpx;height:30rpx;"></image>
+            <text>为避免影响饮品口感，手持冰淇淋等商品为到店现做</text>
+        </view>
+        <view class="skeleton" wx:if="{{isLoading}}">
+            <view class="mt12 flex-sb">
+                <text class="b-eee skeleton-title"></text>
+                <text class="b-eee skeleton-price"></text>
+            </view>
+            <view class="flex-sb">
+                <text class="b-eee skeleton-sub-title"></text>
+                <text class="b-eee skeleton-amount"></text>
+            </view>
+            <view class="mt12 flex-sb">
+                <text class="b-eee skeleton-title"></text>
+                <text class="b-eee skeleton-price"></text>
+            </view>
+            <view class="flex-sb">
+                <text class="b-eee skeleton-sub-title"></text>
+                <text class="b-eee skeleton-amount"></text>
+            </view>
+        </view>
+        <block wx:else>
+            <block wx:if="{{orderSource!==1}}">
+                <view class="border-bottom-dashed" style="position:relative;"></view>
+                <product-item customClass="pt12" product="{{product}}" wx:if="{{index<2||index>=2&&isShowDetail}}" wx:for="{{orderData.orderDetailList}}" wx:for-item="product" wx:key="index"></product-item>
+                <view bindtap="toggle" class="c-aaa f12 mt12" style="text-align:center;" wx:if="{{orderData.orderDetailList.length>2}}">
+                    <text class="iconfont {{isShowDetail?'icon-arrow_up':'icon-arrow_down'}}">{{isShowDetail?'收起更多 ':'展开全部 '}}</text>
+                </view>
+                <view class="border-bottom-dashed"></view>
+            </block>
+            <block wx:if="{{orderSource===1}}">
+                <view class="border-bottom-dashed" style="position:relative;"></view>
+                <view>
+                    <product-item-user userProduct="{{product}}" wx:if="{{index<2||index>=2&&isShowDetail}}" wx:for="{{partitions}}" wx:for-item="product" wx:key="index">
+                        <view slot="header_other" wx:if="{{product.isMine===1}}">
+                            <text class="header_tag">我</text>
+                        </view>
+                        <view slot="footer">
+                            <block wx:if="{{orderData.orderType==2}}">
+                                <view class="product_footer">
+                                    <view class="product_label_l">配送费</view>
+                                    <view class="product_label_r">¥ {{product.shareDeliveryFee/100||0}}</view>
+                                </view>
+                                <view class="product_footer">
+                                    <view class="product_label_l">打包费</view>
+                                    <view class="product_label_r">¥ {{product.mealFee/100||0}}</view>
+                                </view>
+                            </block>
+                            <view class="product_footer">
+                                <view class="product_label_l">分摊优惠</view>
+                                <view class="product_label_r" style="color:#FF5254;">-¥ {{product.shareDiscountPrice/100||0}}</view>
+                            </view>
+                            <view class="product_footer" style="margin:0;">
+                                <view></view>
+                                <view style="display:flex;align-items:center;line-height:20px;">
+                                    <text style="font-size:24rpx;color:#777777;">小计</text>
+                                    <text catchtap="openOrderRule" class="iconfont icon-doubt"></text>
+                                    <text class="fb5">¥ {{product.price/100||0}}</text>
+                                </view>
+                            </view>
+                        </view>
+                    </product-item-user>
+                    <view bindtap="toggle" class="c-aaa f12 mt12" style="text-align:center;" wx:if="{{partitions.length>2}}">
+                        <text class="iconfont {{isShowDetail?'icon-arrow_up':'icon-arrow_down'}}">{{isShowDetail?'收起更多 ':'展开全部 '}}</text>
+                    </view>
+                    <view class="border-bottom-dashed" style="margin:0;"></view>
+                </view>
+            </block>
+        </block>
+        <view class="flex-sb pt12" wx:if="{{orderData.orderType==2}}">
+            <view bindtap="showTakeOutInfo" class="f13 c-777 flex-a-center">配送费<text class="iconfont icon-doubt"></text>
+            </view>
+            <view class="f14">
+                <text class="disabled-price mr5" wx:if="{{orderData.deliveryFeeMerchant>orderData.deliveryFee}}">¥{{orderData.deliveryFeeMerchant/100}}</text>
+                <text>¥{{orderData.deliveryFee/100||0}}</text>
+            </view>
+        </view>
+        <view class="flex-sb pt12" wx:if="{{orderData.orderType==2}}">
+            <text class="f13 c-777">打包费</text>
+            <text class="c-333 f14">¥{{orderData.mealFee/100||0}}</text>
+        </view>
+        <view class="border-bottom-dashed" wx:if="{{orderData.orderType==2}}"></view>
+        <block wx:if="{{orderData.couponDiscount||orderData.marketingDiscount&&orderData.marketingId||orderData.luckyCutDiscount||orderData.pointDed}}">
+            <view class="f13 pt12" wx:if="{{orderData.pointDed}}">
+                <view class="flex-sb c-777">
+                    <view>
+                        <text>{{coinName}}抵现活动</text>
+                    </view>
+                    <view class="c-theme-light">-¥{{orderData.pointDed/100||0}}</view>
+                </view>
+            </view>
+            <view class="flex-sb pt12" wx:if="{{orderData.marketingDiscount&&orderData.marketingId}}">
+                <text class="f13 c-777">优惠活动</text>
+                <view class="c-theme-light">
+                    <text class="activityName" wx:if="{{orderData.marketingName}}">{{orderData.marketingName}}</text>
+                    <text class="f14 ml8">-¥{{orderData.marketingDiscount/100||0}}</text>
+                </view>
+            </view>
+            <view bindtap="showCouponDetail" class="flex-sb pt12 c-777 f13" wx:if="{{orderData.couponDiscount}}">
+                <text>优惠券</text>
+                <view class="f14">
+                    <text class="c-theme-light mr4">-¥{{orderData.couponDiscount/100||0}}</text>
+                    <text class="c-theme-light f13"> 详情</text>
+                    <text class="iconfont icon-arrow_right"></text>
+                </view>
+            </view>
+            <view class="flex-sb pt12 f13 c-777" wx:if="{{orderData.luckyCutDiscount}}">
+                <text>拼单随机立减</text>
+                <text wx:if="{{orderData.luckyCutDiscount.discountPrice==0}}">暂无可享</text>
+                <text class="f14 c-theme-light" wx:else>- ¥{{orderData.luckyCutDiscount.discountPrice/100||0}}</text>
+            </view>
+            <view class="border-bottom-dashed"></view>
+        </block>
+        <view class="sum">
+            <text class="f13 c-333">共{{orderData.productCount||''}}件，合计</text>
+            <text class="f16 fb6 c-333">￥{{orderData.price/100||0}}</text>
+        </view>
+    </view>
+    <gift-card-detail customClass="card mb8" giftCardData="{{orderData.giftCardTradeVo}}" wx:if="{{orderData.giftCardTradeVo&&orderData.giftCardTradeVo.giftCardDeductTotalPrice}}"></gift-card-detail>
+    <view class="card mb11" wx:if="{{orderData.orderType==2}}">
+        <view class="f13 c-333 flex align-start mb11">
+            <text class="c-777 left-width">配送地址</text>
+            <text>{{orderData.consigneeAddress?orderData.consigneeAddress:''}} {{orderData.consigneeAddressDetail?orderData.consigneeAddressDetail:''}} </text>
+        </view>
+        <view class="f13 c-333 flex align-start mb11">
+            <text class="c-777 left-width">联系人</text>
+            <text>{{orderData.consignee?orderData.consignee:''}} {{orderData.consigneePhone?orderData.consigneePhone:''}}</text>
+        </view>
+    </view>
+    <view class="card mb11" wx:if="{{orderData.orderType==2||orderData.remark}}">
+        <view class="f13 c-333 flex mb11" wx:if="{{orderData.orderType==2}}">
+            <text class="c-777 left-width">餐具数量</text>
+            <text>{{orderData.tableware?'无需餐具':'按餐量提供'}}</text>
+        </view>
+        <view class="f13 c-333 flex mb11" wx:if="{{orderData.remark}}">
+            <text class="c-777 left-width">备注</text>
+            <text>{{orderData.remark?orderData.remark:'无'}}</text>
+        </view>
+        <view class="f13 c-333 flex align-start mb11">
+            <text class="c-777 left-width">门店编码</text>
+            <text>{{orderData.shopCode}}</text>
+        </view>
+    </view>
+    <view class="fixed-bottom safe-bottom">
+        <view class="f11 c-theme-light pt8" style="text-align:center" wx:if="{{orderData.giftCardTradeVo&&orderData.giftCardTradeVo.giftCardDeductTotalPrice}}">取消订单将会原路退回礼品卡余额</view>
+        <view class="pt8 pb8 flex">
+            <button bindtap="cancelOrder" class="bottom-btn-cancel">取消订单</button>
+            <button bindtap="goPay" style="width:420rpx" wx:if="{{orderData.giftCardTradeVo&&orderData.giftCardTradeVo.giftCardDeductTotalPrice}}">确认支付¥{{orderData.realPrice/100}}</button>
+            <button bindtap="goPay" style="width:420rpx" wx:else>确认支付</button>
+        </view>
+    </view>
+</view>
+<mx-popup show="{{isShowConfirmDialog}}" zIndex="299">
+    <view class="confirm-dialog f14">
+        <text class="f16 fb5" style="color:#000">取消订单</text>
+        <view class="mx-hairline--bottom f13" style="padding:24rpx 0 40rpx">{{orderSource==1?'订单取消后,需重新发起好友拼单下单':'订单取消后，需重新选择商品下单'}}</view>
+        <view style="display:flex">
+            <view bindtap="hideConfirm" class="cancel-btn c-777">取消</view>
+            <view bindtap="confirmCancel" class="confirm-btn c-theme mx-hairline--left">确定</view>
+        </view>
+    </view>
+</mx-popup>
+<mx-popup bind:close="hideTakeOutInfo" show="{{isShowTakeOutInfo}}">
+    <mx-tem-defee-info bind:close="hideTakeOutInfo" data="{{orderData}}"></mx-tem-defee-info>
+</mx-popup>
+<mx-popup bind:close="closeConfirmPopup" position="bottom" show="{{showPhoneConfirm}}" style="line-height:104rpx" zIndex="199">
+    <view class="flex-center f14 c-777 mx-hairline--bottom">联系电话</view>
+    <view bind:tap="selectPhone" class="flex-center mx-hairline--bottom" data-phone-number="{{item}}" wx:for="{{contactPhone}}" wx:key="*this">{{item}}</view>
+    <view bind:tap="closeConfirmPopup" class="flex-center mx-hairline--bottom">取消</view>
+    <view class="safe-bottom"></view>
+</mx-popup>
+<mx-popup show="{{isShowWarning}}">
+    <view class="confirm-dialog f14">
+        <view class="mx-hairline--bottom" style="padding:0 30rpx 40rpx ;line-height:40rpx;">由于长时间未支付，预约时间已失效，请重新下单</view>
+        <view bindtap="hideWarning" class="confirm-btn c-theme" style="line-height:88rpx;">确定</view>
+    </view>
+</mx-popup>
+<mx-popup bind:close="closeOrderRule" show="{{orderRule}}" wx:if="{{orderRule}}">
+    <mx-tem-join-rule bind:close="closeOrderRule" data="{{jointOrderConfig.ruleDesc}}"></mx-tem-join-rule>
+</mx-popup>
+<order-coupon-popup id="couponPopup" orderId="{{orderData.orderId}}"></order-coupon-popup>

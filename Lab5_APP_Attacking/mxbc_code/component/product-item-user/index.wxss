@@ -1,0 +1,40 @@
+.product_container {
+    border-top: 2rpx dashed #e6e6e6;
+    padding: 24rpx 0
+}
+
+.header {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    position: relative
+}
+
+.avatar {
+    border-radius: 100%;
+    height: 48rpx;
+    overflow: hidden;
+    width: 48rpx
+}
+
+.birthday-hat::after {
+    height: 20rpx;
+    left: 0;
+    top: -12rpx;
+    width: 24rpx
+}
+
+.user_name {
+    color: #333;
+    font-size: 28rpx;
+    line-height: 20px;
+    margin: 0 20rpx;
+    max-width: 248rpx
+}
+
+.pt12 {
+    padding-top: 24rpx
+}

@@ -1,0 +1,24 @@
+.container {
+    -webkit-overflow-scrolling: touch;
+    max-height: 880rpx;
+    overflow-y: auto;
+    padding: 32rpx 32rpx 100rpx;
+    position: relative;
+    text-align: center
+}
+
+.container .know-btn {
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    bottom: 0;
+    box-sizing: border-box;
+    left: 0;
+    padding: 22rpx;
+    position: fixed;
+    right: 0;
+    text-align: center
+}
+
+.container .mx-ellipsis {
+    text-align: left
+}

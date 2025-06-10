@@ -1,0 +1,123 @@
+.point-act-card {
+    border: 1rpx solid #f3d8d8;
+    border-radius: 24rpx;
+    font-size: 24rpx
+}
+
+.point-act-card_name {
+    background-color: #fff;
+    border: 8rpx solid #fbedec;
+    border-bottom: 0;
+    border-radius: 24rpx 24rpx 0 0;
+    color: #601814;
+    padding: 40rpx 24rpx 24rpx;
+    position: relative
+}
+
+.act-name {
+    max-width: 416rpx
+}
+
+.point-act-card_points {
+    background-color: #fff8f8;
+    border-radius: 0 0 24rpx 24rpx;
+    padding: 36rpx 0 24rpx 70rpx;
+    position: relative
+}
+
+.act-img {
+    height: 104rpx;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 202rpx
+}
+
+.point-total {
+    color: rgba(96,24,20,.6);
+    white-space: pre-wrap
+}
+
+.point-img {
+    height: 32rpx;
+    left: 32rpx;
+    position: absolute;
+    top: 42rpx;
+    width: 30rpx
+}
+
+.act-status {
+    height: 56rpx;
+    line-height: 56rpx;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 24rpx;
+    width: 202rpx
+}
+
+.act-status .act-btn {
+    color: #fff8f8;
+    display: inline-block;
+    font-weight: 500;
+    height: 56rpx;
+    line-height: 56rpx;
+    padding: 0;
+    width: 144rpx
+}
+
+.icon-doubt {
+    color: #bfa3a1;
+    font-size: 28rpx
+}
+
+.rule-box {
+    padding: 32rpx 32rpx 0;
+    text-align: justify
+}
+
+.rule-page {
+    -webkit-overflow-scrolling: touch;
+    max-height: 480rpx;
+    overflow: scroll;
+    white-space: pre-wrap
+}
+
+.close-btn,.text-center {
+    text-align: center
+}
+
+.close-btn {
+    color: var(--theme-color);
+    font-size: 32rpx;
+    padding: 20rpx 0
+}
+
+.close-icon {
+    color: hsla(0,0%,100%,.6);
+    float: right;
+    font-size: 48rpx;
+    margin-right: 34rpx
+}
+
+.exchange-success-img {
+    height: 608rpx;
+    margin-top: -10rpx;
+    width: 536rpx
+}
+
+.exchange-btn {
+    height: 160rpx;
+    width: 400rpx
+}
+
+.exchange-content {
+    box-sizing: border-box;
+    color: #520e0e;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    position: absolute;
+    text-align: center;
+    top: 370rpx;
+    width: 100%
+}

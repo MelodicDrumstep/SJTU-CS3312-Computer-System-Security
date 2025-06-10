@@ -1,0 +1,139 @@
+<view class="container-top">
+    <image lazyLoad class="header-bg level{{userInfo.customerLevel||0}}" mode="widthFix" src="{{__static__}}/main/mine_bg_level_0.png" wx:if="{{!userInfo.customerLevel}}"></image>
+    <block wx:else>
+        <image lazyLoad class="header-bg {{index+1==currentLevel?'header-img-opacity':''}}" mode="widthFix" src="{{__static__}}/main/mine_bg_level_{{index+1}}.png" wx:for="{{4}}" wx:key="index"></image>
+    </block>
+    <view class="userInfo mb24" wx:if="{{!userInfo.mobilePhone}}">
+        <image lazyLoad bindtap="toRegister" class="avatar" src="{{__static__}}/main/logo.png"></image>
+        <text class="nickname f14 ml12">{{regGuidanceSettingVo.myLoginTip}}</text>
+        <button bindtap="toRegister" class="auth-btn">授权登录</button>
+    </view>
+    <block wx:else>
+        <view class="userInfo">
+            <image lazyLoad bindtap="toProfiles" class="avatar mr10 {{userInfo.isBirthday==1?'birthday-hat':''}}" data-area="我的头像" data-event="My_pic" mode="aspectFill" src="{{userInfo.image||__static__+'/main/default_avatar.png'}}"></image>
+            <view>
+                <view bindtap="toProfiles" class="nickname f18 fb5 mb4" data-area="我的昵称" data-event="mine_click">{{userInfo.nickname||userInfo.mobilePhone}}</view>
+                <view bindtap="toMedal" class="c-777 medal-box f12 iconfont icon-arrow_right" wx:if="{{medalData&&medalData.medalTotalNumber>0}}">我的徽章<text decode class="c-333">&nbsp;{{medalData.userLightNumber}}</text>/{{medalData.medalTotalNumber}}<view class="medal-content">
+                        <image class="medal-img" mode="aspectFill" src="{{item.imageUrl}}" style="z-index:{{8-index}}" wx:for="{{medalData.medalList}}" wx:key="index"></image>
+                    </view>
+                </view>
+            </view>
+            <view bindtap="signTask" class="sign-img b-fff f12 {{userInfo.isSignin?'c-ccc':'c-333'}}">{{userInfo.isSignin?'已签到':'签到'}}</view>
+        </view>
+        <swiper bindchange="currentChange" class="rights-container" current="{{currentLevel-1}}" nextMargin="20rpx" previousMargin="20rpx">
+            <swiper-item class="level-box level{{item.levelType}}" wx:for="{{levelRights}}" wx:for-index="levelsIndex" wx:for-item="levels" wx:key="levelType">
+                <view class="level-card level{{levels.levelType||1}}" style="transform:perspective(1000rpx) translateZ({{-20}}rpx)">
+                    <image lazyLoad bindtap="toRights" class="level-card-img" src="{{__static__}}/main/mine_card_bg_level_{{levels.levelType||1}}.png"></image>
+                    <view bindtap="toRights" class="level-card-top">
+                        <view class="f16 fb mb10">{{levels.levelName}}</view>
+                        <view wx:if="{{levelsIndex+1<customerLevel}}">您已超越该等级～</view>
+                        <block wx:elif="{{customerLevel==4}}">
+                            <text>甜蜜值 {{userInfo.growthValue}}</text>
+                            <view class="level-text mt4">恭喜您已达最高等级，享【{{levels.currentLevelTxt||'--'}}】等{{levels.currentLevelRightsNum||'--'}}项权益</view>
+                        </block>
+                        <view wx:elif="{{levelsIndex+1==customerLevel}}">
+                            <text class="f12 mr4">甜蜜值</text>
+                            <text class="f14">{{userInfo.growthValue}}</text>
+                            <block wx:if="{{levels.growthValueMax}}">
+                                <text class="f14">/{{levels.growthValueMax}}</text>
+                                <mx-progress-bar activeColor="rgba(255,255,255)" backgroundColor="rgba(255,255,255,0.3)" class="progress-bar" percent="{{percentage}}" strokeWidth="12" wx:if="{{userInfo.customerLevel!=4}}"></mx-progress-bar>
+                            </block>
+                            <text class="level-text">
+                再升一级可享【{{levels.nextLevelTxt||'--'}}】等{{levels.nextLevelRightsNum||'--'}}项权益
+              </text>
+                        </view>
+                        <view class="level-text" wx:else>累计{{levels.growthValueMin}}点甜蜜值可升级，享【{{levels.currentLevelTxt}}】等{{levels.currentLevelRightsNum}}项权益</view>
+                    </view>
+                    <view class="level-card-bottom">
+                        <view bindtap="toRights" class="f14 mb10 iconfont icon-arrow_right fb5" wx:if="{{levelsIndex+1==customerLevel}}">您已解锁<text class="c-theme">{{levels.currentLevelRightsNum||'--'}}</text>项特权</view>
+                        <view bindtap="toRights" class="f14 mb10 iconfont icon-arrow_right fb5" wx:else>{{levels.levelName}}会员尊享<text>{{levels.currentLevelRightsNum}}</text>项权益</view>
+                        <view class="flex mb8 mt10">
+                            <view bindtap="changeTab" class="right-tab {{levels.tabIndex==index?'active':''}}" data-index="{{[levelsIndex,index]}}" wx:for="{{levels.categoryRights}}" wx:key="category">{{item.categoryName}}</view>
+                        </view>
+                        <scroll-view scrollX catchscroll="onScroll" class="rights-box" scrollLeft="{{scrollLeft}}">
+                            <view bindtap="toRights" class="rights-card" wx:for="{{levels.categoryRights[levels.tabIndex].rights}}" wx:for-index="categoryIndex" wx:for-item="rights" wx:key="id">
+                                <image lazyLoad class="rights-img {{rights.isHasRight==1?'':'locked-right'}}" src="{{rights.imgs}}"></image>
+                                <image lazyLoad class="locked-img" src="{{__static__}}/main/locked-img_{{levelsIndex+1}}.png" wx:if="{{!rights.isHasRight}}"></image>
+                                <view class="f12 mb2">{{rights.rightName}}</view>
+                                <view class="f10 c-777 mx-ellipsis">{{rights.assistDesc}}</view>
+                            </view>
+                        </scroll-view>
+                        <view class="scrollbar" wx:if="{{levels.categoryRights[levels.tabIndex].rights.length>4}}">
+                            <view class="scrollbar-thumb" style="left:{{60*levels.scrollPercent}}%;"></view>
+                        </view>
+                    </view>
+                </view>
+            </swiper-item>
+        </swiper>
+    </block>
+</view>
+<view class="flex-sb mb12 mt12">
+    <view bindtap="toCoin" class="panel coin-panel {{!giftCard.globalOpen?'two-item flex-sb':''}}">
+        <block wx:if="{{!giftCard.globalOpen}}">
+            <view class="l16">
+                <text class="f16 fb5">{{userInfo.mobilePhone?userInfo.customerPoint:'***'}}</text>
+                <view class="f12 c-777">雪王币</view>
+            </view>
+            <image lazyLoad class="item-icon" src="{{__static__}}/main/coinIcon.png"></image>
+        </block>
+        <block wx:else>
+            <view class="f12 c-777 l20">雪王币</view>
+            <view class="l16 flex-sb align-start">
+                <text class="f16 fb6 mt4">{{userInfo.mobilePhone?userInfo.customerPoint:'***'}}</text>
+                <image lazyLoad class="item-icon" src="{{__static__}}/main/coinIcon-new.png"></image>
+            </view>
+        </block>
+    </view>
+    <view bindtap="toCoupon" class="panel coupon-panel  {{!giftCard.globalOpen?'two-item flex-sb':''}}">
+        <block wx:if="{{!giftCard.globalOpen}}">
+            <view class="l16">
+                <text class="f16 fb5">{{userInfo.mobilePhone&&couponNum||'***'}}</text>
+                <view class="f12 c-777">优惠券</view>
+            </view>
+            <image lazyLoad class="item-icon" src="{{__static__}}/main/couponIcon.png"></image>
+        </block>
+        <block wx:else>
+            <view class="f12 c-777 l20">优惠券</view>
+            <view class="l16 flex-sb align-start">
+                <text class="f16 fb6 mt4">{{userInfo.mobilePhone&&couponNum||'***'}}</text>
+                <image lazyLoad class="item-icon" src="{{__static__}}/main/couponIcon-new.png"></image>
+            </view>
+        </block>
+    </view>
+    <view bindtap="toGiftCard" class="panel coupon-panel" wx:if="{{giftCard.globalOpen==1}}">
+        <view class="f12 c-777 l20">礼品卡</view>
+        <view class="l16 f16" style="position:relative;text-align:right">
+            <text class="fb5 card-balance" wx:if="{{userInfo.mobilePhone}}">
+                <block wx:if="{{giftCard.totalBalance}}">
+                    <text class="f12">¥</text>{{giftCard.totalBalance}}</block>
+                <text class="f10" wx:else>点击查看</text>
+            </text>
+            <text class="fb6 card-balance" wx:else>***</text>
+            <image lazyLoad class="item-icon" src="{{__static__}}/main/giftCard-new.png"></image>
+        </view>
+    </view>
+</view>
+<swiper autoplay circular class="task-area" indicatorActiveColor="rgba(51, 51, 51, 0.20)" indicatorColor="rgba(51, 51, 51, 0.20)" indicatorDots="{{medalTaskList.length>1||mzhdData.marketingId&&medalTaskList.length}}" interval="{{2500}}" wx:if="{{mzhdData.marketingId||medalTaskList.length}}">
+    <swiper-item wx:if="{{mzhdData.marketingId}}">
+        <mx-mzhd bind:receive="getMzhdData" data="{{mzhdData}}" type="mine"></mx-mzhd>
+    </swiper-item>
+    <swiper-item wx:for="{{medalTaskList}}" wx:key="index">
+        <mx-task-zone medalInfo="{{item}}" type="mine"></mx-task-zone>
+    </swiper-item>
+</swiper>
+<view class="block-title f14 fb5">更多服务</view>
+<view class="navigations">
+    <view bindtap="didSelectCell" class="cell pt8" data-event="{{item.event}}" data-url="{{item.url}}" wx:for="{{dataSource}}" wx:key="index">
+        <view class="icon-box">
+            <image lazyLoad class="cell-icon" src="{{__static__+item.icon}}" wx:if="{{item.iconType==='image'}}"></image>
+        </view>
+        <view class="cell-content c-777 f12">
+            <text>{{item.title}}</text>
+        </view>
+        <view class="cell-sub  c-theme b-theme-light f12" wx:if="{{item.content}}">{{item.content}}</view>
+    </view>
+</view>
+<mx-guide-to-app></mx-guide-to-app>
+<mx-subscribe-guide showSubscribeGuide="{{showSubscribeGuide}}"></mx-subscribe-guide>
+<mx-ad adAniFold="{{takeNoFold}}" adData="{{takeNo}}" adEvent="index_take_no" adType="takeNo" bindclose="closeTakeNo" wx:if="{{showTakeNo}}"></mx-ad>
+<view class="flex-center pt12 pb12 f10 c-aaa" wx:if="{{version}}">版本号：{{version}}</view>

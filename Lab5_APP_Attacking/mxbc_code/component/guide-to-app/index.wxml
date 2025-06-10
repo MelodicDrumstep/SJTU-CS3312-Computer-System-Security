@@ -1,0 +1,7 @@
+<view bindtap="onClick" class="guide-to-app flex-sb custom-class" wx:if="{{guidanceContentVo&&guidanceContentVo.status}}">
+    <view class="flex-sb">
+        <image lazyLoad class="logo" src="{{__static__}}/main/logo_square.png"></image>
+        <text class="f14">蜜雪冰城APP</text>
+    </view>
+    <view class="f12 c-aaa iconfont {{guidanceContentVo.linkAddress?'icon-arrow_right':''}}">{{guidanceContentVo.content}}</view>
+</view>

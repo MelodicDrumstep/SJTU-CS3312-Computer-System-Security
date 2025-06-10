@@ -1,0 +1,105 @@
+.cell {
+    background-color: #fff;
+    color: #333;
+    font-size: 28rpx;
+    font-weight: 400;
+    line-height: 40rpx;
+    padding: 30rpx 40rpx;
+    position: relative
+}
+
+.cell-wrap {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    overflow: hidden
+}
+
+.cell__title {
+    margin-right: 24rpx;
+    max-width: 140rpx;
+    min-width: 140rpx
+}
+
+.cell__content {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    height: 100%;
+    min-width: 1rpx;
+    padding: 0 10rpx
+}
+
+.cell__content-container {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex
+}
+
+.content-placeholder {
+    color: #999;
+    font-weight: 400
+}
+
+.content-text {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%
+}
+
+.cell__content-errmsg {
+    color: #ee0a24;
+    font-size: 12px;
+    line-height: 1;
+    margin-top: 6rpx
+}
+
+.cell__value {
+    color: #999;
+    text-align: right
+}
+
+.cell__icon {
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center
+}
+
+.isLink::after {
+    border-right: 1px solid #777;
+    border-top: 1px solid #777;
+    content: "";
+    display: block;
+    height: 14rpx;
+    left: -2px;
+    position: relative;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 14rpx
+}
+
+.border-bottom::after {
+    border-bottom: 1px solid #ebedf0;
+    bottom: 0;
+    box-sizing: border-box;
+    content: " ";
+    left: 16px;
+    pointer-events: none;
+    position: absolute;
+    right: 16px;
+    -webkit-transform: scaleY(.5);
+    transform: scaleY(.5);
+    -webkit-transform-origin: center;
+    transform-origin: center
+}

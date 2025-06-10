@@ -1,0 +1,2 @@
+<goods-detail bind:close="goBack" bind:updateGoods="dialogUpdateGoods" goods="{{goods}}" show="{{goods.productId}}" useBuyNow="{{useBuyNow}}"></goods-detail>
+<mx-join-group-guide cancelJump="{{false}}" cancelText="暂不添加" content="添加福利官或进群成功后，再次加购即可" id="joinGroupGuide" title="该商品仅限社群用户购买"></mx-join-group-guide>

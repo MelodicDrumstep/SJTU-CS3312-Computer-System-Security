@@ -1,0 +1,177 @@
+{
+  "entryPagePath": "pages/index/index",
+  "pages": [
+    "pages/index/index",
+    "pages/menu/index",
+    "pages/order/index",
+    "pages/mine/index",
+    "pages/store/index",
+    "pages/register/index",
+    "pages/webView/index",
+    "pages/goods/index",
+    "pages/combo/index",
+    "pages/combo-diy/index",
+    "pages/goods-search/index",
+    "pages/order_detail/cart/index",
+    "pages/order_detail/remark/index",
+    "pages/order_detail/pay/index",
+    "pages/order_detail/finish/index",
+    "pages/order_detail/take/index",
+    "pages/order_detail/refund/index",
+    "pages/goods-sell-store/index"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "为避免错选门店而带来不必要的麻烦，我们需要获取您的定位权限"
+    }
+  },
+  "networkTimeout": {
+    "request": 5000,
+    "connectSocket": 5000,
+    "uploadFile": 5000,
+    "downloadFile": 5000
+  },
+  "tabBar": {
+    "color": "#8E8E93",
+    "selectedColor": "#E60012",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "assets\\index.png",
+        "selectedIconPath": "assets\\index_active.png"
+      },
+      {
+        "text": "点餐",
+        "pagePath": "pages/menu/index",
+        "iconPath": "assets\\menu.png",
+        "selectedIconPath": "assets\\menu_active.png"
+      },
+      {
+        "text": "订单",
+        "pagePath": "pages/order/index",
+        "iconPath": "assets\\order.png",
+        "selectedIconPath": "assets\\order_active.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/mine/index",
+        "iconPath": "assets\\mine.png",
+        "selectedIconPath": "assets\\mine_active.png"
+      }
+    ]
+  },
+  "preloadRule": {
+    "pages/index/index": {
+      "network": "all",
+      "packages": [
+        "pages/coupon",
+        "pages/customer-center"
+      ]
+    },
+    "pages/menu/index": {
+      "network": "all",
+      "packages": [
+        "pages/coupon",
+        "pages/customer-center"
+      ]
+    },
+    "pages/webView/index": {
+      "network": "all",
+      "packages": [
+        "pages/coupon"
+      ]
+    }
+  },
+  "renderer": "webview",
+  "resolveAlias": {
+    "@/*": "/*"
+  },
+  "requiredPrivateInfos": [
+    "chooseLocation",
+    "getLocation"
+  ],
+  "componentFramework": "exparser",
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "蜜雪冰城",
+    "navigationBarTextStyle": "black",
+    "handleWebviewPreload": "auto"
+  },
+  "subPackages": [
+    {
+      "root": "pages/coupon/",
+      "pages": [
+        "pack-list/index",
+        "pack-buy-list/index",
+        "pack-buy-result/index",
+        "upd-discounts/index",
+        "use-voucher/index",
+        "mine/index",
+        "rules/index",
+        "select/index",
+        "select-all/index",
+        "store/index",
+        "cdKey/index",
+        "store-coupon/index",
+        "give-list/index",
+        "group-buying-list/index"
+      ]
+    },
+    {
+      "root": "pages/customer-center/",
+      "pages": [
+        "address-list/index",
+        "address-editor/index",
+        "profiles/index",
+        "coin/index",
+        "record/index",
+        "rights/index",
+        "about-us/index",
+        "logout/index"
+      ]
+    },
+    {
+      "root": "pages/activity/",
+      "pages": [
+        "coupon-center/index",
+        "joint-order/index",
+        "joint-menu/index",
+        "joint-order-error/index",
+        "customer-share/index",
+        "msg-subscription/index",
+        "invite-gift/index",
+        "invite-record/index",
+        "invite-coupon/index",
+        "custom-generate/index",
+        "expand-share/index",
+        "assist/index",
+        "association/index"
+      ]
+    },
+    {
+      "root": "pages/wallet/",
+      "pages": [
+        "gift-card/index",
+        "gift-card/settle/index",
+        "gift-card/settle-result/index",
+        "gift-card/order-list/index",
+        "gift-card/order-detail/index",
+        "gift-card/card-detail/index",
+        "gift-card/record-list/index",
+        "gift-card/multi-send/index",
+        "gift-card/pick-up/index",
+        "gift-card/select/index"
+      ]
+    },
+    {
+      "root": "pages/duiba/",
+      "pages": [
+        "duibaPay/duibaPay",
+        "duibaRedirect/duibaRedirect"
+      ]
+    }
+  ],
+  "plugins": {}
+}

@@ -1,0 +1,8 @@
+<mx-field maxlength="20" value="{{remark}}" placeholder="{{orderType==1?'特殊需求请与门店提前沟通，暂不支持通过备注定制口味，自提订单需到门店取餐，不支持配送':'暂不支持通过备注定制口味'}}"></mx-field>
+<view class="pl16 pr16 mt6">
+    <block wx:if="{{remarkArr.length}}">
+        <view class="f12 c-777">快捷标签</view>
+        <text bind:tap="selectRemark" class="remark-tag" data-index="{{index}}" wx:for="{{remarkArr}}" wx:key="*this">{{item}}</text>
+    </block>
+    <button bindtap="submitRemark" class="mt27">完成</button>
+</view>

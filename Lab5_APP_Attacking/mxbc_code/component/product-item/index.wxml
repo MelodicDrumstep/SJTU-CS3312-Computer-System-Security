@@ -1,0 +1,21 @@
+<view class="flex custom-class {{statusObj[product.status]}}">
+    <image lazyLoad class="product-img" src="{{product.productLogo}}"></image>
+    <view class="product-content">
+        <view class="flex-sb">
+            <text class="f14 mx-ellipsis c-333">{{product.productName}}</text>
+            <view class="f12 ml11 shrink">
+                <text class="mr7 disabled-price" wx:if="{{product.originPrice!=product.price&&product.originPrice!==null}}">￥{{product.originPrice/100}}</text>
+                <text class="f14 fb5 c-333">
+                    <text class="f12">¥ </text>{{product.price/100}}</text>
+            </view>
+        </view>
+        <text class="f11 c-777 mt4">{{selectNames}}</text>
+        <view class="f12 c-333 mt4">x {{product.productAmount}}</view>
+        <view class="tags">
+            <text class="f10 mt4 c-text-theme tag" wx:if="{{product.productVoucherList&&product.productVoucherList.length}}">使用商品券x{{product.productVoucherList.length}}</text>
+            <block wx:if="{{product.promotionLabels&&product.promotionLabels.length}}">
+                <text class="f10 mt4 c-text-theme tag" wx:for="{{product.promotionLabels}}" wx:key="*this">{{product.promotionLabels[index]}}</text>
+            </block>
+        </view>
+    </view>
+</view>

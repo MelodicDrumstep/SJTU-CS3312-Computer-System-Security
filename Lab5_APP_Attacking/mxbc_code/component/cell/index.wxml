@@ -1,0 +1,23 @@
+<view bindtap="onClick" class="cell custom-class">
+    <view class="cell-wrap {{border?'border-bottom':''}}">
+        <view class="cell__title">
+            <text wx:if="{{title}}">{{title}}</text>
+            <slot name="title" wx:else></slot>
+        </view>
+        <view class="cell__content">
+            <view class="cell__content-container">
+                <view class="content-placeholder" wx:if="{{placeholder&&!content}}">{{placeholder}}</view>
+                <text class="content-text" wx:if="{{content}}">{{content}}</text>
+                <slot name="content" wx:else></slot>
+            </view>
+            <view class="cell__content-errmsg" wx:if="{{errorMessage}}">{{errorMessage}}</view>
+        </view>
+        <view class="cell__value">
+            <text wx:if="{{value}}">{{value}}</text>
+            <slot name="value" wx:else></slot>
+        </view>
+        <view class="cell__icon {{isLink?'isLink':''}}">
+            <slot name="icon"></slot>
+        </view>
+    </view>
+</view>

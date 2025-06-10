@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "mx-tencent-flower": "pages\\order\\component\\tencent-flower\\index",
+    "mx-tab": "pages\\order\\component\\tab\\index",
+    "mx-order-item": "pages\\order\\component\\order-item\\index",
+    "mx-dialog": "pages\\order\\component\\dialog\\index"
+  },
+  "navigationBarTitleText": ""
+}

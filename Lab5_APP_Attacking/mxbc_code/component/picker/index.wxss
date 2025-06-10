@@ -1,0 +1,8 @@
+.container {
+    padding-top: 40rpx;
+    text-align: center
+}
+
+.icon-container {
+    line-height: 88rpx
+}

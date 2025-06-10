@@ -1,0 +1,110 @@
+<mx-nav-bar useDialog bindback="goBack">
+    <button class="share-btn" openType="share">
+        <image lazyLoad class="share-icon" src="{{__static__}}/main/goods_share2.png"></image>
+    </button>
+</mx-nav-bar>
+<view class="combos-cards-swiper">
+    <mx-ad adData="{{comboData.productImages}}" adInterval="{{2000}}" adType="banner" customClass="combo-img"></mx-ad>
+    <view class="combo-top">
+        <view class="f16 fb5 mx-ellipsis">{{comboData.productName}}</view>
+        <text class="text-tag mt4" style="color:#777;background:#F6F6F6" wx:if="{{comboData.singleNotDelivery}}">单点不送</text>
+        <view class="f14 c-777 mt8 mx-ellipsis" wx:if="{{comboData.productDesc}}">{{comboData.productDesc}}</view>
+    </view>
+    <view class="combos-cards bg-fff" id="{{'cards'+index}}" wx:for="{{comboData.comboGroups}}" wx:for-item="category" wx:key="groupId">
+        <view class="combos-cards_title">{{category.groupName}}（{{category.combos.length}}选{{category.selectQuantity}}）</view>
+        <view class="combos-cards_content">
+            <view bindtap="openGoodsDetail" class="goods-item {{goods.disableClassName}}" data-indexs="{{[index,goods_idx]}}" wx:for="{{category.combos}}" wx:for-index="goods_idx" wx:for-item="goods" wx:key="productId">
+                <image lazyLoad class="goods-img" src="{{goods.productLogo}}"></image>
+                <view class="f13 mx-ellipsis fb5">{{goods.productName||''}}{{goods.cups&&goods.cups.length?'（'+goods.cups[goods.selectCup].specName+'）':''}}</view>
+                <view class="cards-price flex-sb">
+                    <view>
+                        <block wx:if="{{goods.detailRaisePrice&&!goods.disableClassName}}">
+                            <text class="goods-price f12 mr3">+¥</text>
+                            <text class="goods-price f12">{{goods.detailRaisePrice/100}}</text>
+                        </block>
+                        <text class="goods-price f12 mr3" wx:else></text>
+                    </view>
+                    <view class="number-buttons flex-sb" style="width:{{goods.addNum?'170rpx':'auto'}}">
+                        <block wx:if="{{goods.addNum}}">
+                            <text catchtap="removeGoods" class="icon-btn iconfont icon-remove c-theme" data-indexs="{{[index,goods_idx]}}"></text>
+                            <text class="f14 add-num">{{goods.addNum}}</text>
+                        </block>
+                        <text catchtap="addGoods" class="icon-btn iconfont icon-add c-theme {{category.addNum>=category.selectQuantity&&!goods.addNum?'disabled':''}}" data-indexs="{{[index,goods_idx]}}"></text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="cart-box mx-hairline--top">
+    <view class="flex-sb inner-box">
+        <view bind:tap="toogleCartDetail" class="cart-img-box">
+            <image lazyLoad class="cart-img" src="{{__static__}}/main/cart2.png" style="opacity:{{cartData.productAmount?'1':'0.4'}};"></image>
+            <text class="number-icon" style="top:0;right:0" wx:if="{{cartData.productAmount}}">{{cartData.productAmount}}</text>
+        </view>
+        <view class="price-box f11">
+            <block wx:if="{{cartData.productAmount<comboData.limitNum}}">
+                <text>选择{{comboData.limitNum}}件商品：</text>
+                <text class="f12 fb">
+                    <text class="ml3 mr3">¥</text>
+                    <text class="f18">{{cartData.splitOriginSprice[0]||0}}</text>
+                    <text wx:if="{{cartData.splitOriginSprice[1]}}">.{{cartData.splitOriginSprice[1]||0}}</text>
+                    <text class="ml3 c-aaa fb4">起</text>
+                </text>
+            </block>
+            <block wx:else>
+                <text>合计：</text>
+                <text class="f12 fb">
+                    <text class="ml3 mr3">¥</text>
+                    <text class="f18">{{cartData.splitSprice[0]||0}}</text>
+                    <text wx:if="{{cartData.splitSprice[1]}}">.{{cartData.splitSprice[1]||0}}</text>
+                </text>
+            </block>
+        </view>
+        <button bind:tap="confirmSelect" disabled="{{cartData.productAmount<comboData.limitNum}}" style="width:240rpx">{{cartData.productAmount<comboData.limitNum?'选购未完成':'加入购物车'}}</button>
+    </view>
+    <view class="safe-bottom"></view>
+</view>
+<view class="safe-bottom"></view>
+<mx-popup bind:close="closeCartDetail" position="bottom" show="{{isShowCartDetail}}" zIndex="99">
+    <view class="cart-detail safe-bottom">
+        <view class="title flex-sb">
+            <text class="f16 fb">已选商品</text>
+            <view bind:tap="showConfirmDialog" class="f12 c-aaa">
+                <text class="iconfont icon-delete f13"></text>
+                <text>清空</text>
+            </view>
+        </view>
+        <view class="content-box">
+            <view class="cart-detail-goods" wx:for="{{cartData.products}}" wx:key="productId">
+                <image lazyLoad class="cart-detail-img" src="{{item.productLogo}}"></image>
+                <view class="cart-detail-goods-text f11">
+                    <text class="fb f14">{{item.productName}}</text>
+                    <text class="select-item-text c-777">{{item.selectNames}}</text>
+                    <view class="select-item-price fb5 f12" wx:if="{{item.totalAddPrice}}">
+                        <text class="mr3">+</text>
+                        <text class="f16 ml2">¥{{item.totalAddPrice/100||0}}</text>
+                    </view>
+                </view>
+                <view class="number-buttons flex-sb" style="width:170rpx;bottom:-16rpx;font-size:48rpx">
+                    <text bind:tap="cartRemoveGoods" class="icon-btn iconfont icon-remove c-theme" data-index="{{index}}"></text>
+                    <text class="f14">{{item.productAmount}}</text>
+                    <text bind:tap="cartAddGoods" class="icon-btn iconfont icon-add c-theme" data-index="{{index}}"></text>
+                </view>
+            </view>
+        </view>
+    </view>
+</mx-popup>
+<mx-popup bind:close="closeConfirmDialog" show="{{isShowConfirmDialog}}" zIndex="199">
+    <view class="confirm-dialog f14">
+        <view class="confirm-msg mx-hairline--bottom">确认清空购物车吗？</view>
+        <view style="display:flex">
+            <view bind:tap="closeConfirmDialog" class="cancel c-777">我再想想</view>
+            <view bind:tap="confirmClear" class="confirm c-theme mx-hairline--left">确定</view>
+        </view>
+    </view>
+</mx-popup>
+<mx-popup bind:close="closeGoodsDetail" show="{{isShowGoodsDetail}}" zIndex="199">
+    <goods-detail bind:close="closeGoodsDetail" bind:updateGoods="dialogUpdateGoods" cart="{{cartData}}" goods="{{currentGoods}}" show="{{isShowGoodsDetail}}" type="diy"></goods-detail>
+</mx-popup>
+<mx-join-group-guide cancelJump="{{false}}" cancelText="暂不添加" content="添加福利官或进群成功后，再次加购即可" id="joinGroupGuide" title="该商品仅限社群用户购买"></mx-join-group-guide>

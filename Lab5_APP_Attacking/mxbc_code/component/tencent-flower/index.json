@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mx-popup": "component\\tencent-flower\\component\\popup\\index"
+  },
+  "pureDataPattern": "^pure_"
+}

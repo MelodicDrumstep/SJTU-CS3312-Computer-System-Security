@@ -1,0 +1,8 @@
+<view bindtouchcancel="endDrag" bindtouchend="endDrag" bindtouchstart="startDrag" capture-bind:touchmove="onDrag" catchtap="onClick" class="swipe-cell custom-class" id="swipe-cell">
+    <view class="swipe-cell-wrap" style="{{wrapperStyle}}">
+        <slot></slot>
+        <view catch:tap="onClose" class="swipe-cell__right">
+            <slot name="right"></slot>
+        </view>
+    </view>
+</view>

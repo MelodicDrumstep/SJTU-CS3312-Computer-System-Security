@@ -1,0 +1,51 @@
+<view class="warp-default" wx:if="{{template==='default'}}">
+    <image lazyLoad class="logo" src="{{__static__}}/main/logo.png"></image>
+    <text>{{brandName}}</text>
+    <text class="wx-auth-txt">成为会员，立享更多优惠福利</text>
+    <text class="wx-tip-txt">授权绑定手机号 为您提供更好的服务</text>
+    <button bindtap="checkedTap" class="auth-button" wx:if="{{!privacyStatus}}">一键登录</button>
+    <block wx:else>
+        <button bindgetphonenumber="getPhoneNumber" bindtap="getSessionKey" class="auth-button" openType="getPhoneNumber" wx:if="{{!isBindPhone}}">一键登录</button>
+        <button bindtap="login" class="auth-button" wx:else>一键登录</button>
+    </block>
+    <view bindtap="updatePrivacyStatus" class="f11 flex-start" style="width:590rpx;">
+        <text class="iconfont {{privacyStatus?'icon-checked c-theme':'icon-unchecked c-aaa'}} f16 flex-center" style="width:44rpx;"></text>
+        <view style="flex:1">
+            <text>已阅读并同意</text>
+            <text catchtap="advertiseTap" class="c-theme" data-url="https://mxsa.mxbc.net/policy.html">《蜜雪冰城个人信息保护政策》</text>
+            <text catchtap="advertiseTap" class="c-theme" data-url="https://mxsa.mxbc.net/agreement.html">《蜜雪冰城用户服务协议》</text>
+        </view>
+    </view>
+    <view bindtap="goBack" class="cancel" wx:if="{{showCancel}}">暂不登录</view>
+</view>
+<view class="warp-popup" wx:if="{{template==='popup'}}">
+    <view bindtap="goBack" class="cancel">暂不登录</view>
+    <image lazyLoad class="login-img" src="{{__static__}}/regGuidance/loginPopImg.png"></image>
+    <button bindtap="checkedTap" class="auth-button" wx:if="{{!privacyStatus}}">一键登录</button>
+    <block wx:else>
+        <button bindgetphonenumber="getPhoneNumber" bindtap="getSessionKey" class="auth-button" openType="getPhoneNumber" wx:if="{{!isBindPhone}}">一键登录</button>
+        <button bindtap="login" class="auth-button" wx:else>一键登录</button>
+    </block>
+    <view bindtap="updatePrivacyStatus" class="f12 flex-start" style="width:702rpx;">
+        <text class="iconfont {{privacyStatus?'icon-checked c-theme':'icon-unchecked c-aaa'}} f16 flex-center" style="width:44rpx;"></text>
+        <view style="flex:1">
+            <text>已阅读并同意</text>
+            <text catchtap="advertiseTap" class="c-theme" data-url="https://mxsa.mxbc.net/policy.html">《蜜雪冰城个人信息保护政策》</text>
+            <text catchtap="advertiseTap" class="c-theme" data-url="https://mxsa.mxbc.net/agreement.html">《蜜雪冰城用户服务协议》</text>
+        </view>
+    </view>
+</view>
+<mx-popup show="{{isShowTip}}">
+    <view style="width:550rpx;text-align:center;font-size:28rpx;">
+        <view class="mx-hairline--bottom f13" style="padding:64rpx 40rpx;font-size:26rpx;">{{tips}}</view>
+        <view bindtap="tipConfirm" class="c-theme" style="padding:20rpx;font-weight:500;">确定</view>
+    </view>
+</mx-popup>
+<mx-popup show="{{!isShowTip&&isGetNewGift}}">
+    <view style="width:550rpx;padding:40rpx 40rpx 0;text-align:center;box-sizing:border-box;">
+        <view class="f16 fb5 mb5">恭喜获得新人礼</view>
+        <view class="f12 c-777">【首次入会】可享新人券包</view>
+        <view class="f12 c-777" style="padding-bottom:40rpx;">在我的优惠券中查看</view>
+        <view bindtap="newGiftConfirm" class="c-theme fb5 mx-hairline--top" style="height:88rpx;line-height:88rpx;">去下单</view>
+    </view>
+</mx-popup>

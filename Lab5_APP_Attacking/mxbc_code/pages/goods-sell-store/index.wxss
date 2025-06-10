@@ -1,0 +1,55 @@
+.goods-sell-store,page {
+    background-color: #f4f4f7
+}
+
+.goods-sell-store {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw
+}
+
+.goods-sell-store .goods-img {
+    height: 564rpx
+}
+
+.goods-sell-store-header {
+    font-weight: 500;
+    padding: 24rpx
+}
+
+.goods-sell-store-title {
+    padding: 24rpx
+}
+
+.goods-sell-store-list {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 0 24rpx 48rpx
+}
+
+.goods-sell-store-empty {
+    text-align: center
+}
+
+.store-empty-img {
+    display: block;
+    height: 482rpx;
+    margin: 0 auto;
+    width: 486rpx
+}
+
+.location-page.goods-sell-store-location {
+    background-color: #f4f4f7;
+    height: 742rpx
+}

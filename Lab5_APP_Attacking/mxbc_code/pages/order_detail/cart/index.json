@@ -1,0 +1,19 @@
+{
+  "navigationBarBackgroundColor": "#FC3F41",
+  "backgroundColorTop": "#FC3F41",
+  "navigationBarTextStyle": "white",
+  "navigationBarTitleText": "订单结算",
+  "backgroundColor": "#F5F5F5",
+  "usingComponents": {
+    "mx-tencent-flower": "pages\\order_detail\\cart\\component\\tencent-flower\\index",
+    "mx-mzhd": "pages\\order_detail\\cart\\component\\tem-mzhd\\index",
+    "product-item": "pages\\order_detail\\cart\\component\\product-item\\index",
+    "product-item-user": "pages\\order_detail\\cart\\component\\product-item-user\\index",
+    "mx-popup": "pages\\order_detail\\cart\\component\\popup\\index",
+    "mx-tem-store-error": "pages\\order_detail\\cart\\component\\tem-store-error\\index",
+    "mx-tem-defee-info": "pages\\order_detail\\cart\\component\\tem-defee-info\\index",
+    "mx-picker": "pages\\order_detail\\cart\\component\\picker\\index",
+    "mx-dialog": "pages\\order_detail\\cart\\component\\dialog\\index",
+    "pay-gift-card": "pages\\order_detail\\cart\\component\\pay-gift-card\\index"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mx-popup": "component\\gift-card-detail\\component\\popup\\index"
+  }
+}

@@ -1,0 +1,47 @@
+.pay-gift {
+    background: -webkit-linear-gradient(top,#ffeff2,#fff 50%,#fff);
+    background: linear-gradient(180deg,#ffeff2,#fff 50%,#fff);
+    border: 2rpx solid #fff;
+    padding: 32rpx 24rpx;
+    position: relative
+}
+
+.pay-gift-tip {
+    -webkit-box-flex: 1;
+    color: rgba(252,63,65,.6);
+    -webkit-flex: 1;
+    flex: 1;
+    line-height: 36rpx
+}
+
+.pay-gift .icon-arrow_right:after {
+    color: #aaa;
+    display: inline-block;
+    padding: 4rpx 8rpx
+}
+
+.limit {
+    width: 520rpx
+}
+
+.reward-btn {
+    position: absolute;
+    right: 24rpx;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%)
+}
+
+.pay-gift_popup {
+    -webkit-box-align: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    line-height: 60rpx
+}

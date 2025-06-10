@@ -1,0 +1,103 @@
+<view bindtap="showGoodsDetail" class="goods-item {{model}} {{goods.disableClassName}} custom-class" data-goods-id="{{goods.productId}}" wx:if="{{model=='grid'}}">
+    <block wx:if="{{show}}">
+        <image lazyLoad class="goods-img" mode="aspectFill" src="{{goods.productImg}}"></image>
+        <view class="goods-text">
+            <view class="goods-info">
+                <view class="f14 fb5 mx-multi-ellipsis--l2">{{goods.productName||''}}</view>
+                <view class="f11 pt2 pb2" wx:if="{{goods.teastName}}">{{goods.teastName}}</view>
+                <view class="goods-tags" wx:if="{{goods.productTags.length}}">
+                    <text class="tags-item mx-ellipsis" style="color:{{tags.fontColor}};background:{{tags.bgColor}}" wx:for="{{goods.productTags}}" wx:for-item="tags" wx:key="id">{{tags.content}}</text>
+                </view>
+                <view class="goods-desc mt4 mx-ellipsis f11 c-aaa" wx:if="{{goods.productDesc}}">{{goods.productDesc}}</view>
+            </view>
+            <block wx:if="{{goods.productLabels&&!goods.estimatedPrice&&!goods.exchangeMarketingId}}">
+                <text class="text-tag mt4 ml4" wx:for="{{goods.productLabels}}" wx:for-item="label" wx:key="*this"> {{label}}</text>
+            </block>
+            <view class="goods-price mt10 {{goods.productLabels||!!goods.estimatedPrice?'theme-price':'default-price'}}" wx:if="{{goods.presellFlag!==1}}">
+                <view class="c-theme f12  flex-a-center" wx:if="{{goods.exchangeMarketingId}}">
+                    <image class="exchange-marketing-img" height="12" mode="aspectFill" src="{{__static__}}/activity/coupon-tag.png" width="12"></image>
+                    <text>仅供兑换</text>
+                </view>
+                <block wx:else>
+                    <text class="mr2 fb5 price-colorful">¥</text>
+                    <text class="f16 fb5 price-colorful">{{goods.splitSprice[0]}}</text>
+                    <text class="fb5 price-colorful" wx:if="{{goods.splitSprice[1]}}">.{{goods.splitSprice[1]}}</text>
+                    <text class="ml3 bright-colorful" wx:if="{{goods.hasMorePrice}}">起</text>
+                    <text class="bright-colorful" wx:if="{{goods.estimatedPrice}}"> 券后价</text>
+                    <text class="origin-price c-aaa" wx:if="{{_.underlinePrice(goods)}}">¥{{goods.originPrice/100}}</text>
+                </block>
+                <text catchtap="toGoodsSellStore" class="presell-good b-theme f12" data-goods-id="{{goods.productId}}" wx:if="{{goods.productStatus==3}}">可售门店</text>
+                <text catchtap="toPackDetail" class="icon-btn iconfont icon-add c-theme" data-goods-id="{{goods.productId}}" wx:elif="{{goods.productType==3}}"></text>
+                <text catchtap="addGoods" class="icon-btn iconfont icon-add c-theme" data-goods-id="{{goods.productId}}" wx:else></text>
+            </view>
+            <view class="goods-price" wx:else>
+                <view class="presell-good b-theme f12" style="margin:16rpx 0;">开售提醒我</view>
+            </view>
+        </view>
+    </block>
+</view>
+<view bindtap="showGoodsDetail" class="goods-item {{model}} {{goods.disableClassName}} custom-class" data-goods-id="{{goods.productId}}" wx:else>
+    <block wx:if="{{goods.showStyle===2&&show}}">
+        <image lazyLoad class="goods-img" mode="widthFix" src="{{goods.productImg}}"></image>
+        <view class="number-buttons flex-sb" style="width:{{goods.addNum?'120rpx':'auto'}};font-size:44rpx">
+            <block wx:if="{{goods.addNum}}">
+                <text catchtap="removeGoods" class="icon-btn iconfont icon-remove c-ccc" data-goods-id="{{goods.productId}}"></text>
+                <text class="f14">{{goods.addNum}}</text>
+            </block>
+            <text catchtap="addGoods" class="icon-btn iconfont icon-add {{goods.disableClassName?'c-ccc':'c-theme'}}" data-goods-id="{{goods.productId}}"></text>
+        </view>
+    </block>
+    <block wx:elif="{{show}}">
+        <image lazyLoad class="goods-img b-eee" src="{{goods.productLogo}}"></image>
+        <view class="goods-text goods-text--default">
+            <view class="goods-info">
+                <view class="flex-a-center">
+                    <text class="f14 fb">{{goods.productName||''}}</text>
+                    <text class="goods-corner-mark ml4" style="{{_.setCornerTagStyle(goods.cornerTag)}}" wx:if="{{goods.productName&&goods.productName.length<=8&&goods.cornerTag}}">{{goods.cornerTag.content}}</text>
+                </view>
+                <view class="goods-tags" wx:if="{{goods.productTags.length}}">
+                    <text class="tags-item mx-ellipsis" style="color:{{tags.fontColor}};background:{{tags.bgColor}}" wx:for="{{goods.productTags}}" wx:for-item="tags" wx:key="id">{{tags.content}}</text>
+                </view>
+                <view class="goods-desc mt4 mb4 mx-ellipsis c-aaa" wx:if="{{goods.productDesc}}">{{goods.productDesc}}</view>
+            </view>
+            <view class="goods-price" wx:if="{{goods.presellFlag!==1}}">
+                <view class="c-theme f12 flex-a-center" wx:if="{{goods.exchangeMarketingId}}">
+                    <image class="exchange-marketing-img" height="12" mode="aspectFill" src="{{__static__}}/activity/coupon-tag.png" width="12"></image>
+                    <text> 仅供兑换</text>
+                </view>
+                <block wx:else>
+                    <text class="text-tag mr4 mt4" wx:if="{{goods.productLabels&&!goods.estimatedPrice}}"> {{goods.productLabels[0]}}</text>
+                    <text class="text-tag mt4" style="color:#777;background:#F6F6F6" wx:if="{{goods.singleNotDelivery}}">单点不送</text>
+                    <view class="{{goods.productLabels||!!goods.estimatedPrice?'theme-price':'default-price'}}">
+                        <text class="mr2 fb5 price-colorful">¥</text>
+                        <text class="f16 fb5 price-colorful">{{goods.splitSprice[0]}}</text>
+                        <text class="fb5 price-colorful" wx:if="{{goods.splitSprice[1]}}">.{{goods.splitSprice[1]}}</text>
+                        <text class="ml3 bright-colorful" wx:if="{{goods.hasMorePrice}}">起 </text>
+                        <text class="bright-colorful" wx:if="{{goods.estimatedPrice}}">券后价</text>
+                        <text class="disabled-price" wx:if="{{_.underlinePrice(goods)}}">¥{{goods.originPrice/100}}</text>
+                    </view>
+                </block>
+                <block wx:if="{{!hideNumberButton}}">
+                    <view catchtap="toGoodsSellStore" class="normal-buttons f11 flex-center" data-goods-id="{{goods.productId}}" wx:if="{{goods.productStatus==3}}">可售门店</view>
+                    <view catchtap="toPackDetail" class="normal-buttons f11 flex-center" data-goods-id="{{goods.productId}}" wx:elif="{{goods.productType==3}}">立即购买</view>
+                    <view class="number-buttons flex-sb" style="width:{{goods.addNum?'140rpx':'auto'}};bottom:-16rpx;top:auto;font-size:44rpx" wx:else>
+                        <block wx:if="{{goods.addNum}}">
+                            <text catchtap="removeGoods" class="icon-btn iconfont icon-remove c-theme" data-goods-id="{{goods.productId}}"></text>
+                            <text class="f14">{{goods.addNum}}</text>
+                        </block>
+                        <text catchtap="addGoods" class="icon-btn iconfont icon-add c-theme" data-goods-id="{{goods.productId}}"></text>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view catchtap="toGoodsSellStore" class="normal-buttons f11 flex-center" data-goods-id="{{goods.productId}}" wx:if="{{goods.productStatus==3&&fromPage!=='jointMenu'}}">可售门店</view>
+                </block>
+            </view>
+            <view class="goods-price" wx:else>
+                <view class="presell-good b-theme f12">开售提醒我</view>
+            </view>
+        </view>
+    </block>
+    <slot></slot>
+</view>
+
+<wxs module="_" src="..\..\utils\tools.wxs"/>

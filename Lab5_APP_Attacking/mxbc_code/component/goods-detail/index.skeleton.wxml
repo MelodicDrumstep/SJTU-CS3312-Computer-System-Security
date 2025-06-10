@@ -1,0 +1,14 @@
+<template name="skeleton">
+    <view class="sk-container" style="flex:1;">
+        <image lazyLoad class="goods-img sk-image" style="left:0;margin-bottom:24rpx;"></image>
+        <view class="sk-text sk-text-1"></view>
+        <view class="sk-text sk-text-2"></view>
+        <view class="sk-text sk-text-3"></view>
+        <view class="sk-text sk-text-1"></view>
+        <view class="sk-text sk-text-4"></view>
+        <view class="sk-text sk-text-1"></view>
+        <view class="sk-text sk-text-4"></view>
+        <view class="sk-text sk-text-1"></view>
+        <view class="sk-text sk-text-4"></view>
+    </view>
+</template>

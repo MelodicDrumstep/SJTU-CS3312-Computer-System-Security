@@ -1,0 +1,21 @@
+<view class="vtabs" style="height:{{height}}">
+    <view class="vtabs-bar__wrp">
+        <scroll-view scrollY class="vtabs-bar__scrollview" scrollIntoView="vtabs-item__{{currentView}}">
+            <view bindtap="handleTabClick" class="vtabs-bar__item flex-center c-777 {{index===activeTab?'active':index===activeTab-1?'fillet-up':index===activeTab+1?'fillet-down':''}}" data-index="{{index}}" id="vtabs-item__{{index}}" wx:for="{{vtabs}}" wx:key="productCategoryId">
+                <image lazyLoad class="category-icon" src="{{item.categoryIcon}}" wx:if="{{!item.cornerTag&&item.categoryIcon}}"></image>
+                <text class="category-corner-mark" style="{{_.setCornerTagStyle(item.cornerTag)}}" wx:if="{{item.cornerTag}}">{{item.cornerTag.content}}</text>
+                <text>{{item.categoryNameSale}}</text>
+            </view>
+            <view class="vtabs-bar__item" style="height:200rpx"></view>
+        </scroll-view>
+    </view>
+    <view class="vtabs-content__wrp">
+        <slot name="coupon"></slot>
+        <scroll-view scrollWithAnimation scrollY bindscroll="handleContentScroll" bindscrolltolower="handleScrollToLower" class="vtabs-content__scrollview" lowerThreshold="100" scrollTop="{{contentScrollTop}}">
+            <slot></slot>
+            <view style="height:200rpx"></view>
+        </scroll-view>
+    </view>
+</view>
+
+<wxs module="_" src="..\..\utils\tools.wxs"/>

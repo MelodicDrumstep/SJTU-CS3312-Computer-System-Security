@@ -1,0 +1,7 @@
+{
+  "component": true,
+  "usingComponents": {
+    "mx-popup": "component\\points-redemption-voucher\\component\\popup\\index",
+    "mx-dialog": "component\\points-redemption-voucher\\component\\dialog\\index"
+  }
+}

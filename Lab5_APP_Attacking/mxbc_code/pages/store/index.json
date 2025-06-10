@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "门店列表",
+  "usingComponents": {
+    "mx-popup": "pages\\store\\component\\popup\\index",
+    "mx-tem-store-error": "pages\\store\\component\\tem-store-error\\index",
+    "mx-shop-item": "pages\\store\\component\\shop-item\\index",
+    "mx-tab": "pages\\store\\component\\tab\\index",
+    "mx-location": "pages\\store\\component\\custom-location\\index"
+  }
+}

@@ -1,0 +1,69 @@
+.popup-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    width: 590rpx
+}
+
+.img-status {
+    height: 260rpx;
+    margin: 48rpx 0
+}
+
+.popup-text {
+    font-size: 32rpx;
+    font-weight: 500
+}
+
+.popup-time {
+    color: #333;
+    font-size: 28rpx;
+    line-height: 50rpx;
+    margin-top: 18rpx;
+    padding: 0 60rpx;
+    text-align: center
+}
+
+.button-close {
+    background-color: initial;
+    color: var(--theme-color);
+    height: 104rpx;
+    line-height: 104rpx;
+    margin-top: 32rpx;
+    text-align: center;
+    width: 100%
+}
+
+.footer_btn {
+    -webkit-box-pack: justify;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    width: 100%
+}
+
+.footer_btn .btn {
+    box-sizing: border-box;
+    height: 88rpx;
+    line-height: 88rpx;
+    text-align: center;
+    width: 50%
+}
+
+.footer_btn .btn_go {
+    border-right: 1px solid #e5e6eb;
+    color: #777
+}
+
+.footer_btn .btn_switch {
+    color: #e60012
+}

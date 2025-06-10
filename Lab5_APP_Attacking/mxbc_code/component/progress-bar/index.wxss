@@ -1,0 +1,14 @@
+.progress-bar {
+    border: none;
+    border-radius: 24rpx;
+    overflow: hidden;
+    position: relative
+}
+
+.progress-bar_active {
+    border: none;
+    border-radius: 24rpx;
+    left: 0;
+    position: absolute;
+    top: 0
+}

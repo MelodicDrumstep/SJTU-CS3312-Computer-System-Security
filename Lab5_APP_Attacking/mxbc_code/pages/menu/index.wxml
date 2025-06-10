@@ -1,0 +1,255 @@
+<mx-loading show="{{isLoading&&showAnimate}}" wx:if="{{isLoading}}"></mx-loading>
+<view class="navigator mx-hairline--bottom" style="padding-top:{{statusBarHeight}}px;height:{{navBarHeight}}px;">
+    <view class="order-type flex-center f18">
+        <text bindtap="toggleType" class="order-type-item {{orderType==1?'fb5 c-333':'c-777'}}" data-order-type="{{1}}">自提</text>
+        <text bindtap="toggleType" class="order-type-item {{orderType==2?'fb5 c-333':'c-777'}}" data-order-type="{{2}}" wx:if="{{selectedStore.takeoutStatus}}">外送</text>
+    </view>
+    <view bindtap="toSearch" class="search-area flex-a-center f13 c-777 {{selectedStore.takeoutStatus?'short ml10':''}}">
+        <text class="pt2 pl15 pr11 fb iconfont icon-search"></text>
+        <text class="mx-ellipsis">{{hotSearchWord||'搜索商品'}}</text>
+    </view>
+</view>
+<view class="store-info flex-sb">
+    <view class="orderType2" wx:if="{{orderType==2}}">
+        <view bindtap="toAddress" class="fb f16" style="display:flex;align-items:center;">
+            <text class="fb5" wx:if="{{currentAddress.address===undefined}}">请选择收货地址</text>
+            <text class="mx-ellipsis" wx:else>配送至·{{currentAddress.address+'，'+currentAddress.detailAddress}}</text>
+            <text class="iconfont icon-arrow_right f13"></text>
+        </view>
+        <view bindtap="toStoreOrAddress" class="f14 c-777 mx-ellipsis" style="margin-top:12rpx;padding-left:30rpx">
+            <image lazyLoad class="deliver-img" src="{{__static__}}/main/deliver.png"></image>{{selectedStore.shopName}}</view>
+    </view>
+    <view class="orderType1" style="padding-left:46rpx;" wx:else>
+        <view bindtap="toStore" class="flex-a-center fb f16">
+            <image lazyLoad catch:tap="clickFavorite" class="favorite" src="{{__static__}}/main/{{selectedStore.hasCollectShop?'favorited':'unfavorited'}}.png"></image>
+            <text class="mx-ellipsis">{{selectedStore.shopName}}</text>
+            <text class="iconfont icon-arrow_right"></text>
+        </view>
+        <view class="flex-a-center f14 c-777 mt6">
+            <text class="location iconfont icon-location f13"></text>
+            <text>直线距离{{selectedStore.distance||'未知'}}</text>
+        </view>
+    </view>
+    <view class="recommend-tip f11 c-fff" wx:if="{{showRecommendTip}}">
+        <view class="triangle"></view>
+        <text>已为您匹配最近门店 下单后自助取餐</text>
+    </view>
+</view>
+<mx-shop-notice activites="{{activites}}" orderType="{{orderType}}" selectedStore="{{selectedStore}}"></mx-shop-notice>
+<mx-mzhd bindupdateMzhdData="getMzhdData" data="{{mzhdData}}" type="menu"></mx-mzhd>
+<mx-member-rights customStyle="position:absolute;top:{{rightsBarTop}};right:0;z-index:90;" customer="{{userInfo}}" page="menu" showTitle="{{showRightsBarTitle}}" wx:if="{{rightsBarTop&&!activeTab&&userInfo.mobilePhone&&userInfo.mainPageRightsNum&&userInfo.orderPageRightsSwitchFlag}}"></mx-member-rights>
+<view class="mx-hairline--bottom" id="pageTab" style="width:100vw;overflow-x:auto;">
+    <mx-tab bindchange="onChange" currentTab="{{activeTab}}" lineType="text" tabs="{{menuTabs}}" width="{{25*menuTabs.length}}vw"></mx-tab>
+</view>
+<swiper disableTouch bindchange="onSwiperChange" class="menu-container" current="{{activeTab}}" data-name="{{mzhdData.activityName}}" style="height:calc(100vh - 252rpx - {{statusBarHeight+navBarHeight}}px - {{mzhdData.activityName?'116':0}}rpx)">
+    <swiper-item>
+        <vtabs bindcontentScroll="contentScroll" bindshowMoreView="showMoreView" height="calc(100vh - 252rpx - {{statusBarHeight+navBarHeight}}px - {{mzhdData.activityName?'116':0}}rpx)" id="vtabs" vtabs="{{vtabs}}">
+            <vtabs-content tabIndex="{{index}}" wx:for="{{vtabs}}" wx:key="categoryNameSale">
+                <image lazyLoad bindtap="toJointOrder" class="join-order-img mt12 {{swiperList.length?'':'mb12'}}" mode="aspectFill" src="{{_jointOrderConfig.guideImageUrl}}" wx:if="{{!index&&_jointOrderConfig.open&&_jointOrderConfig.guideImageUrl}}"></image>
+                <mx-ad adData="{{swiperList}}" adEvent="meal_banner" adType="banner" customClass="menu-swiper" wx:if="{{!index&&swiperList.length}}"></mx-ad>
+                <view class="category-name f14 fb5" id="category_{{index}}">{{item.categoryNameSale}}</view>
+                <image lazyLoad bindtap="advertiseTap" class="girdle-ad mb10" data-url="{{item.adLink}}" mode="aspectFill" src="{{item.adImage}}" wx:if="{{item.adImage}}"></image>
+                <goods-item bind:addGoods="addGoods" bind:removeGoods="removeGoods" bind:showGoodsDetail="openGoodsDetail" bind:toPackDetail="toPackDetail" customClass="{{item.products.length-1==goods_idx?'goods-bottom':''}}" goods="{{goods}}" id="goods_{{index}}_{{goods_idx}}" model="{{goods.showStyle===2?'image':'list'}}" show="{{curViewShowIndex>=index}}" wx:if="{{!item.foldSaleOutGoods||item.foldSaleOutGoods&&goods.productStatus!=3}}" wx:for="{{item.products}}" wx:for-index="goods_idx" wx:for-item="goods" wx:key="productId">
+                    <image class="hot-sale-top" src="{{__static__}}/main/hot_sale_top_{{goods_idx+1}}.png" wx:if="{{item.pullType==1}}"></image>
+                </goods-item>
+                <view bindtap="toggleFoldStatus" class="fold-sale-out c-777 f12" data-categoryIndex="{{index}}" data-foldSaleOutGoods="{{item.foldSaleOutGoods}}" wx:if="{{item.isExistSaleOut&&item.pullType!=1}}">
+                    <text>{{item.foldSaleOutGoods?'点击查看已售罄商品':'点击收起'}}</text>
+                    <text class="iconfont icon-arrow_{{item.foldSaleOutGoods?'down':'up'}}"></text>
+                </view>
+            </vtabs-content>
+        </vtabs>
+    </swiper-item>
+    <swiper-item wx:for="{{marketingMenuList}}" wx:for-item="marketingMenu" wx:key="index">
+        <scroll-view scrollY bindscroll="contentScroll" class="menu-scrollview menu-scrollview__{{index+1}}" style="height:calc(100vh - 252rpx - {{statusBarHeight+navBarHeight}}px - {{mzhdData.activityName?'116':0}}rpx);font-size:0">
+            <image class="menu-tab-activity-bg" mode="aspectFill" src="{{marketingMenu.backgroundImage}}" wx:if="{{marketingMenu.backgroundImage}}"></image>
+            <image bindtap="actTap" class="menu-tab-activity-icon" data-id="{{item.marketingId}}" data-type="{{item.marketingType}}" data-url="{{item.miniMarketingUrl}}" mode="aspectFill" src="{{item.marketingImage}}" wx:if="{{item.marketingImage}}" wx:for="{{marketingMenu.marketingInfos}}" wx:key="index"></image>
+            <view class="mt12 flex-center f14 fb" wx:if="{{(marketingMenu.backgroundImage||marketingMenu.marketingInfos.length)&&marketingMenu.products.length}}">
+                <image class="debris-icon" mode="aspectFill" src="{{__static__}}/main/category-left_debris.png"></image>{{marketingMenu.categoryName}}<image class="debris-icon" mode="aspectFill" src="{{__static__}}/main/category-right_debris.png"></image>
+            </view>
+            <view class="menu-item-scroll" wx:if="{{marketingMenu.loaded||activeTab===index+1}}">
+                <block wx:if="{{marketingMenu.products.length}}">
+                    <view class="mb10 {{goods.sortIndex===1?'break-before':''}}" wx:for="{{marketingMenu.products}}" wx:for-item="goods" wx:key="productId">
+                        <goods-item bind:addGoods="addGoods" bind:removeGoods="removeGoods" bind:showGoodsDetail="openGoodsDetail" bind:toPackDetail="toPackDetail" goods="{{vtabs[ goods.productIndexs[0] ].products[ goods.productIndexs[1] ]}}" id="goods_{{goods.sortIndex}}_{{goods.productId}}" model="grid"></goods-item>
+                    </view>
+                </block>
+                <view class="no-goods" wx:elif="{{!marketingMenu.backgroundImage&&!marketingMenu.marketingInfos.length}}">
+                    <image lazyLoad src="{{__static__}}/main/no_goods.png" style="width:486rpx;height:482rpx;"></image>
+                    <text class="f12 c-aaa">这里什么都没有</text>
+                </view>
+            </view>
+        </scroll-view>
+    </swiper-item>
+    <swiper-item class="menu-item" wx:if="{{showUserPreference}}">
+        <scroll-view scrollY class="menu-scrollview" style="height:100%">
+            <view class="menu-item-user" wx:if="{{orderList.length}}">
+                <view class="menu-item-title">再来一单<view style="float:right;margin-top:2px;">
+                        <text class="f13">{{currentOrderTab+1}}</text>
+                        <text class="f12 c-777 fb4">/{{orderList.length}}</text>
+                    </view>
+                </view>
+                <view class="user-swiper-wrap" style="transform:translateX({{currentOrderTab===orderList.length-1?'0':'-62rpx'}});">
+                    <swiper bindchange="onOrderSwiperChange" class="user-swiper" previousMargin="{{orderList.length===1?'':'62rpx'}}">
+                        <swiper-item class="user-swiper-item" wx:for="{{orderList}}" wx:key="productId">
+                            <view class="order-item b-fff">
+                                <mx-order-item bindaddCartFromOnemore="onAddCartFromOnemore" consigneeAddressId="{{currentAddress.consigneeAddressId}}" fromPage="menu" orderDetail="{{item}}" orderType="{{orderType}}"></mx-order-item>
+                            </view>
+                        </swiper-item>
+                    </swiper>
+                </view>
+            </view>
+            <view class="menu-item-user" wx:if="{{collectList.length}}">
+                <view class="menu-item-title">我收藏的口味</view>
+                <view class="menu-item-user_body" style="padding-bottom:{{maybePreferList.length?'0px':'300rpx'}}">
+                    <view class="menu-item-scroll_row" wx:for="{{collectList}}" wx:for-index="collect_i" wx:for-item="collect_row" wx:key="collect_i">
+                        <goods-item bind:addGoods="addGoods" bind:removeGoods="removeGoods" bind:showGoodsDetail="onClickGoods" bind:toPackDetail="toPackDetail" customClass="mb10" data-area="收藏口味" goods="{{goods}}" id="goods_{{sortIndex}}_{{goods.productId}}" model="grid" wx:for="{{collect_row}}" wx:for-index="teastIndex" wx:for-item="goods" wx:key="productId"></goods-item>
+                    </view>
+                </view>
+            </view>
+            <view class="menu-item-user" wx:if="{{maybePreferList.length}}">
+                <view class="menu-item-title">可能喜欢</view>
+                <view class="menu-item-user_body" style="padding-bottom:300rpx">
+                    <view class="menu-item-scroll_row" wx:for="{{maybePreferList}}" wx:for-index="prefer_i" wx:for-item="prefer_row" wx:key="prefer_i">
+                        <goods-item bind:addGoods="addGoods" bind:removeGoods="removeGoods" bind:showGoodsDetail="onClickGoods" bind:toPackDetail="toPackDetail" customClass="mb10" data-area="可能喜欢" goods="{{goods}}" id="goods_{{goods.sortIndex}}_{{goods.productId}}" model="grid" wx:for="{{prefer_row}}" wx:for-index="maybePreferIndex" wx:for-item="goods" wx:key="productId"></goods-item>
+                    </view>
+                </view>
+            </view>
+            <view class="no-goods" wx:if="{{!orderList.length&&!collectList.length&&!maybePreferList.length}}">
+                <image lazyLoad src="{{__static__}}/main/no_goods.png" style="width:486rpx;height:482rpx;"></image>
+                <text class="f12 c-aaa">这里什么都没有</text>
+            </view>
+        </scroll-view>
+    </swiper-item>
+</swiper>
+<image lazyLoad bindtap="toLogin" class="login-guide-img" src="{{__static__}}/regGuidance/orderLoginImg.png" style="bottom:{{16+(cartData.productAmount?96:0)+(cartData.discountDesc?56:0)}}rpx;" wx:if="{{!selectedStore.cleanVersionFlag&&isJuniorMember&&cartData.productAmount}}"></image>
+<view class="cart-box flex-sb mx-hairline--top" style="display:{{cartData.productAmount?'':'none'}};">
+    <view class="discount-bar f11 c-text-theme" wx:if="{{!isShowCartDetail&&cartData.discountDesc}}">{{cartData.discountDesc}}</view>
+    <view bindtap="showCartDetail" class="cart-img-box">
+        <image lazyLoad src="{{__static__}}/main/cart.png" style="width:62rpx;height:72rpx;"></image>
+        <text class="number-icon" style="top:8rpx;right:-24rpx;">{{cartData.productAmount}}</text>
+    </view>
+    <view class="price-box">
+        <text class="f12 c-aaa" wx:if="{{orderType==2&&currentAddress.address}}">另需配送费¥{{cartData.deliveryFee/100||0}}</text>
+        <text class="f12 c-aaa" wx:if="{{orderType==2&&!currentAddress.address}}">请选择收货地址</text>
+        <text class="f12 ml8">合计</text>
+        <text class="f12 fb">
+            <text class="ml3 mr3">¥</text>
+            <text class="f18">{{cartData.splitSprice[0]}}</text>
+            <text wx:if="{{cartData.splitSprice[1]}}">.{{cartData.splitSprice[1]}}</text>
+        </text>
+    </view>
+    <button catchtap="toOrder" class="f16" disabled="{{orderType==2&&!cartData.canBeDelivered||cartData.singleNotDelivery}}" style="min-width:204rpx;height:72rpx;">
+        <text wx:if="{{orderType==1||!hasAccessToken||cartData.canBeDelivered&&!cartData.singleNotDelivery}}">去结算</text>
+        <block wx:elif="{{!cartData.canBeDelivered}}">
+            <text wx:if="{{cartData.minDeliveryType==2}}">差{{cartData.minDeliveryNum-cartData.productAmount}}件起送</text>
+            <text wx:elif="{{cartData.minDeliveryType==3&&!currentAddress.consigneeAddressId}}">请选择地址</text>
+            <text wx:else>差¥{{(cartData.minDeliveryAmount-cartData.originPriceNoDeliveryFee)/100}}起送</text>
+        </block>
+        <text wx:else>单点不配送</text>
+    </button>
+</view>
+<mx-popup bind:close="closeConfirmDialog" show="{{isShowConfirmDialog||isShowFarDistanceConfirm}}" zIndex="299">
+    <view class="confirm-dialog f14" wx:if="{{isShowConfirmDialog}}">
+        <view class="confirm-msg mx-hairline--bottom">确认清空购物车吗？</view>
+        <view style="display:flex">
+            <view bindtap="closeConfirmDialog" class="cancel c-777">我再想想</view>
+            <view bindtap="confirmClear" class="confirm c-theme mx-hairline--left">确定</view>
+        </view>
+    </view>
+    <view class="confirm-dialog f14" style="padding-top:40rpx" wx:if="{{isShowFarDistanceConfirm}}">
+        <image lazyLoad src="{{__static__}}/main/shop_confirm.png" style="width:212rpx;height:212rpx"></image>
+        <view class="confirm-msg mx-hairline--bottom f14">
+            <text style="line-height:1.5">确定去【{{selectedStore.shopName}}】自提吗？该门店距您</text>
+            <text class="c-theme">{{selectedStore.distance}}</text>
+            <view class="f11 c-777 mt12">确认后订单无法更改</view>
+        </view>
+        <view style="display:flex">
+            <view bindtap="closeConfirmShop" class="cancel c-777">选择其他门店</view>
+            <view bindtap="confirmToOrder" class="confirm c-theme mx-hairline--left">确定</view>
+        </view>
+    </view>
+</mx-popup>
+<mx-popup show="{{showErrorPopup||showOfflinePopup||showClosedPopup}}" zIndex="299">
+    <mx-tem-store-error orderType="{{orderType}}" selectedStore="{{selectedStore}}" showClosed="{{showClosedPopup}}" showError="{{showErrorPopup}}" showOffline="{{showOfflinePopup}}"></mx-tem-store-error>
+</mx-popup>
+<mx-popup bind:close="closeCartDetail" position="bottom" show="{{isShowCartDetail}}" zIndex="98">
+    <view class="cart-detail">
+        <view class="discount-bar f11 c-text-theme" wx:if="{{cartData.discountDesc}}">{{cartData.discountDesc}}</view>
+        <view class="title flex-sb">
+            <text class="f16 fb">已选商品<text class="f12 fb4" wx:if="{{orderType==2}}">（打包费<text class="c-theme">¥{{cartData.mealFee/100||0}}</text>）</text>
+            </text>
+            <view bindtap="showConfirmDialog" class="f12 c-aaa">
+                <text class="iconfont icon-delete f13"></text>
+                <text>清空</text>
+            </view>
+        </view>
+        <view class="content-box">
+            <view class="cart-detail-goods" wx:for="{{cartData.products}}" wx:key="productId">
+                <image lazyLoad class="cart-detail-img" src="{{item.productLogo}}"></image>
+                <view class="cart-detail-goods-text f11">
+                    <text class="fb f14">{{item.productName}}</text>
+                    <text class="select-item-text c-777">{{item.selectNames}}</text>
+                    <view>
+                        <text class="fb5">¥<text class="f14" style="margin-left:4rpx">{{item.price/100}}</text>
+                        </text>
+                        <text class="disabled-price" wx:if="{{item.originPrice&&item.originPrice!==item.price}}">¥{{item.originPrice/100}}</text>
+                    </view>
+                </view>
+                <view class="number-buttons flex-sb" style="width:170rpx;font-size:48rpx">
+                    <text bindtap="cartRemoveGoods" class="icon-btn iconfont icon-remove c-theme" data-index="{{index}}"></text>
+                    <text class="f14">{{item.productAmount}}</text>
+                    <text bindtap="cartAddGoods" class="icon-btn iconfont icon-add c-theme" data-index="{{index}}"></text>
+                </view>
+            </view>
+        </view>
+    </view>
+</mx-popup>
+<mx-ad adData="{{popupAdList}}" adEvent="pop-orderpage" adKey="WechartMiniOrderPopup" adType="popup" style="display:{{showMultiShopPopup||showErrorPopup||showOfflinePopup||showClosedPopup?'none':'block'}}" wx:if="{{!selectedStore.cleanVersionFlag&&popupAdList.length}}"></mx-ad>
+<mx-ad adData="{{guideLoginAdList}}" adKey="newMemMenuPopup" adPosition="bottom" adType="popup" bind:adTap="showLoginPopup" style="display:{{showMultiShopPopup||showErrorPopup||showOfflinePopup||showClosedPopup?'none':'block'}}" wx:if="{{!selectedStore.cleanVersionFlag&&guideLoginAdList.length}}"></mx-ad>
+<mx-dialog bindcancel="toCreateJoint" bindconfirm="toCurrentJoint" cancelText="{{jointRole==1?'重新发起':'我来发起'}}" confirmText="查看当前拼单" content="{{jointRole==1?'您当前有一笔拼单正在进行中，是否继续拼单，重新发起将取消当前拼单':'您已加入一笔拼单，是否继续拼单，重新发起将退出当前拼单'}}" id="jointOrderDialog" title="拼单进行中"></mx-dialog>
+<mx-popup show="{{showTakeoutTipsDialog}}" zIndex="299">
+    <mx-tem-store-error bind:toggleType="toggleType" orderType="{{orderType}}" selectedStore="{{selectedStore}}" showGoHomeAndSwitch="{{true}}" showOffline="{{showTakeoutTipsDialog}}"></mx-tem-store-error>
+</mx-popup>
+<mx-popup show="{{isShowAbnormalGoods}}" zIndex="299">
+    <mx-tem-goods-error bind:close="closeAbnormalGoodsDialog" data="{{invalidProductList}}"></mx-tem-goods-error>
+</mx-popup>
+<mx-popup customClass="popup-confirm_shop" position="bottom" show="{{showMultiShopPopup&&!showTakeoutTipsDialog&&!showOfflinePopup&&!showClosedPopup&&!showErrorPopup}}" zIndex="299">
+    <view class="shop-detail-tip b-fff">
+        <text bindtap="closeMultiShopConfirm" class="iconfont icon-close" style="float:right"></text>
+        <view class="f16 fb6">请确认取餐门店</view>
+        <text class="f12 c-777">附近门店较多，请确认取餐门店</text>
+    </view>
+    <mx-shop-item bind:shopTap="shopTap" data="{{item}}" isShowDistance="{{false}}" operateType="ShopSelectWarn" selected="{{index===0}}" wx:for="{{recommendShopLists}}" wx:key="shopId">
+        <view slot class="c-333" style="text-align:center">
+            <text class="f14 fb6">{{index==0?'确认门店':'选择门店'}}</text>
+            <view class="f12 mt12">
+                <text class="c-777">距您</text>{{item.distance}}</view>
+        </view>
+    </mx-shop-item>
+    <view bindtap="popupChangeStore" class="c-777 f12" style="text-align:center;padding:16rpx 32rpx 32rpx">选择其他门店<text class="iconfont icon-arrow_right"></text>
+    </view>
+</mx-popup>
+<mx-popup bind:close="closeLoginPopup" position="bottom" show="{{showLogin}}" zIndex="299">
+    <mx-login bind:end="closeLoginPopup" options="{{loginOptions}}" template="popup" wx:if="{{showLoginCom}}"></mx-login>
+</mx-popup>
+<mx-subscribe-guide showSubscribeGuide="{{showSubscribeGuide}}"></mx-subscribe-guide>
+<mx-ad adAniFold="{{suspensionFold}}" adData="{{suspensionAdList}}" adKey="WechatMiniOrderIcon" adType="suspensionAd" wx:if="{{suspensionAdList.length>0}}"></mx-ad>
+<mx-ad adData="{{recommendAdList}}" adEvent="menu_recommend_suspension_banner" adKey="WechatMiniOrderRecommend" adType="suspensionAdBanner" isVibrate="{{true}}" wx:if="{{!selectedStore.cleanVersionFlag&&recommendAdList.length>0&&isShowSuspensionBanner}}"></mx-ad>
+<mx-dialog bindconfirm="onExchange" cancelText="取消" confirmText="确认兑换" id="comfirmExchange" useCustomBody="{{true}}">
+    <view class="c-333 f14" slot="content">
+        <view class="c-333 f16 fb mt20">确认兑换</view>
+        <view class="pt8 pb20 pl10 pr10 mx-hairline--bottom f14">
+            <view>确认用{{pointExchangeCount}}雪王币兑换</view>
+            <text>{{pointExchangeRewardName}}</text>
+        </view>
+    </view>
+</mx-dialog>
+<mx-popup customStyle="background-color: transparent;min-width: 536rpx;" show="{{showExchange}}">
+    <text bindtap="closePointExchangeTap" class="iconfont icon-close_circle close-icon"></text>
+    <image class="exchange-success-img" mode="aspectFill" src="{{__static__}}/activity/exchange-success.png"></image>
+    <view class="f14 exchange-content fb6">恭喜！已成功得到<view class="fb6">{{pointExchangeRewardName}}</view>
+        <image bindtap="closePointExchangeTap" class="exchange-btn" mode="aspectFill" src="{{__static__}}/activity/exchange-btn.png"></image>
+    </view>
+</mx-popup>
+<mx-join-group-guide cancelJump="{{false}}" cancelText="暂不添加" content="添加福利官或进群成功后，再次加购即可" id="joinGroupGuide" title="该商品仅限社群用户购买"></mx-join-group-guide>
+
+<wxs module="_" src="..\..\utils\tools.wxs"/>

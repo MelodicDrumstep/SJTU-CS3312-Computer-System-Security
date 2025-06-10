@@ -1,0 +1,11 @@
+<view class="f16 fb5 pt20 pb8" style="text-align:center">配送费规则</view>
+<view class="content">
+    <view>每笔外送订单收取配送费{{data.deliveryFeeMerchant/100||0}}元，具体配送费以门店补贴消费者后的金额为准，详情如下：</view>
+    <view>根据实际配送距离计算{{data.firstDeliveryDistance||0}}公里内{{data.firstDeliveryFee/100||0}}元；超出范围每公里增加{{data.extraDeliveryFee/100||0}}元（不足一公里按一公里计费）</view>
+    <block wx:if="{{data.deliveryFeeInfo.hasNightDeFee}}">
+        <text>夜间配送加价</text>
+        <view wx:for="{{data.deliveryFeeInfo.nightDeFeeRules}}" wx:for-item="nightDeFee" wx:key="index">{{nightDeFee.startTime}}点~{{nightDeFee.endTime}}点，每单加价{{nightDeFee.minDeliveryAmount/100}}元</view>
+    </block>
+    <view class="pt10" wx:if="{{data.nightDeFee}}">夜间配送加价{{data.nightDeFee/100}}元</view>
+</view>
+<view bindtap="close" class="flex-center c-theme mt20 mx-hairline--top" style="height:90rpx;">确认</view>

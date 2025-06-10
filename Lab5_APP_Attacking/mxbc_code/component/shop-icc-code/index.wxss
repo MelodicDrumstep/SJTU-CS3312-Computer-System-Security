@@ -1,0 +1,24 @@
+.qr-code-box {
+    background: #fff;
+    border-radius: var(--card-radius);
+    height: 220rpx;
+    margin: 0 24rpx 22rpx;
+    overflow: hidden;
+    position: relative;
+    width: 702rpx
+}
+
+.qr-code-bg {
+    height: 220rpx;
+    width: 100%
+}
+
+.qr-code {
+    border: 1rpx solid #eee;
+    border-radius: 8rpx;
+    height: 172rpx;
+    position: absolute;
+    right: 24rpx;
+    top: 24rpx;
+    width: 172rpx
+}

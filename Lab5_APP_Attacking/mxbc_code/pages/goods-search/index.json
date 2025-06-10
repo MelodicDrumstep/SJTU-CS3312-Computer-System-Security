@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "搜索",
+  "usingComponents": {
+    "goods-item": "pages\\goods-search\\component\\goods-item\\index"
+  }
+}

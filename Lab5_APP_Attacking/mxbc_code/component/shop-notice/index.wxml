@@ -1,0 +1,73 @@
+<view bindtap="onTap" class="activity f12 c-777 flex-sb">
+    <swiper autoplay circular vertical interval="{{4000}}" style="height:100%;flex:1">
+        <swiper-item wx:for="{{activites}}" wx:key="index">
+            <view class="activity-scroll-item">
+                <text class="activity-type">{{item.tag}}</text>
+                <text class="mx-ellipsis f12">{{_.filterStringBreak(item.marketingDetailInfo)}}</text>
+            </view>
+        </swiper-item>
+        <swiper-item wx:if="{{orderType==2&&selectedStore.takeoutNotice}}">
+            <view class="activity-scroll-item">
+                <image lazyLoad class="notice-horn mr4" mode="aspectFit" src="{{__static__}}/main/notice.png"></image>
+                <text class="mx-ellipsis c-theme">{{_.filterStringBreak(selectedStore.takeoutNotice)}}</text>
+            </view>
+        </swiper-item>
+        <block wx:if="{{orderType==1}}">
+            <swiper-item wx:for="{{shopNoticeList}}" wx:key="index">
+                <view class="activity-scroll-item">
+                    <image lazyLoad class="notice-horn mr4" mode="aspectFit" src="{{__static__}}/main/notice.png"></image>
+                    <text class="mx-ellipsis c-theme">{{_.filterStringBreak(item.content)}}</text>
+                </view>
+            </swiper-item>
+        </block>
+        <swiper-item>
+            <view class="activity-scroll-item">
+                <image lazyLoad class="notice-horn mr4" mode="aspectFit" src="{{__static__}}/main/notice.png"></image>
+                <text class="mx-ellipsis c-theme">珍惜粮食，按需点餐~</text>
+            </view>
+        </swiper-item>
+    </swiper>
+    <view class="iconfont icon-arrow_right">{{activites.length||shopNoticeList.length||orderType==2&&selectedStore.takeoutNotice?'查看更多':''}}</view>
+</view>
+<mx-popup bind:close="onClose" customClass="onemore-container" position="bottom" show="{{isExpandNotice}}" zIndex="299">
+    <view class="activity-detail f12" style="line-height:40rpx;">
+        <view catchtap="onClose" class="detail-arrow-up iconfont icon-close c-333"></view>
+        <view style="overflow-y:auto;max-height:880rpx;">
+            <block wx:if="{{activites.length}}">
+                <view class="f14 fb mt12">优惠信息</view>
+                <view class="flex align-start mt8" wx:for="{{activites}}" wx:key="index">
+                    <text class="activity-type">{{item.tag}}</text>
+                    <text>{{item.marketingDetailInfo}}</text>
+                </view>
+            </block>
+            <block wx:if="{{orderType==1}}">
+                <view class="f14 fb mt12">门店公告</view>
+                <view bindtap="toJumpNotice" class="mt8 flex align-start c-theme" data-notice="{{item}}" wx:for="{{shopNoticeList}}" wx:key="index">
+                    <image lazyLoad class="notice-horn mr4" mode="aspectFit" src="{{__static__}}/main/notice.png"></image>
+                    <view class="flex-sb flex-1">{{item.content}}<text class="iconfont icon-arrow_right c-777" wx:if="{{item.jumpContent}}"></text>
+                    </view>
+                </view>
+            </block>
+            <block wx:if="{{orderType==2}}">
+                <view class="f14 fb mt12">外送公告</view>
+                <view class="mt8 flex align-start c-theme" wx:if="{{selectedStore.takeoutNotice}}">
+                    <image lazyLoad class="notice-horn mr4" mode="aspectFit" src="{{__static__}}/main/notice.png"></image>
+                    <text class="flex-1">{{selectedStore.takeoutNotice}}</text>
+                </view>
+            </block>
+            <view class="mt8 flex align-start c-theme">
+                <image lazyLoad class="notice-horn mr4" mode="aspectFit" src="{{__static__}}/main/notice.png"></image>
+                <text>珍惜粮食，按需点餐~</text>
+            </view>
+            <block wx:if="{{orderType==2}}">
+                <view class="f14 fb mt12">配送信息</view>
+                <view class="c-777 mt8" wx:if="{{selectedStore.fixDeliveryCost}}">每笔外送订单收取配送费{{selectedStore.fixDeliveryCost/100||0}}元，具体配送费以门店补贴消费者后的金额为准，详情如下：</view>
+                <view class="c-777 mt8" wx:if="{{selectedStore.deliveryFee.firstDeliveryDistance}}">根据实际配送距离计算{{selectedStore.deliveryFee.firstDeliveryDistance}}公里内{{selectedStore.deliveryFee.firstDeliveryFee/100||0}}元，超出范围每公里增加{{selectedStore.deliveryFee.extraDeliveryFee/100||0}}元。（不足一公里按一公里计费）</view>
+                <view class="c-777 mt8" wx:for="{{selectedStore.nightDeFeeList}}" wx:for-item="nightDeFee" wx:key="index">{{nightDeFee.startTime}}点~{{nightDeFee.endTime}}点，每单加价{{nightDeFee.minDeliveryAmount/100}}元</view>
+            </block>
+            <view catchtap="toFoodSafety" class="iconfont icon-arrow_right mt12">查看食品安全信息</view>
+        </view>
+    </view>
+</mx-popup>
+
+<wxs module="_" src="..\..\utils\tools.wxs"/>

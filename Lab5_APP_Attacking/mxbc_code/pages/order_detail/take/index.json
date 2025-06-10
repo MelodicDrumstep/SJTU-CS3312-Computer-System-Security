@@ -1,0 +1,21 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#f5f5f5",
+  "backgroundTextStyle": "dark",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "mx-tencent-flower": "pages\\order_detail\\take\\component\\tencent-flower\\index",
+    "product-item": "pages\\order_detail\\take\\component\\product-item\\index",
+    "product-item-user": "pages\\order_detail\\take\\component\\product-item-user\\index",
+    "mx-popup": "pages\\order_detail\\take\\component\\popup\\index",
+    "mx-tem-defee-info": "pages\\order_detail\\take\\component\\tem-defee-info\\index",
+    "mx-ad": "pages\\order_detail\\take\\component\\custom-ad\\index",
+    "order-coupon-popup": "pages\\order_detail\\take\\component\\order-coupon-popup\\index",
+    "mx-dialog": "pages\\order_detail\\take\\component\\dialog\\index",
+    "mx-tem-join-rule": "pages\\order_detail\\take\\component\\tem-join-rule\\index",
+    "mx-shop-icc-code": "pages\\order_detail\\take\\component\\shop-icc-code\\index",
+    "pay-gift-card": "pages\\order_detail\\take\\component\\pay-gift-card\\index",
+    "gift-card-detail": "pages\\order_detail\\take\\component\\gift-card-detail\\index"
+  }
+}

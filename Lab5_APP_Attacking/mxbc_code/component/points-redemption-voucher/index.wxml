@@ -1,0 +1,39 @@
+<view class="point-act-card mb12" wx:if="{{pointExchangeDetail&&pointExchangeDetail.marketingId}}">
+    <view class="point-act-card_name flex-a-center">
+        <image class="act-img" mode="aspectFill" src="{{__static__}}/activity/coupon-icon.png"></image>
+        <text class="act-name f14 mx-ellipsis">{{pointExchangeDetail.rewardName}}</text>
+        <text bindtap="onToggleRule" class="iconfont icon-doubt ml4"></text>
+    </view>
+    <view class="point-act-card_points">
+        <image class="point-img" mode="aspectFill" src="{{__static__}}/activity/point-icon.png"></image>
+        <text class="point-num f16 c-theme fb6">{{pointExchangeDetail.pointExchangeCount}}</text>
+        <text class="point-total f11"> 雪王币余额：{{pointExchangeDetail.customerPointCount}}</text>
+        <view class="act-status f12" style="top:{{pointExchangeDetail.buttonStatus!==0?'34rpx':'24rpx'}}">
+            <button bindtap="onConfirmExchange" class="act-btn f12" wx:if="{{pointExchangeDetail.buttonStatus===0}}">立即兑换</button>
+            <text class="act-status-text c-theme" wx:else>{{pointText[pointExchangeDetail.buttonStatus]}}</text>
+        </view>
+    </view>
+</view>
+<mx-popup show="{{showRule}}">
+    <view class="rule-box">
+        <view class="text-center f16 fb5 pb10">兑换规则</view>
+        <view decode class="rule-body f12">{{pointExchangeDetail.marketingDesc}}</view>
+        <view bindtap="onToggleRule" class="close-btn">关闭</view>
+    </view>
+</mx-popup>
+<mx-dialog bindconfirm="onExchange" cancelText="取消" confirmText="确认兑换" id="comfirmExchange" useCustomBody="{{true}}">
+    <view class="c-333 f14" slot="content">
+        <view class="c-333 f16 fb mt20">确认兑换</view>
+        <view class="pt8 pb20 pl10 pr10 mx-hairline--bottom f14">
+            <view>确认用{{pointExchangeDetail.pointExchangeCount}}雪王币兑换</view>
+            <text>{{pointExchangeDetail.rewardName}}</text>
+        </view>
+    </view>
+</mx-dialog>
+<mx-popup customStyle="background-color: transparent;min-width: 536rpx;" show="{{showExchange}}">
+    <text bindtap="closeTap" class="iconfont icon-close_circle close-icon"></text>
+    <image class="exchange-success-img" mode="aspectFill" src="{{__static__}}/activity/exchange-success.png"></image>
+    <view class="f14 exchange-content fb6">恭喜！已成功得到<view class="fb6">{{pointExchangeDetail.rewardName}}</view>
+        <image bindtap="closeTap" class="exchange-btn" mode="aspectFill" src="{{__static__}}/activity/exchange-btn.png"></image>
+    </view>
+</mx-popup>

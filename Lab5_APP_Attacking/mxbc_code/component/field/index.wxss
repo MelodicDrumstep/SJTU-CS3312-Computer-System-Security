@@ -1,0 +1,64 @@
+.textarea-container {
+    border-radius: 12rpx;
+    padding: 16rpx 32rpx
+}
+
+.textarea {
+    background-color: #f5f5f5;
+    border-radius: 12rpx;
+    box-sizing: border-box;
+    font-size: 26rpx;
+    height: 240rpx;
+    margin: auto;
+    padding: 20rpx 32rpx;
+    width: 100%
+}
+
+.limitTip,.placeholder {
+    color: #aaa
+}
+
+.limitTip {
+    font-size: 26rpx;
+    padding: 0 32rpx;
+    position: relative;
+    text-align: right;
+    top: -50rpx
+}
+
+.input-container {
+    background-color: #f4f4f7;
+    border-radius: 12rpx;
+    position: relative
+}
+
+.input {
+    box-sizing: border-box;
+    font-size: 26rpx;
+    height: 88rpx;
+    padding: 20rpx 32rpx
+}
+
+.clear-btn {
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    height: 88rpx;
+    -webkit-justify-content: center;
+    justify-content: center;
+    padding-right: 20rpx;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 60rpx;
+    z-index: 50
+}
+
+.clear-icon {
+    height: 30rpx;
+    width: 30rpx
+}

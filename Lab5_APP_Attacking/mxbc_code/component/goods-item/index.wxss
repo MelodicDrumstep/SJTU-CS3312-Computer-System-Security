@@ -1,0 +1,214 @@
+.goods-item.image,.goods-item.list {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    min-height: 160rpx;
+    padding-bottom: 48rpx;
+    position: relative
+}
+
+.goods-item.image {
+    position: relative;
+    width: 100%
+}
+
+.goods-item.grid {
+    -webkit-column-break-inside: avoid;
+    background-color: #fff;
+    border-radius: 16rpx;
+    break-inside: avoid;
+    overflow: hidden;
+    position: relative;
+    width: 343rpx
+}
+
+.goods-item.list .goods-img {
+    background: #f8f8f8;
+    border-radius: 16rpx;
+    height: 172rpx;
+    margin-right: 16rpx;
+    position: relative;
+    width: 172rpx
+}
+
+.goods-item.image .goods-img {
+    border-radius: 12rpx;
+    width: 100%
+}
+
+.goods-item.grid .goods-img {
+    height: 258rpx;
+    width: 343rpx
+}
+
+.goods-text {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    font-size: 22rpx;
+    position: relative
+}
+
+.goods-item.list .goods-text {
+    min-height: 172rpx
+}
+
+.goods-text--default {
+    -webkit-box-pack: justify;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: space-between;
+    justify-content: space-between
+}
+
+.goods-item.grid .goods-text {
+    padding: 8rpx 16rpx 16rpx
+}
+
+.goods-desc {
+    height: 32rpx;
+    line-height: 32rpx;
+    max-width: 350rpx;
+    overflow: hidden;
+    white-space: pre-line
+}
+
+.origin-price {
+    margin-left: 10rpx;
+    text-decoration: line-through
+}
+
+.goods-item.image .number-buttons {
+    bottom: 18rpx;
+    left: inherit;
+    right: 18rpx;
+    top: inherit
+}
+
+.number-buttons {
+    position: absolute;
+    right: -10px;
+    top: calc(50% - 40rpx)
+}
+
+.normal-buttons {
+    background: #e60012;
+    border-radius: 22rpx;
+    bottom: 0;
+    color: #fff;
+    height: 44rpx;
+    position: absolute;
+    right: 0;
+    width: 120rpx
+}
+
+.sale-out .goods-img::after {
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    -webkit-align-items: center;
+    align-items: center;
+    bottom: 0;
+    content: "本店暂时售罄";
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    position: absolute
+}
+
+.goods-item.grid.sale-out .goods-img::after,.sale-out .goods-img::after {
+    background: rgba(0,0,0,.4);
+    color: #fff;
+    font-size: 24rpx;
+    height: 58rpx;
+    left: 0;
+    width: 100%
+}
+
+.goods-item.grid.sale-out .goods-img::after {
+    border-width: 0;
+    text-align: center;
+    top: 200rpx;
+    -webkit-transform: rotate(0);
+    transform: rotate(0)
+}
+
+.no-in .normal-buttons::before,.no-in .number-buttons::before,.no-out .normal-buttons::before,.no-out .number-buttons::before {
+    color: #aaa;
+    content: "不支持外送";
+    font-size: 20rpx;
+    position: absolute;
+    right: 10rpx;
+    visibility: visible;
+    white-space: nowrap
+}
+
+.no-in .normal-buttons::before,.no-in .number-buttons::before {
+    content: "不支持自提";
+    visibility: visible
+}
+
+.no-in .iconfont.icon-add,.no-in .normal-buttons,.no-out .iconfont.icon-add,.no-out .normal-buttons {
+    visibility: hidden
+}
+
+.icon-btn {
+    padding: 10rpx
+}
+
+.goods-item.image .number-buttons .icon-btn {
+    height: 48rpx;
+    width: 48rpx
+}
+
+.goods-item.list .goods-info {
+    min-height: 78rpx
+}
+
+.goods-tags {
+    font-size: 0;
+    height: 30rpx;
+    margin: 8rpx 0;
+    overflow: hidden
+}
+
+.goods-price {
+    position: relative;
+    white-space: pre-wrap
+}
+
+.goods-item.grid .icon-add {
+    bottom: -20rpx;
+    font-size: 44rpx;
+    padding-bottom: 16rpx;
+    position: absolute;
+    right: 0
+}
+
+.theme-price .bright-colorful,.theme-price .price-colorful {
+    color: var(--theme-color)
+}
+
+.default-price .bright-colorful {
+    color: #aaa
+}
+
+.exchange-marketing-img {
+    height: 24rpx;
+    width: 24rpx
+}
+
+.presell-good {
+    border-radius: 16px;
+    color: #fff;
+    float: right;
+    height: 40rpx;
+    line-height: 40rpx;
+    padding: 0 16rpx
+}

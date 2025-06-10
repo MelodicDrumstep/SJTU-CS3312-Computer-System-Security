@@ -1,0 +1,41 @@
+.mask-container {
+    z-index: 1
+}
+
+.btn-container,.mask-container {
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    position: absolute
+}
+
+.btn-container {
+    height: rpx(100);
+    margin: 0 auto;
+    width: rpx(100);
+    z-index: 3
+}
+
+page {
+    --add-action: #ff5638
+}
+
+.movable-area {
+    height: calc(100% - 200rpx);
+    pointer-events: none;
+    position: fixed;
+    right: 16rpx;
+    top: 0;
+    width: 128rpx;
+    z-index: 100
+}
+
+.movable-view {
+    pointer-events: auto
+}

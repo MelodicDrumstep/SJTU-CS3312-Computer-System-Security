@@ -1,0 +1,2 @@
+<mx-login bind:end="onRegisterBack" fromSource="{{fromSource}}" isNavigateBack="{{false}}" isThirdActivity="{{isThirdActivity}}" options="{{options}}" wx:if="{{showLogin===true}}"></mx-login>
+<web-view bindmessage="bindMessage" src="{{url}}" wx:if="{{showLogin===false}}"></web-view>

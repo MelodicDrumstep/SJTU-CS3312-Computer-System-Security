@@ -1,0 +1,27 @@
+<view class="top-wrap">
+    <mx-tab bindchange="onChange" tabs="{{['全部','历史','退单']}}"></mx-tab>
+</view>
+<view class="list-container" style="left:-{{activeTab}}00%">
+    <scroll-view refresherEnabled scrollWithAnimation scrollY bindrefresherrefresh="refreshList" bindscrolltolower="loadMore" class="scroll-list" refresherThreshold="{{80}}" refresherTriggered="{{freshTrigger}}" scrollTop="{{scrollTop}}" wx:for="{{orderList}}" wx:for-index="i" wx:for-item="list" wx:key="index">
+        <mx-tencent-flower pageType="order" wx:if="{{index===0}}"></mx-tencent-flower>
+        <view class="cells" wx:if="{{list.list.length}}">
+            <view bindtap="tapOrder" class="cell" data-orderStatus="{{item.orderStatus}}" data-orderType="{{item.orderType}}" data-ordercode="{{item.orderCode}}" wx:for="{{list.list}}" wx:for-index="j" wx:key="orderCode">
+                <mx-order-item orderDetail="{{item}}" productLimit="{{productLimit}}">
+                    <view class="operate-box mt12">
+                        <image lazyLoad catchtap="sendBlessToSnowKing" class="birthday-img mr12" data-index="{{[i,j]}}" data-order-code="{{item.orderCode}}" data-shop-code="{{item.shopCode}}" mode="widthFix" src="{{__static__}}/order_detail/birthdayBtn.png" wx:if="{{item.blessIsShow}}"></image>
+                        <view catchtap="OneMoreTap" class="another-order c-theme f12" data-order-code="{{item.orderCode}}" wx:if="{{item.orderSource!=1&&item.orderSource!=2&&item.orderType!=3&&item.orderStatus!=10&&item.orderSource!=4}}">再来一单</view>
+                    </view>
+                </mx-order-item>
+            </view>
+            <view class="f12 c-aaa" style="padding:20rpx 0 60rpx;text-align:center;">{{list.currPage==list.totalPage?'已经到底了...':'加载中...'}}</view>
+        </view>
+        <view class="empty-view flex-center" wx:else>
+            <image lazyLoad class="empty-img" mode="heightFix" src="{{__static__}}/main/empty_orders.png"></image>
+            <text class="empty-text">您还没有订单，快去选一杯喜欢的饮品吧~</text>
+            <button bindtap="goDrink" class="empty-btn">去喝一杯</button>
+        </view>
+    </scroll-view>
+</view>
+<mx-dialog useCustomButton content="祝福已发送" id="mxDialog" title="温馨提示">
+    <view bindtap="onCloseTip" class="dialog-cancel c-theme">知道了</view>
+</mx-dialog>

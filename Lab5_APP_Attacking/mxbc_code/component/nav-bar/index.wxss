@@ -1,0 +1,42 @@
+.navigator {
+    -webkit-box-align: center;
+    -webkit-box-pack: justify;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    z-index: 99
+}
+
+.navigator.inline {
+    position: relative
+}
+
+.center-title {
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: center;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    width: 100vw
+}
+
+.back-img {
+    height: 32px;
+    padding: 24rpx var(--theme-padding);
+    width: 32px;
+    z-index: 99
+}

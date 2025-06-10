@@ -1,0 +1,31 @@
+<view class="search-form flex-sb">
+    <text class="iconfont icon-search f18 c-aaa"></text>
+    <input focus bindconfirm="confirmSearch" bindinput="onInput" class="search-input f13 " confirmType="search" cursorSpacing="140" value="{{value}}" placeholder="{{suggestList[0]&&suggestList[0].keyWord||'搜索商品'}}" placeholderClass="c-aaa" type="text"></input>
+    <view bindtap="clearValue" class="icon-clear flex-center" hidden="{{!value}}">
+        <icon size="14" type="clear"></icon>
+    </view>
+    <text bindtap="btnSearch">搜索</text>
+</view>
+<view class="content">
+    <view class="history" wx:if="{{historyList.length}}">
+        <view class="flex-sb" style="margin-bottom:16rpx">
+            <text class="f14 fb5">历史搜索</text>
+            <text bindtap="clearHistory" class="f12 c-aaa">清空</text>
+        </view>
+        <text bindtap="historyTap" class="history-item f13 mx-ellipsis" data-value="{{item}}" wx:for="{{historyList}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="suggest" wx:if="{{suggestList.length}}">
+        <view class="f14 fb5 mt12 mb12 suggest-title">热门<text class="c-theme">推荐</text>
+        </view>
+        <text bindtap="suggestTap" class="suggest-item f13 mx-ellipsis {{index<2?'strong':''}}" data-content="{{item.jumpContent}}" data-type="{{item.jumpType}}" data-word="{{item.keyWord}}" wx:for="{{suggestList}}" wx:key="searchWordId">{{item.keyWord}}</text>
+    </view>
+    <view class="result-list" wx:if="{{resultList.length}}">
+        <goods-item bind:showGoodsDetail="backMenu" customClass="{{item.products.length-1==goods_idx?'goods-bottom':''}}" data-id="{{goods.productId}}" data-product-status="{{goods.productStatus}}" fromPage="{{fromPage}}" goods="{{goods}}" hideNumberButton="{{true}}" id="goods_{{index}}_{{goods_idx}}" model="{{goods.showStyle===2?'image':'list'}}" wx:for="{{resultList}}" wx:for-index="goods_idx" wx:for-item="goods" wx:key="productId"></goods-item>
+    </view>
+    <view class="no-goods" wx:elif="{{hasSearched}}">
+        <image lazyLoad mode="widthFix" src="{{__static__}}/coupon/no_goods.png" style="width:486rpx;margin-bottom:-16rpx;"></image>
+        <text class="f12 c-777">更多新品还在研发中，敬请期待</text>
+    </view>
+</view>
+
+<wxs module="_" src="..\..\utils\tools.wxs"/>

@@ -1,12 +1,19 @@
 # Lab Report : APP Attacking
 
+## Result Screenshots
+
+Successfully reverse the sign generating algorithm:
+
+<img src="images/result.png" width="400" alt="Result">
+
 ## Solution
 
 Just depack the APP program and locate the logic of generating the sign.
 
 ```js
 function l() {
-  return (l = n(e().mark((function n(i) {
+  return (l = n(e().mark((fu
+  nction n(i) {
     var u, o, s, l, f, b, d;
     return e().wrap((function(e) {
       for (;;) switch (e.prev = e.next) {

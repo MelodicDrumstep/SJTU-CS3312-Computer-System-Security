@@ -1,0 +1,7 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "goods-detail": "pages\\goods\\component\\goods-detail\\index",
+    "mx-join-group-guide": "pages\\goods\\component\\join-group-guide\\index"
+  }
+}

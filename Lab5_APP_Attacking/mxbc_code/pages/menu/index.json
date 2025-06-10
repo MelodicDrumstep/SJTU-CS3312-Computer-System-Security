@@ -1,0 +1,25 @@
+{
+  "navigationStyle": "custom",
+  "initialRenderingCache": "static",
+  "usingComponents": {
+    "vtabs": "pages\\menu\\component\\vtabs\\index",
+    "vtabs-content": "pages\\menu\\component\\vtabs-content\\index",
+    "goods-item": "pages\\menu\\component\\goods-item\\index",
+    "goods-detail": "pages\\menu\\component\\goods-detail\\index",
+    "mx-popup": "pages\\menu\\component\\popup\\index",
+    "mx-tem-store-error": "pages\\menu\\component\\tem-store-error\\index",
+    "mx-ad": "pages\\menu\\component\\custom-ad\\index",
+    "mx-dialog": "pages\\menu\\component\\dialog\\index",
+    "mx-tem-goods-error": "pages\\menu\\component\\tem-goods-error\\index",
+    "mx-loading": "pages\\menu\\component\\loading\\index",
+    "mx-shop-notice": "pages\\menu\\component\\shop-notice\\index",
+    "mx-subscribe-guide": "pages\\menu\\component\\subscribe-guide\\index",
+    "mx-mzhd": "pages\\menu\\component\\tem-mzhd\\index",
+    "mx-login": "pages\\menu\\component\\custom-login\\index",
+    "mx-tab": "pages\\menu\\component\\tab\\index",
+    "mx-shop-item": "pages\\menu\\component\\shop-item\\index",
+    "mx-order-item": "pages\\menu\\component\\order-item\\index",
+    "mx-member-rights": "pages\\menu\\component\\member-rights\\index",
+    "mx-join-group-guide": "pages\\menu\\component\\join-group-guide\\index"
+  }
+}

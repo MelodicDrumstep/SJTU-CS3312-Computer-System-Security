@@ -1,0 +1,32 @@
+.card-detail {
+    background: #f4f4f7;
+    position: relative
+}
+
+.card-detail .icon-close {
+    position: absolute;
+    right: 36rpx;
+    top: 32rpx
+}
+
+.card-list {
+    height: 800rpx;
+    overflow: hidden scroll
+}
+
+.card-item {
+    background: #fff;
+    border-radius: var(--card-radius);
+    margin: 0 24rpx 24rpx;
+    padding: 32rpx;
+    position: relative
+}
+
+.deduct-amount {
+    position: absolute;
+    right: 32rpx;
+    text-align: center;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%)
+}

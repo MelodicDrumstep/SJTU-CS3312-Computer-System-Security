@@ -1,0 +1,474 @@
+page {
+    background-color: #f5f5f5;
+    line-height: 34rpx;
+    position: relative
+}
+
+.custom-nav-bar {
+    line-height: 40rpx;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    -webkit-transition: background,color .2s ease;
+    transition: background,color .2s ease;
+    z-index: 19
+}
+
+.nav-bar-title {
+    left: 50%;
+    position: absolute;
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%)
+}
+
+.order-title {
+    box-sizing: border-box;
+    color: #fff;
+    font-size: 36rpx;
+    line-height: 50rpx;
+    padding-left: 48rpx;
+    padding-top: 8rpx
+}
+
+.order-title-sub {
+    display: block;
+    font-size: 24rpx;
+    line-height: 40rpx;
+    margin-top: 16rpx;
+    max-width: 65%
+}
+
+.refresh-btn {
+    background: rgba(0,0,0,.15);
+    border-radius: 8rpx;
+    height: 56rpx;
+    width: 128rpx
+}
+
+.header-bg {
+    height: 422rpx;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1
+}
+
+.bottom {
+    -webkit-box-flex: 1;
+    background: -webkit-linear-gradient(top,#fff,#f5f5f5 13%,#f5f5f5);
+    background: linear-gradient(180deg,#fff,#f5f5f5 13%,#f5f5f5);
+    border-radius: 24rpx 24rpx 4rpx 4rpx;
+    -webkit-flex: 1;
+    flex: 1;
+    margin-top: 54rpx;
+    position: relative
+}
+
+.img-order-status {
+    height: 180rpx;
+    position: absolute;
+    right: 24rpx;
+    top: -180rpx;
+    width: 260rpx
+}
+
+.card {
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    margin-left: 24rpx;
+    margin-right: 24rpx;
+    padding: 24rpx;
+    position: relative
+}
+
+.card .mb11:last-child {
+    margin-bottom: 0!important
+}
+
+.avatar {
+    height: 88rpx;
+    width: 88rpx
+}
+
+.rider-name {
+    width: 444rpx
+}
+
+.contact_icon {
+    height: 50rpx;
+    width: 50rpx
+}
+
+.order_total {
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    margin-bottom: 24rpx
+}
+
+.order_total .mx-ellipsis {
+    color: #333;
+    font-size: 12px
+}
+
+.share_btn {
+    background: #fff!important;
+    color: #333;
+    font-size: 28rpx;
+    font-weight: 400;
+    height: 60rpx;
+    padding: 0 60rpx 0 20rpx!important;
+    position: relative
+}
+
+.share_btn,wx-button::after {
+    border: none
+}
+
+.share_img {
+    height: 50rpx;
+    position: absolute;
+    right: 0;
+    top: 6rpx;
+    width: 50rpx
+}
+
+.header_tag {
+    background: #fff7e8;
+    border-radius: 6rpx;
+    color: #ff9f00;
+    display: inline-block;
+    font-size: 20rpx;
+    height: 36rpx;
+    line-height: 36rpx;
+    text-align: center;
+    vertical-align: middle;
+    width: 36rpx
+}
+
+.product_footer {
+    -webkit-box-pack: justify;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    font-size: 28rpx;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    margin: 14rpx 0
+}
+
+.product_label_l {
+    color: #777;
+    font-size: 26rpx;
+    line-height: 18px
+}
+
+.product_label_r {
+    color: #333;
+    font-size: 28rpx;
+    line-height: 20px
+}
+
+.icon-doubt {
+    color: #777;
+    margin-left: 10rpx;
+    margin-right: 20rpx;
+    vertical-align: middle
+}
+
+.shop-address {
+    width: 484rpx
+}
+
+.title {
+    color: #333;
+    line-height: 44rpx
+}
+
+.shop_item_contact_icon {
+    height: 50rpx;
+    margin-left: 24rpx;
+    width: 50rpx
+}
+
+.border-bottom-dashed {
+    border-bottom: 2rpx dashed #e6e6e6;
+    margin-top: 24rpx
+}
+
+.activityName {
+    background: var(--bg-theme-light-color);
+    border-radius: 4rpx;
+    font-size: 22rpx;
+    font-weight: 400;
+    line-height: 32rpx;
+    padding: 4rpx
+}
+
+.sum {
+    margin-top: 28rpx;
+    text-align: right
+}
+
+.left-width {
+    -webkit-box-flex: 0;
+    -webkit-flex-grow: 0;
+    flex-grow: 0;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    width: 140rpx
+}
+
+.copy {
+    background: #e6e6e6;
+    border-radius: 4rpx;
+    margin-left: 8rpx;
+    padding: 2rpx 8rpx
+}
+
+.refund {
+    font-size: 26rpx;
+    font-weight: 400;
+    line-height: 36rpx;
+    margin-top: 26rpx;
+    text-align: center
+}
+
+.skeleton-title {
+    height: 30rpx;
+    margin-bottom: 10rpx;
+    width: 200rpx
+}
+
+.skeleton-sub-title {
+    height: 24rpx;
+    margin-top: 14rpx;
+    width: 300rpx
+}
+
+.skeleton-price {
+    height: 30rpx;
+    width: 100rpx
+}
+
+.skeleton-amount {
+    height: 20rpx;
+    width: 40rpx
+}
+
+.order-ad {
+    border-radius: 12rpx!important;
+    height: 180rpx!important;
+    margin: 24rpx!important;
+    width: auto!important
+}
+
+.wx-swiper-dots.wx-swiper-dots-horizontal {
+    bottom: 0rpx!important;
+    position: absolute!important
+}
+
+.confirm-dialog {
+    min-width: 560rpx;
+    text-align: center
+}
+
+.pop-title {
+    color: #333;
+    line-height: 36rpx;
+    padding: 24rpx 24rpx 40rpx
+}
+
+.cancel-btn,.confirm-btn {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    line-height: 90rpx
+}
+
+.container {
+    box-sizing: border-box;
+    padding: 40rpx 0 0;
+    text-align: center;
+    width: 560rpx
+}
+
+.stepping-stone {
+    padding-top: 88rpx
+}
+
+.bottom-area {
+    background-color: #fff;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    text-align: right
+}
+
+.bottom-area .one-more {
+    border: 2rpx solid var(--theme-color);
+    border-radius: 8rpx;
+    display: inline-block;
+    height: 56rpx;
+    line-height: 56rpx;
+    margin: 16rpx 24rpx 16rpx 0;
+    text-align: center;
+    width: 128rpx
+}
+
+#earlyArrivalDialog .confirm-dialog {
+    padding-top: 0
+}
+
+.early-btn {
+    border-radius: 8rpx;
+    display: inline-block;
+    height: 56rpx;
+    line-height: 56rpx;
+    margin: 16rpx 24rpx 16rpx 0;
+    text-align: center;
+    width: 128rpx
+}
+
+.circle {
+    background-color: #f8f8fa;
+    border-radius: 50%;
+    bottom: -40rpx;
+    height: 32rpx;
+    position: absolute;
+    width: 32rpx
+}
+
+.left-circle {
+    left: -40rpx
+}
+
+.right-circle {
+    right: -40rpx
+}
+
+.coin-number {
+    -webkit-box-pack: end;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-end;
+    justify-content: flex-end;
+    line-height: 1.5
+}
+
+.coin-number .snow_icon {
+    height: 28rpx;
+    margin: 0 4rpx;
+    width: 28rpx
+}
+
+.coin-number .rule_icon {
+    height: 24rpx;
+    margin: 0 4rpx;
+    width: 24rpx
+}
+
+.medal-box {
+    color: #ffe5c3;
+    text-align: center
+}
+
+.medal-title {
+    height: 124rpx;
+    margin: 76rpx auto 28rpx;
+    width: 654rpx
+}
+
+.medal-img {
+    height: 368rpx;
+    width: 368rpx
+}
+
+.medal-name {
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    font-size: 48rpx;
+    font-weight: 700;
+    -webkit-justify-content: center;
+    justify-content: center;
+    margin: 54rpx auto 48rpx;
+    position: relative
+}
+
+.medal-ear {
+    height: 48rpx;
+    margin: 0 16rpx;
+    width: 24rpx
+}
+
+.medal-close {
+    height: 88rpx;
+    margin-top: 86rpx;
+    width: 424rpx
+}
+
+.send-bless-btn {
+    background: -webkit-linear-gradient(45deg,#ff601c,#ff1b1b);
+    background: linear-gradient(45deg,#ff601c,#ff1b1b);
+    border: 1rpx solid #fee5c9;
+    border-radius: 30px;
+    height: 72rpx;
+    line-height: 72rpx;
+    margin: 12rpx auto 0;
+    text-align: center;
+    width: 396rpx
+}
+
+.send-bless-icon {
+    height: 40rpx;
+    width: 40rpx
+}
+
+.coin-exchange {
+    background: #fff7e8;
+    border-radius: 12rpx;
+    box-sizing: border-box;
+    color: #b96507;
+    font-size: 24rpx;
+    height: 76rpx;
+    margin-bottom: 24rpx;
+    padding: 0 16rpx;
+    width: 654rpx
+}
+
+.coin-icon {
+    height: 32rpx;
+    width: 32rpx
+}
+
+.coin-num {
+    color: #ff7d00;
+    font-size: 32rpx
+}
+
+.to-exchange {
+    color: #9a5c18;
+    font-size: 22rpx;
+    height: 76rpx;
+    line-height: 76rpx
+}

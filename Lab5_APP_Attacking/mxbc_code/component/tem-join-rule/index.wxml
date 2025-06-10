@@ -1,0 +1,6 @@
+<view class="order_rule_container">
+    <view class="order_rule_scrollview">
+        <view decode class="order_rule_text">{{data}}</view>
+    </view>
+    <text bindtap="close" class="iconfont icon-close f20"></text>
+</view>

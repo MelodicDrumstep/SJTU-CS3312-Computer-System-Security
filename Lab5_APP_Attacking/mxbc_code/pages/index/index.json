@@ -1,0 +1,16 @@
+{
+  "navigationStyle": "custom",
+  "initialRenderingCache": "static",
+  "usingComponents": {
+    "mx-popup": "pages\\index\\component\\popup\\index",
+    "mx-ad": "pages\\index\\component\\custom-ad\\index",
+    "mx-debug": "pages\\index\\component\\debug\\index",
+    "mx-dialog": "pages\\index\\component\\dialog\\index",
+    "mx-mzhd": "pages\\index\\component\\tem-mzhd\\index",
+    "mx-subscribe-guide": "pages\\index\\component\\subscribe-guide\\index",
+    "mx-member-rights": "pages\\index\\component\\member-rights\\index",
+    "mx-login": "pages\\index\\component\\custom-login\\index",
+    "mx-progress-bar": "pages\\index\\component\\progress-bar\\index",
+    "mx-task-zone": "pages\\index\\component\\task-zone\\index"
+  }
+}

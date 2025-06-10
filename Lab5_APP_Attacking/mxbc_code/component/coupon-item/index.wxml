@@ -1,0 +1,68 @@
+<view bindtap="couponClick" class="single-coupon custom-class {{disabled?'disabled c-aaa':'c-777'}}" wx:if="{{designType==='default'}}">
+    <view class="coupon-top flex-sb">
+        <view class="coupon-left">
+            <view class="coupon-title-box flex align-center">
+                <text class="coupon-title fb5 mx-ellipsis" style="max-width:calc(100vw - 72rpx - 188rpx - {{couponTag?'150rpx':'0rpx'}});">{{couponData.couponName}}</text>
+                <text class="coupon-warning-tag f10 ml4 mx-ellipsis" style="max-width:130rpx;" wx:if="{{couponTag}}">{{couponTag}}</text>
+            </view>
+            <view class="limit-item" wx:if="{{couponData.createdTime}}">发券时间：{{couponData.createdTime}}</view>
+            <view class="limit-item" wx:if="{{couponData.validType==2}}">自领取后 {{couponData.vaildDays}} 天内有效</view>
+            <view class="limit-item" wx:else>券有效期：{{startTime}} - {{endTime}}</view>
+            <view class="limit-item" style="display:flex" wx:if="{{limitDate||limitTime}}">
+                <text>限定时段：</text>
+                <view style="max-width:calc(100vw - 72rpx - 188rpx - 24rpx);flex:1">
+                    <view wx:if="{{limitDate}}">{{limitDate}}</view>
+                    <view wx:if="{{limitTime}}">{{limitTime}}</view>
+                </view>
+            </view>
+            <view class="limit-item">使用渠道：{{channelType||'通用'}}</view>
+            <view class="limit-item">适用场景：{{orderType||'--'}}</view>
+        </view>
+        <view class="coupon-amount shrink flex-center" wx:if="{{!couponData.canUseMore}}">
+            <text class="free-type c-text-theme fb5" wx:if="{{couponData.couponType==5&&couponData.deductType==1}}">1</text>
+            <text class="amount-type c-text-theme fb5" wx:elif="{{(couponData.couponType==5&&couponData.deductType==0||couponData.couponType==8&&couponData.deliveryDeduceType==1)&&priceOriginal}}">{{priceOriginal}}</text>
+            <text class="amount-type c-text-theme fb5" wx:elif="{{(couponData.couponType==1||couponData.couponType==6)&&priceOriginal}}">{{priceOriginal}}</text>
+            <text class="amount-type c-text-theme fb5" wx:elif="{{couponData.couponType==7&&couponData.discountedPrice}}">{{couponData.discountedPrice}}</text>
+            <text class="discount-type c-text-theme fb5" wx:elif="{{couponData.couponType==3&&couponData.couponDiscount}}">{{couponData.couponDiscount/10}}</text>
+            <text class="delivery-deduce-type c-text-theme fb5 f18" wx:elif="{{couponData.couponType==8&&couponData.deliveryDeduceType==2}}">免配券</text>
+            <view class="amount-description f11">{{amountDesc}}</view>
+        </view>
+        <view class="coupon-amount shrink flex-center" wx:if="{{couponData.couponType==7}}">
+            <text class="amount-type c-text-theme fb5" wx:if="{{couponData.discountedPrice}}">{{couponData.discountedPrice}}</text>
+            <view class="amount-description f11">{{amountDesc}}</view>
+        </view>
+        <view class="coupon-tag-text-box">
+            <text class="coupon-tag-text c-text-theme almost-expired" wx:if="{{inThisDay}}">新获得</text>
+            <text class="coupon-tag-text c-text-theme almost-expired" wx:if="{{couponData.isUsed}}">已占用</text>
+            <text class="coupon-tag-text c-text-theme almost-expired" wx:if="{{couponData.isDueSoon==1}}">即将到期</text>
+            <text class="coupon-tag-text b-ccc c-fff" wx:if="{{couponData.couponStatus==5}}">已锁定</text>
+            <text class="coupon-tag-text b-ccc c-fff" wx:elif="{{couponData.couponStatus==6}}">已退款</text>
+            <text class="coupon-tag-text b-ccc c-fff" wx:elif="{{couponData.couponStatus==7}}">已作废</text>
+            <text class="coupon-tag-text b-ccc c-fff" wx:elif="{{couponData.couponStatus==8}}">赠送中</text>
+            <text class="coupon-tag-text b-ccc c-fff" wx:elif="{{couponData.couponStatus==9}}">已赠送</text>
+            <text class="coupon-tag-text b-ccc c-fff" wx:elif="{{disabled&&couponData.couponStatus!=2}}">已过期</text>
+        </view>
+        <image lazyLoad class="coupon-tag-img" src="{{__static__}}/main/used.png" wx:if="{{couponData.couponStatus==2}}"></image>
+    </view>
+    <view class="coupon-bottom flex-sb">
+        <text catchtap="toRule" class="iconfont icon-arrow_right f12">使用规则 </text>
+        <slot></slot>
+    </view>
+</view>
+<view class="simplify-coupon" wx:elif="{{designType==='simplify'}}">
+    <view class="coupon-name-tag">
+        <text class="f14 fb5 {{couponData.couponTag?'mx-ellipsis':''}}" style="max-width:392rpx">{{couponData.couponRuleName}}</text>
+        <view class="coupon-tag c-theme-light" wx:if="{{couponData.couponTag}}">{{couponData.couponTag}}</view>
+    </view>
+    <view class="flex-center flex-column c-theme-light" style="width:200rpx">
+        <text class="free-type c-text-theme fb5 f24" wx:if="{{couponData.couponType==5&&couponData.deductType==1}}">1</text>
+        <text class="f14 fb5" wx:elif="{{(couponData.couponType==1||couponData.couponType==5&&couponData.deductType==0||couponData.couponType==8&&couponData.deliveryDeduceType==1)&&couponData.couponAmount}}">¥<text class="f24 ml2">{{couponData.couponAmount}}</text>
+        </text>
+        <text class="discount-type fb5 f24" wx:elif="{{couponData.couponType==3&&couponData.couponDiscount}}">{{couponData.couponDiscount/10}}</text>
+        <text class="f14 fb5" wx:elif="{{(couponData.couponType==6||couponData.couponType==7)&&couponData.discountedPrice}}">¥<text class="f24 ml2">{{couponData.discountedPrice}}</text>
+        </text>
+        <text class="delivery-deduce-type c-text-theme fb5 f18" wx:elif="{{couponData.couponType==8&&couponData.deliveryDeduceType==2}}">免配券</text>
+        <view class="f10" wx:if="{{couponData.couponType!=3&&couponData.enableAmount}}">满{{couponData.enableAmount}}元可用</view>
+    </view>
+    <image class="coupon-bg" src="{{__static__}}/activity/coupon_bg_sm.png"></image>
+</view>

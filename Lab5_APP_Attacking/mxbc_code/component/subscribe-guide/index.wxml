@@ -1,0 +1,3 @@
+<view class="mask-layer" wx:if="{{showSubscribeGuide}}">
+    <image lazyLoad class="guide-icon" mode="widthFix" src="{{__static__}}/main/guide-icon.png"></image>
+</view>

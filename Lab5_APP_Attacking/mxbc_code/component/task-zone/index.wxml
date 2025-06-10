@@ -1,0 +1,16 @@
+<view class="medal-task {{type}}">
+    <image class="medal-task-icon mr12" src="{{medalInfo.getImageUrl}}"></image>
+    <view class="medal-task-info f12 c-aaa">
+        <view class="medal-task-name mx-ellipsis f14 c-333 fb5">{{medalInfo.lightFlag?'已获得【'+medalInfo.name+'】徽章':'还差1杯得【'+medalInfo.name+'】徽章'}}</view>
+        <view class="medal-task-progress">
+            <view class="bar-bg">
+                <view class="bar" wx:if="{{medalInfo.lightFlag}}"></view>
+            </view>
+            <text class="c-theme">{{medalInfo.lightFlag*1}}/1</text>
+        </view>
+        <view wx:if="{{medalInfo.lightFlag}}">已点亮该徽章</view>
+        <view wx:elif="{{medalInfo.leftSeconds}}">距活动结束：<text class="c-333">{{medalInfo.day}}</text>天<text class="c-333">{{medalInfo.hour}}</text>时<text class="c-333">{{medalInfo.minute}}</text>分</view>
+        <view wx:else>满足指定条件即可点亮徽章</view>
+    </view>
+    <button bindtap="onTap" class="task-btn b-theme c-fff f12">{{medalInfo.lightFlag?'查看徽章':'马上点亮'}}</button>
+</view>

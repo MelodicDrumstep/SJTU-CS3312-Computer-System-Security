@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "退单申请",
+  "backgroundColor": "#F5F5F5",
+  "usingComponents": {
+    "mx-field": "pages\\order_detail\\refund\\component\\field\\index"
+  }
+}

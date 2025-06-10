@@ -1,0 +1,124 @@
+<page-meta pageStyle="{{isShowPrivacy?'overflow: hidden;':''}}"></page-meta>
+<mx-ad adData="{{swiperList}}" adEvent="top_banner" adType="banner" customClass="index-ad" wx:if="{{swiperList.length>0}}"></mx-ad>
+<view class="custom-container mb12">
+    <view bindtap="advertiseTap" class="custom-info flex-sb {{userInfo.isBirthday==1?'birthday-hat':''}}">
+        <image lazyLoad class="avatar avatar-bg" data-area="头像" data-event="index_click" data-url="/pages/customer-center/profiles/index" mode="aspectFill" src="{{userInfo.image||__static__+'/main/default_avatar.png'}}"></image>
+        <view class="level-info">
+            <block wx:if="{{userInfo.customerLevel}}">
+                <view class="flex-a-center">
+                    <text class="fb6 mx-ellipsis f14" data-area="昵称" data-event="index_click" data-url="/pages/customer-center/profiles/index" style="max-width:200rpx">{{userInfo.nickname||userInfo.mobilePhone}}</text>
+                    <text class="level-tag level-{{userInfo.customerLevel}}" data-area="会员等级" data-event="index_click" data-url="/pages/customer-center/rights/index">{{userInfo.customerLevelVo.levelName}}会员</text>
+                </view>
+                <view class="f9 flex-a-center mt4" wx:if="{{userInfo.customerLevel!==4}}">
+                    <mx-progress-bar activeColor="#FC3F41" backgroundColor="#FFBFC6" class="mr4" data-area="进度条" data-event="index_click" data-url="/pages/customer-center/rights/index" percent="{{userInfo.currentPrecent}}" strokeWidth="12" width="278"></mx-progress-bar>
+                    <text class="c-theme" data-area="进度条" data-event="index_click" data-url="/pages/customer-center/rights/index">{{userInfo.growthValue}}</text>
+                    <text class="c-aaa" data-area="进度条" data-event="index_click" data-url="/pages/customer-center/rights/index">/{{userInfo.customerLevelVo.growthValueMax}}</text>
+                </view>
+            </block>
+            <block wx:else>
+                <text class="fb6 f14">尊敬的用户</text>
+                <view class="f11 c-aaa mt2">{{regGuidanceSettingVo.mainLoginTip}}</view>
+            </block>
+        </view>
+        <block wx:if="{{userInfo.customerLevel}}">
+            <view catchtap="toCoin" style="text-align:center">
+                <text class="fb f14">{{userInfo.customerPoint}}</text>
+                <view class="f11 c-aaa mt2">雪王币</view>
+            </view>
+            <view catchtap="toCoupon" style="text-align:center">
+                <text class="fb f14">{{couponData.count}}</text>
+                <view class="f11 c-aaa mt2">优惠券</view>
+                <text class="coupon-tag f9 c-theme b-theme-light" wx:if="{{couponData.nextExpireCount}}">{{couponData.nextExpireCount}}张即将过期</text>
+            </view>
+        </block>
+        <button catchtap="advertiseTap" class="f13" data-event="Login" data-url="/pages/register/index" style="height:64rpx;padding:0 24rpx" wx:else>授权登录</button>
+    </view>
+    <mx-member-rights customStyle="border: 4rpx solid #fff;border-radius: 0 0 var(--card-radius) var(--card-radius);" customer="{{userInfo}}" wx:if="{{userInfo.mobilePhone&&userInfo.mainPageRightsNum&&userInfo.homePageRightsSwitchFlag}}"></mx-member-rights>
+</view>
+<view bindtap="advertiseTap" class="middle-ad mb12">
+    <view class="to-order" style="position:relative">
+        <image lazyLoad data-event="takeout" data-url="{{mainBannerList[0].adUrl}}" mode="aspectFill" src="{{mainBannerList[0].adImg}}"></image>
+        <image lazyLoad data-event="deliver" data-url="{{mainBannerList[1].adUrl}}" mode="aspectFill" src="{{mainBannerList[1].adImg}}"></image>
+    </view>
+    <view class="magnet flex mx-hairline--top" wx:if="{{magnetList.length}}">
+        <image lazyLoad class="magnet-img" data-event="index_magnet" data-url="{{item.adUrl}}" mode="aspectFill" src="{{item.adImg}}" wx:for="{{magnetList}}" wx:key="index"></image>
+    </view>
+</view>
+<swiper autoplay circular class="task-area mb12" indicatorActiveColor="rgba(51, 51, 51, 0.20)" indicatorColor="rgba(51, 51, 51, 0.20)" indicatorDots="{{medalTaskList.length>1||mzhdData.marketingId&&medalTaskList.length}}" interval="{{2500}}" wx:if="{{mzhdData.marketingId||medalTaskList.length}}">
+    <swiper-item wx:if="{{mzhdData.marketingId}}">
+        <mx-mzhd bind:receive="getMzhdData" data="{{mzhdData}}" type="index"></mx-mzhd>
+    </swiper-item>
+    <swiper-item wx:for="{{medalTaskList}}" wx:key="index">
+        <mx-task-zone medalInfo="{{item}}"></mx-task-zone>
+    </swiper-item>
+</swiper>
+<view class="hot-suggest pl12 pt12 pb12 mb20" wx:if="{{suggestData.goods.length}}">
+    <image lazyLoad class="suggest-bg" src="{{__static__}}/main/suggest_bg.png"></image>
+    <image lazyLoad mode="widthFix" src="{{__static__}}/main/suggest_title.png" style="width:160rpx"></image>
+    <view class="mx-ellipsis f13 mt8 mb8" style="max-width:660rpx">
+        <text class="iconfont icon-location mr4"></text>
+        <text>{{suggestData.shopName}}</text>
+    </view>
+    <view class="suggest-goods">
+        <view bindtap="suggestGoodsTap" class="suggest-goods-item f14 mr12" data-name="{{item.productName}}" wx:for="{{suggestData.goods}}" wx:key="index">
+            <image lazyLoad class="suggest-goods-img" mode="aspectFill" src="{{item.productLogo}}"></image>
+            <view class="mx-ellipsis f12 mt4 mb4" style="max-width:220rpx">{{item.productName}}</view>
+            <view class="goods-bottom flex-sb">
+                <text class="fb5">¥ {{item.productPrice/100}}</text>
+                <text class="iconfont icon-add f22 c-theme"></text>
+            </view>
+        </view>
+    </view>
+</view>
+<block wx:if="{{sweetNewsList.length}}">
+    <view class="f16 fb c-333">甜蜜资讯</view>
+    <view class="pt12 pb17">
+        <mx-ad adData="{{sweetNewsList}}" adEvent="button_banner" adType="banner" customClass="sweet-news-ad"></mx-ad>
+    </view>
+</block>
+<mx-ad adData="{{popupAdList}}" adEvent="pop-homepage,{\"user\":\"会员\"}" adKey="WechartMiniIndexPopup" adType="popup" wx:if="{{popupAdList.length&&!isShowPrivacy}}"></mx-ad>
+<mx-ad adData="{{guideLoginAdList}}" adEvent="pop-homepage,{\"user\":\"新人引导\"}" adKey="newMemIndexPopup" adType="popup" bind:adTap="showLoginPopup" wx:if="{{guideLoginAdList.length}}"></mx-ad>
+<mx-popup show="{{isShowPrivacy}}">
+    <view class="privacy-confirm">
+        <view class="f16 fb5" style="text-align:center">协议与隐私政策</view>
+        <view class="f13" style="margin-top:24rpx;">欢迎来到蜜雪冰城！我们根据最新的法律法规、监管政策要求，更新了《蜜雪冰城用户服务协议》和《蜜雪冰城个人信息保护政策》，请您认真阅读。</view>
+        <view bindtap="updatePrivacyStatus" class="f11 pt12 pb12 privacy-confirm-agree">
+            <view style="flex:1">
+                <text catchtap="advertiseTap" class="c-theme" data-url="https://mxsa.mxbc.net/policy.html">《蜜雪冰城个人信息保护政策》</text>
+                <text catchtap="advertiseTap" class="c-theme" data-url="https://mxsa.mxbc.net/agreement.html">《蜜雪冰城用户服务协议》</text>
+            </view>
+        </view>
+        <button bindtap="closeConfirmPopup">同意</button>
+        <button bindtap="disagreePrivacy" class="disagree">不同意</button>
+    </view>
+</mx-popup>
+<mx-debug wx:if="{{!isProMini}}"></mx-debug>
+<mx-popup bind:close="closeJointOrderType" position="bottom" show="{{showJointOrderType}}">
+    <view class="f16 fb5 pt20 pb22" style="text-align:center">
+        <text>请选择拼单方式</text>
+        <text bindtap="closeJointOrderType" class="f20 iconfont icon-close joint-close-icon"></text>
+    </view>
+    <view class="flex-se pb20" style="{font-size:0;position:relative}">
+        <image lazyLoad bindtap="selectJointType" data-type="1" mode="widthFix" src="{{__static__}}/main/main_left_placeholder.png"></image>
+        <view class="line"></view>
+        <image lazyLoad bindtap="selectJointType" data-type="2" mode="widthFix" src="{{__static__}}/main/main_right_placeholder.png"></image>
+    </view>
+</mx-popup>
+<mx-dialog bindcancel="toCreateJoint" bindconfirm="toCurrentJoint" cancelText="{{jointRole==1?'重新发起':'我来发起'}}" confirmText="查看当前拼单" content="{{jointRole==1?'您当前有一笔拼单正在进行中，是否继续拼单，重新发起将取消当前拼单':'您已加入一笔拼单，是否继续拼单，重新发起将退出当前拼单'}}" id="jointOrderDialog" title="拼单进行中"></mx-dialog>
+<view bindtap="advertiseTap" class="splash flex-a-center" data-url="{{splash.adUrl}}" wx:if="{{splash.show&&splash.adImg}}">
+    <image lazyLoad data-url="{{splash.adUrl}}" mode="widthFix" src="{{splash.adImg}}" style="width:100%"></image>
+    <view catchtap="closeSplash" class="splash-timer f14">跳过<text class="timer-txt">{{splash.timer}}</text>S</view>
+</view>
+<mx-ad adAniFold="{{takeNoFold}}" adData="{{takeNo}}" adEvent="index_take_no" adType="takeNo" bindclose="closeTakeNo" wx:if="{{showTakeNo}}"></mx-ad>
+<view bindtap="closeAppCollect" class="index-app_collect c-fff f11 flex-center" style="top:{{statusBarHeight+navBarHeight+10}}px;right:{{menuButtonWidth-40}}px;" wx:if="{{showAppCollect}}">
+    <text>点击</text>
+    <text style="color:#FF9F00;">“添加至我的小程序” </text>
+    <text>下次访问更方便</text>
+    <text class="text-line ml12 mr12"></text>
+    <text class="f16" style="margin-top:-4rpx;">×</text>
+    <view class="triangle-up"></view>
+</view>
+<mx-popup bind:close="closeLoginPopup" position="bottom" show="{{showLogin}}" zIndex="299">
+    <mx-login bind:end="closeLoginPopup" options="{{loginOptions}}" template="popup" wx:if="{{showLoginCom}}"></mx-login>
+</mx-popup>
+<mx-subscribe-guide showSubscribeGuide="{{showSubscribeGuide}}"></mx-subscribe-guide>

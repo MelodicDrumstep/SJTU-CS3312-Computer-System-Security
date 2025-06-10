@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "mx-guide-to-app": "pages\\mine\\component\\guide-to-app\\index",
+    "mx-mzhd": "pages\\mine\\component\\tem-mzhd\\index",
+    "mx-subscribe-guide": "pages\\mine\\component\\subscribe-guide\\index",
+    "mx-progress-bar": "pages\\mine\\component\\progress-bar\\index",
+    "mx-ad": "pages\\mine\\component\\custom-ad\\index",
+    "mx-task-zone": "pages\\mine\\component\\task-zone\\index"
+  }
+}

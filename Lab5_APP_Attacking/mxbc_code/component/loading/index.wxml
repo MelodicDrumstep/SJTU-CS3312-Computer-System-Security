@@ -1,0 +1,3 @@
+<view class="mx-loading_container" hidden="{{!visible}}">
+    <image lazyLoad class="mx-loading_icon" mode="aspectFit" src="{{__static__}}/main/loading-img.png"></image>
+</view>

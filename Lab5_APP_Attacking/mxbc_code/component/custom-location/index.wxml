@@ -1,0 +1,20 @@
+<view class="location-page {{inline?'inline':''}} custom-class" style="{{customStyle}}">
+    <mx-nav-bar wx:if="{{showSearch}}">
+        <view bind:tap="chooseLocation" class="to-search c-777" slot="leftButton">
+            <text class="iconfont icon-search f16 mr3"></text>
+            <text class="f13">搜索门店</text>
+        </view>
+    </mx-nav-bar>
+    <view class="no-location-permission f12">
+        <image lazyLoad class="no-permission-img" mode="widthFix" src="{{__static__}}/main/no_location_permission.png"></image>
+        <view>未开启定位权限,无法为您匹配附近门店</view>
+        <view wx:if="{{showSearch||showSearchText}}">可手动搜索门店下单</view>
+        <view class="c-warn mt8">（请先确认微信的位置权限是否开启）</view>
+        <button catch:tap="openSetting" style="width:598rpx;margin:80rpx auto 32rpx;">去开启定位信息</button>
+        <block wx:if="{{showHKMini}}">
+            <button catch:tap="jumpToHKApp" class="btn-jump">打开“蜜雪冰城香港澳门”小程序</button>
+            <view class="tip-jump">中国港澳台门店</view>
+            <view class="tip-jump">请前往微信或支付宝搜索[蜜雪冰城香港澳门]小程序下单</view>
+        </block>
+    </view>
+</view>

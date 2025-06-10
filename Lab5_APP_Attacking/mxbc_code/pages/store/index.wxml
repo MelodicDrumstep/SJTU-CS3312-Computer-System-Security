@@ -1,0 +1,55 @@
+<view class="top_container flex-sb" wx:if="{{isShowPrivacy!==0}}">
+    <mx-tab bind:change="tabChange" tabs="{{['附近门店','常去门店','收藏门店']}}"></mx-tab>
+    <view bind:tap="chooseLocation" class="to-search flex-center f12 c-aaa" hidden="{{currentTab}}">
+        <text class="iconfont icon-search f14" style="margin-right:6rpx"></text>
+        <text>搜索门店</text>
+    </view>
+</view>
+<view class="no-location-permission f12" wx:else>
+    <image lazyLoad class="disagree-img" mode="widthFix" src="{{__static__}}/main/disagree_privacy.png"></image>
+    <view class="disagree-tip">
+        <text>未同意</text>
+        <text catch:tap="advertiseTap" class="c-theme" data-url="https://mxsa.mxbc.net/policy.html">《蜜雪冰城个人信息保护政策》</text>
+        <text catch:tap="advertiseTap" class="c-theme" data-url="https://mxsa.mxbc.net/agreement.html">《蜜雪冰城用户服务协议》</text>
+        <text>，无法为您匹配服务门店</text>
+    </view>
+    <view bind:tap="handleAgree" class="agree-btn">我已阅读并同意</view>
+</view>
+<block wx:if="{{isShowPrivacy!==0}}">
+    <mx-location inline isShowPrivacy showSearchText customStyle="height:70vh;" wx:if="{{!userLocationPermission&&!mapData.longitude}}"></mx-location>
+    <block wx:else>
+        <view class="map_container" hidden="{{!mapData.showMap}}">
+            <view class="location-tips flex-sb" hidden="{{userLocationPermission||currentTab}}">
+                <view class="flex-center">
+                    <image lazyLoad src="{{__static__}}/main/icon_shop_tip.png" style="width:44rpx;height:44rpx;margin-right:12rpx;"></image>
+                    <text>开启位置权限以获取更准确门店推荐</text>
+                </view>
+                <view catch:tap="openSetting" class="openSetting flex-center">去开启</view>
+            </view>
+            <map showLocation bindmarkertap="onMarkerTap" id="map" latitude="{{mapData.latitude}}" longitude="{{mapData.longitude}}" markers="{{mapData.markers}}" scale="16" style="width:100%;height:100%"></map>
+            <image lazyLoad catch:tap="moveToLocation" class="to-location-icon" src="{{__static__}}/main/icon_shop_locate.png" wx:if="{{!currentTab&&userLocationPermission}}"></image>
+        </view>
+        <view bind:tap="packUpMap" class="flex-center f12 c-777 mx-hairline--top" style="height:70rpx">
+            <text style="margin-right:16rpx">{{mapData.showMap?'收起地图':'展开地图'}}</text>
+            <text class="f11 iconfont {{mapData.showMap?'icon-arrow_up':'icon-arrow_down'}}"></text>
+        </view>
+        <view class="shop_container">
+            <block wx:if="{{shops[currentTab].data.length}}">
+                <view hidden="{{tab_idx!=currentTab}}" style="height:100%;" wx:for="{{shops}}" wx:for-index="tab_idx" wx:for-item="list" wx:key="tab_idx">
+                    <block wx:if="{{list.data.length}}">
+                        <mx-shop-item bind:clickFavorite="clickFavorite" bind:shopTap="shopTap" data="{{item}}" tabIndex="{{tab_idx}}" wx:for="{{list.data}}" wx:key="shopId"></mx-shop-item>
+                        <view style="height:100rpx;"></view>
+                    </block>
+                </view>
+            </block>
+            <view bind:tap="getShopList" class="shop-empty" wx:elif="{{!shops[currentTab].isLoading}}">
+                <image lazyLoad src="{{__static__}}/main/img_shop_empty.png" style="width:414rpx;height:410rpx"></image>
+                <text class="f10 c-777" style="margin-top:-60rpx">{{shops[currentTab].noShopTxt}}</text>
+            </view>
+            <view class="f12 mt10 c-777" style="text-align:center;" wx:else>加载中...</view>
+        </view>
+    </block>
+</block>
+<mx-popup bind:close="closePopup" show="{{showOfflinePopup||showClosedPopup}}">
+    <mx-tem-store-error bind:close="closePopup" selectedStore="{{selectedStore}}" showClosed="{{showClosedPopup}}" showOffline="{{showOfflinePopup}}"></mx-tem-store-error>
+</mx-popup>

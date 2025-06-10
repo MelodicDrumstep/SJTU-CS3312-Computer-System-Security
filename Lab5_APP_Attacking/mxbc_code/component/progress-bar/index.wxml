@@ -1,0 +1,3 @@
+<view class="progress-bar {{customClass}}" style="width:{{width}}rpx;background-color:{{backgroundColor}};height:{{strokeWidth}}rpx;">
+    <view class="progress-bar_active" style="width:{{percent}}%;height:{{strokeWidth}}rpx;background-color:{{activeColor}}"></view>
+</view>

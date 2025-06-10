@@ -1,0 +1,4 @@
+<view class="qr-code-box" wx:if="{{qrcodeUrl}}">
+    <image lazyLoad class="qr-code-bg" src="{{bgImgUrl}}" wx:if="{{bgImgUrl}}"></image>
+    <image lazyLoad showMenuByLongpress bindlongpress="onLongPress" class="qr-code" mode="aspectFill" src="{{qrcodeUrl}}"></image>
+</view>

@@ -1,0 +1,71 @@
+.activity {
+    height: 64rpx;
+    padding: 0 28rpx;
+    position: relative
+}
+
+.activity-scroll-item {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    font-size: 24rpx;
+    height: 100%;
+    line-height: 48rpx
+}
+
+.activity-scroll-item .mx-ellipsis {
+    max-width: 510rpx
+}
+
+.activity-type {
+    background: #ff5254;
+    border-radius: 8rpx;
+    color: #fff;
+    display: inline-block;
+    font-size: 20rpx;
+    line-height: 28rpx;
+    margin-right: 10rpx;
+    padding: 2rpx 6rpx
+}
+
+.notice-horn {
+    height: 32rpx;
+    width: 32rpx
+}
+
+.onemore-container .popup-content {
+    padding-top: 48rpx
+}
+
+.activity-detail .activity-type,.activity-detail .notice-horn {
+    margin-top: 2rpx
+}
+
+.activity-detail {
+    -webkit-overflow-scrolling: touch;
+    background: #fff;
+    box-sizing: border-box;
+    color: #333;
+    max-height: 944rpx;
+    overflow-y: auto;
+    padding: 0rpx 32rpx 92rpx;
+    width: 100%;
+    z-index: 200
+}
+
+.detail-arrow-up {
+    font-size: 32rpx;
+    position: absolute;
+    right: 12rpx;
+    top: 24rpx
+}
+
+.flex-1 {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    word-break: break-all
+}

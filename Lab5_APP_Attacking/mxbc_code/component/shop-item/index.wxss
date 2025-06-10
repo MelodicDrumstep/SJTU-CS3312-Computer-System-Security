@@ -1,0 +1,43 @@
+.shop-item {
+    background: #fff;
+    background-position: 0 0;
+    background-size: 100% auto;
+    border-radius: var(--card-radius);
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    margin-bottom: 16rpx;
+    padding: 24rpx 0 24rpx 24rpx
+}
+
+.shop-item-detail {
+    border-right: 1rpx solid #eee;
+    font-size: 24rpx;
+    padding-right: 20rpx;
+    width: 475rpx
+}
+
+.shop-item-contact {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    width: 180rpx
+}
+
+.shop-item-contact_icon {
+    height: 48rpx;
+    width: 48rpx
+}
+
+.disabled,.disabled .c-333,.disabled .c-777 {
+    color: #aaa
+}
+
+.favorite {
+    padding: 32rpx
+}
+
+.shop-item.selected {
+    border: 2rpx solid var(--theme-color)
+}

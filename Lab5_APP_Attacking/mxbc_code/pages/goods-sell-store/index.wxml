@@ -1,0 +1,28 @@
+<view class="goods-sell-store">
+    <mx-nav-bar useDialog bindback="close" customClass="mx-nav-bar"></mx-nav-bar>
+    <mx-ad adData="{{goods.productImages}}" adInterval="{{2000}}" adType="banner" customClass="goods-img"></mx-ad>
+    <view class="goods-sell-store-header b-fff c-333 mb8">
+        <view class="goods-sell-store-price mb8">
+            <text class="f16">¥ </text>
+            <text class="f18">{{goods.splitSprice[0]}}</text>
+            <text class="f12" wx:if="{{goods.splitSprice[1]}}">.{{goods.splitSprice[1]}}</text>
+        </view>
+        <view class="goods-sell-store-name f14">{{goods.productName}}</view>
+    </view>
+    <mx-location inline showSearchText customClass="goods-sell-store-location" showHKMini="{{false}}" wx:if="{{!userLocationPermission}}"></mx-location>
+    <block wx:elif="{{storeList.length}}">
+        <view class="goods-sell-store-title f14 fb5">可售门店</view>
+        <view class="goods-sell-store-list">
+            <mx-shop-item bind:clickFavorite="clickFavorite" bind:shopTap="shopTap" data="{{item}}" orderType="{{goods.orderType}}" wx:for="{{storeList}}" wx:key="index"></mx-shop-item>
+        </view>
+    </block>
+    <view class="goods-sell-store-empty" wx:else>
+        <image lazyLoad class="store-empty-img" src="{{__static__}}/main/img_shop_empty.png"></image>
+        <text class="f12 c-777">附近暂无可售门店</text>
+    </view>
+</view>
+<mx-popup animation="{{openAnimation}}" bind:close="closePopup" position="bottom" show="{{showPhoneConfirm}}" style="line-height:104rpx" zIndex="199">
+    <view class="flex-center f14 c-777 mx-hairline--bottom">联系电话</view>
+    <view bind:tap="selectPhone" class="flex-center mx-hairline--bottom" data-phone-number="{{item}}" wx:for="{{contactPhone}}" wx:key="*this">{{item}}</view>
+    <view bind:tap="closePopup" class="flex-center mx-hairline--bottom">取消</view>
+</mx-popup>

@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "mx-popup": "pages\\combo-diy\\component\\popup\\index",
+    "goods-detail": "pages\\combo-diy\\component\\goods-detail\\index",
+    "mx-nav-bar": "pages\\combo-diy\\component\\nav-bar\\index",
+    "mx-ad": "pages\\combo-diy\\component\\custom-ad\\index",
+    "mx-join-group-guide": "pages\\combo-diy\\component\\join-group-guide\\index"
+  }
+}

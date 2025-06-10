@@ -1,0 +1,32 @@
+.confirm-dialog {
+    text-align: center;
+    width: 560rpx
+}
+
+.confirm-msg {
+    line-height: 42rpx;
+    padding: 24rpx 32rpx 40rpx
+}
+
+.horizontal .cancel,.horizontal .confirm {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    font-size: 32rpx;
+    line-height: 90rpx
+}
+
+.horizontal {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex
+}
+
+.vertical {
+    margin: 0 32rpx 40rpx
+}
+
+.vertical .cancel,.vertical .confirm {
+    border-radius: 8rpx;
+    line-height: 90rpx
+}

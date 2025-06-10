@@ -1,0 +1,28 @@
+<view class="{{customClass}}">
+    <view bindtap="showDetail" class="flex-a-center">
+        <image src="{{__static__}}/wallet/gift_card_icon.png" style="width:40rpx;height:40rpx"></image>
+        <text class="ml8 f13" style="flex:1">礼品卡</text>
+        <text class="f12 c-aaa">礼品卡抵扣</text>
+        <text class="f14 c-theme-light ml4 mr4">- ¥{{giftCardData.giftCardDeductTotalPrice/100}}</text>
+        <text class="f13 c-theme-light">详情</text>
+        <text class="iconfont icon-arrow_right c-777 f13"></text>
+    </view>
+    <slot></slot>
+</view>
+<mx-popup bind:close="closeDetail" position="bottom" show="{{isShowPopup}}">
+    <view class="card-detail safe-bottom">
+        <text bindtap="closeDetail" class="f20 iconfont icon-close"></text>
+        <view class="f14 fb5 pt16 pb16" style="text-align:center">订单使用礼品卡详情</view>
+        <view class="card-list">
+            <view class="card-item" wx:for="{{giftCardData.giftCardTradeItemVos}}" wx:key="index">
+                <view class="f13 fb5">{{item.templateName}}</view>
+                <view class="f10 c-aaa mt8">卡号：{{item.cardNo}}</view>
+                <view class="deduct-amount">
+                    <view class="f12 fb5 c-theme-light">¥<text class="f20">{{item.giftCardDeductPrice/100}}</text>
+                    </view>
+                    <text class="f10 c-aaa mt2">礼品卡抵扣</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</mx-popup>

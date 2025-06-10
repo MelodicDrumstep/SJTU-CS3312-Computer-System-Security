@@ -1,0 +1,21 @@
+<mx-popup bind:close="onCloseOnOverlay" show="{{isShow}}" zIndex="299">
+    <view class="confirm-dialog f14">
+        <slot name="content" wx:if="{{useCustomBody}}"></slot>
+        <block wx:else>
+            <view class="c-333 f16 fb mt20">{{title}}</view>
+            <view class="confirm-msg {{btnStyle==='horizontal'?'mx-hairline--bottom f14':''}}">{{content}}</view>
+        </block>
+        <view class="{{btnStyle}}">
+            <slot wx:if="{{useCustomButton}}"></slot>
+            <block wx:elif="{{btnStyle==='horizontal'}}">
+                <view bind:tap="cancel" class="cancel c-777" wx:if="{{canCancel}}">{{cancelText}}</view>
+                <text class="mx-hairline--left" wx:if="{{canCancel&&canConfirm&&btnStyle==='horizontal'}}"></text>
+                <view bind:tap="confirm" class="confirm c-theme" wx:if="{{canConfirm}}">{{confirmText}}</view>
+            </block>
+            <block wx:else>
+                <button bind:tap="confirm" class="confirm b-theme c-fff f16" wx:if="{{canConfirm}}">{{confirmText}}</button>
+                <view bind:tap="cancel" class="cancel c-777 f14 mt8" wx:if="{{canCancel}}">{{cancelText}}</view>
+            </block>
+        </view>
+    </view>
+</mx-popup>

@@ -1,0 +1,15 @@
+<mx-popup round bind:close="onClose" position="bottom" show="{{show}}">
+    <view class="container custom-class safe-bottom">
+        <slot name="header"></slot>
+        <picker-view immediateChange bindchange="onChange" indicatorStyle="height: 88rpx;" style="height:200rpx;" value="{{[checked]}}" wx:if="{{show}}">
+            <picker-view-column>
+                <view class="flex-center" wx:for="{{data}}" wx:key="index">
+                    <image lazyLoad src="{{item.image}}" style="width:40rpx;height:40rpx;" wx:if="{{item.image}}"></image>
+                    <text class="iconfont {{item.icon}}" wx:if="{{item.icon}}"></text>
+                    <text wx:if="{{item.text}}">{{item.text}}</text>
+                </view>
+            </picker-view-column>
+        </picker-view>
+        <button bindtap="onSave" style="margin:32rpx;">确定</button>
+    </view>
+</mx-popup>

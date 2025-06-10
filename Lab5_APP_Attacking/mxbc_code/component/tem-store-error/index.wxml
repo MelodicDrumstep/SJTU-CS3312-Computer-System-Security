@@ -1,0 +1,26 @@
+<view class="popup-container custom-class" wx:if="{{showError||showOffline||showClosed}}">
+    <block wx:if="{{showError}}">
+        <image lazyLoad class="img-status" mode="heightFix" src="{{__static__}}/main/img_shop_error.png"></image>
+        <view class="popup-text">当前门店无法下单</view>
+    </block>
+    <block wx:if="{{showOffline}}">
+        <image lazyLoad class="img-status" mode="heightFix" src="{{__static__}}/main/img_shop_offline.png"></image>
+        <block wx:if="{{orderType==1}}">
+            <view class="popup-text">未到营业时间</view>
+            <view class="popup-time">本店营业时间：{{selectedStore.operationTime||'今日休息'}}</view>
+        </block>
+        <block wx:else>
+            <view class="popup-text">未到外送营业时间</view>
+            <view class="popup-time">本店外送营业时间：{{selectedStore.takeoutOperationTime||'今日休息'}}</view>
+        </block>
+    </block>
+    <block wx:if="{{showClosed}}">
+        <image lazyLoad class="img-status" mode="heightFix" src="{{__static__}}/main/img_shop_closed.png"></image>
+        <view class="popup-text">门店暂停线上接单</view>
+    </block>
+    <view class="footer_btn mt20 mx-hairline--top" wx:if="{{showGoHomeAndSwitch}}">
+        <view bind:tap="goHome" class="btn btn_go">返回首页</view>
+        <view bind:tap="switchOrderType" class="btn btn_switch" data-order-type="{{1}}">切换自提</view>
+    </view>
+    <view bind:tap="toOtherShop" class="button-close mx-hairline--top" wx:else>选择其他门店</view>
+</view>

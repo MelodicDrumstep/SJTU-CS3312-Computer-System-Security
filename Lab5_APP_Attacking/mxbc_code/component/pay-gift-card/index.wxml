@@ -1,0 +1,20 @@
+<view class="{{customClass}} pay-gift">
+    <view class="flex-a-center f13">
+        <image mode="heightFix" src="{{__static__}}/main/pay_gift_title.png" style="height:44rpx"></image>
+        <block wx:if="{{payGiftData.prizeType==1}}">
+            <text catchtap="showAd" class="iconfont icon-arrow_right fb5" style="margin-left:auto" wx:if="{{payGiftData.page=='cart'}}"></text>
+            <button catchtap="toReward" class="small reward-btn" wx:else>兑换奖品</button>
+        </block>
+        <block wx:else>
+            <text class="pay-gift-tip f11">订单完成后到账</text>
+            <text catchtap="showAd" class="iconfont icon-arrow_right fb5" style="color:#FC3F41">{{payGiftData.couponNum}}张券</text>
+        </block>
+    </view>
+    <view class="c-aaa mt8 f12 {{payGiftData.prizeType==1&&payGiftData.page=='finish'?'limit':''}}" wx:if="{{payGiftData.cardContent}}">{{payGiftData.cardContent}}</view>
+</view>
+<mx-popup bind:close="closeAd" customStyle="background-color: transparent;border-radius: 0" show="{{isShowPopup}}" zIndex="200">
+    <view class="pay-gift_popup">
+        <image bindtap="advertiseTap" data-url="{{payGiftData.miniUrl}}" mode="widthFix" src="{{payGiftData.cardUrl}}" style="width:80vw"></image>
+        <text bindtap="closeAd" class="iconfont icon-close_circle f30 c-fff mt20"></text>
+    </view>
+</mx-popup>

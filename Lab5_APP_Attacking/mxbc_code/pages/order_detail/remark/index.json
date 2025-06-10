@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "订单备注",
+  "usingComponents": {
+    "mx-field": "pages\\order_detail\\remark\\component\\field\\index"
+  }
+}

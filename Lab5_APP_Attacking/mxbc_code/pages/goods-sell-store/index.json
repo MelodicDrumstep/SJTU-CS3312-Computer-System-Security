@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "mx-nav-bar": "pages\\goods-sell-store\\component\\nav-bar\\index",
+    "mx-ad": "pages\\goods-sell-store\\component\\custom-ad\\index",
+    "mx-shop-item": "pages\\goods-sell-store\\component\\shop-item\\index",
+    "mx-location": "pages\\goods-sell-store\\component\\custom-location\\index",
+    "mx-popup": "pages\\goods-sell-store\\component\\popup\\index"
+  }
+}

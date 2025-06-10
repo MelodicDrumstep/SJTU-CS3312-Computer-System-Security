@@ -1,0 +1,15 @@
+.mask-layer {
+    background: rgba(0,0,0,.5);
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    text-align: center;
+    top: 0;
+    z-index: 999
+}
+
+.guide-icon {
+    height: 275rpx;
+    margin-top: 220rpx
+}

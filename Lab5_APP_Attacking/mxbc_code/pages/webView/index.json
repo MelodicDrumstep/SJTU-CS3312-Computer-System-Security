@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "mx-login": "pages\\webView\\component\\custom-login\\index"
+  }
+}

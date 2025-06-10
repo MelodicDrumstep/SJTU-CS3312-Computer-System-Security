@@ -1,0 +1,9 @@
+<view class="product_container product-container-class">
+    <view class="header">
+        <image lazyLoad class="avatar avatar-bg {{isBirthday?'birthday-hat':''}}" mode="aspectFill" src="{{userProduct.customerInfo.avatarUrl||__static__+'/main/default_avatar.png'}}"></image>
+        <text class="user_name mx-ellipsis">{{nickname||userProduct.customerInfo.mobilePhone}}</text>
+        <slot name="header_other"></slot>
+    </view>
+    <product-item customClass="pt12" product="{{product}}" wx:for="{{userProduct.products}}" wx:for-item="product" wx:key="index"></product-item>
+    <slot name="footer"></slot>
+</view>

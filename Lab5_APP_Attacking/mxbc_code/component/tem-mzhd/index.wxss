@@ -1,0 +1,241 @@
+.mzhd-card {
+    box-sizing: border-box;
+    padding: 32rpx 24rpx
+}
+
+.mzhd-card.index {
+    background: -webkit-linear-gradient(left,#fff 45%,#ffeaee);
+    background: linear-gradient(90deg,#fff 45%,#ffeaee);
+    border: 2rpx solid #fff;
+    border-radius: 26rpx 26rpx 26rpx 26rpx;
+    height: 220rpx;
+    padding-bottom: 44rpx
+}
+
+.mzhd-card.mine {
+    background: #fff8f8;
+    border: 1rpx solid #fcf1f1;
+    border-radius: 24rpx 24rpx 24rpx 24rpx;
+    height: 220rpx
+}
+
+.mzhd-img {
+    height: 104rpx;
+    width: 104rpx
+}
+
+.mzhd-title {
+    color: #333;
+    font-size: 28rpx;
+    font-weight: 600;
+    line-height: 40rpx
+}
+
+.mzhd-time {
+    color: #aaa;
+    font-size: 24rpx;
+    font-weight: 400;
+    line-height: 36rpx
+}
+
+.mzhd-bar {
+    height: 36rpx;
+    margin: 12rpx 0 8rpx;
+    width: 360rpx
+}
+
+.mzhd-card.index .mzhd-bar {
+    margin: 14rpx 0
+}
+
+.bar-bg {
+    background: #ffe1e3;
+    height: 12rpx;
+    margin-right: 16rpx;
+    overflow: hidden;
+    width: 302rpx
+}
+
+.bar,.bar-bg {
+    border-radius: 6rpx
+}
+
+.bar {
+    background: #fc3f41;
+    height: 100%
+}
+
+.mzhd-btn {
+    background: var(--theme-color);
+    border-radius: 30rpx;
+    font-size: 24rpx;
+    font-weight: 500;
+    height: 48rpx;
+    line-height: 48rpx;
+    padding: 0;
+    width: 128rpx
+}
+
+.mzhd-btn.disabled {
+    background: #f8b3b8
+}
+
+.mzhd-card.menu {
+    margin: 0 24rpx 20rpx;
+    padding: 12rpx 16rpx;
+    position: relative
+}
+
+.menu .mzhd-bg {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1
+}
+
+.menu .mzhd-bar {
+    width: auto
+}
+
+.menu .bar-bg {
+    background: #ffc9c9;
+    border-radius: 6rpx;
+    height: 12rpx;
+    margin-right: 16rpx;
+    overflow: hidden;
+    width: 120rpx
+}
+
+.menu .bar {
+    background: #fc3f41;
+    border-radius: 6rpx;
+    height: 100%
+}
+
+.mzhd-card.cart {
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    margin: 24rpx 24rpx 0;
+    padding: 24rpx;
+    position: relative
+}
+
+.mzhd-card .activity-tag {
+    background-color: #fb3943;
+    border-radius: 10rpx;
+    color: #fff;
+    display: inline-block;
+    font-size: 26rpx;
+    margin-right: 24rpx;
+    padding: 4rpx 8rpx
+}
+
+.rule-box {
+    padding: 32rpx 32rpx 0;
+    text-align: justify
+}
+
+.rule-page {
+    -webkit-overflow-scrolling: touch;
+    max-height: 480rpx;
+    overflow: scroll;
+    white-space: pre-line
+}
+
+.close-btn,.text-center {
+    text-align: center
+}
+
+.close-btn {
+    color: var(--theme-color);
+    font-size: 32rpx;
+    padding: 20rpx 0
+}
+
+.mzhd-content {
+    -webkit-box-pack: space-evenly;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-box-flex: 1;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex: 1;
+    flex: 1;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    height: 100%;
+    -webkit-justify-content: space-evenly;
+    justify-content: space-evenly
+}
+
+.mzhd-stairs-reward {
+    background: -webkit-linear-gradient(top,#feeff8,#fff 72px,#fff);
+    background: linear-gradient(180deg,#feeff8,#fff 72px,#fff);
+    border-radius: 24rpx 24rpx 0 0;
+    line-height: 1.5;
+    padding: 24rpx
+}
+
+.mzhd-card.stairs-card {
+    background-color: #fff5f7;
+    border-radius: 16rpx;
+    padding: 16rpx 24rpx
+}
+
+.mzhd-card.stairs-card .mzhd-img {
+    border-radius: 12rpx;
+    height: 64rpx;
+    width: 64rpx
+}
+
+.mzhd-card.stairs-card .mzhd-btn {
+    background: #fff7fa;
+    border: 1rpx solid #f8b3b8;
+    border-radius: 88rpx;
+    height: 56rpx;
+    line-height: 56rpx;
+    width: 128rpx
+}
+
+.stairs-reward_list .mzhd-img {
+    border-radius: 16rpx;
+    height: 96rpx;
+    width: 96rpx
+}
+
+.stairs-reward_list .mzhd-btn {
+    background-color: #fff7fa;
+    color: #fc3f41;
+    height: 56rpx;
+    line-height: 56rpx;
+    text-align: center;
+    width: 128rpx
+}
+
+.stairs-reward_list .mzhd-btn.status_2 {
+    background-color: #fff;
+    color: #aaa
+}
+
+.stairs-reward_list .mzhd-btn.status_0,.stairs-reward_list .mzhd-btn.status_3 {
+    color: rgba(252,63,65,.3)
+}
+
+.stairs-reward_img {
+    display: block;
+    height: 128rpx;
+    width: 100%
+}
+
+.float-right {
+    float: right
+}
+
+.close-icon {
+    height: 48rpx;
+    margin: 0;
+    width: 48rpx
+}

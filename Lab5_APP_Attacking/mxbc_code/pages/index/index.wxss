@@ -1,0 +1,264 @@
+page {
+    background: #f4f4f7;
+    min-height: 100vh;
+    padding: 564rpx 24rpx 0
+}
+
+.index-ad {
+    height: 634rpx;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%
+}
+
+.index-ad.ad-banner .ad-img {
+    border-radius: 0!important
+}
+
+.sweet-news-ad {
+    border-radius: var(--card-radius);
+    height: 270rpx;
+    width: 100%
+}
+
+.index-ad .wx-swiper-dots.wx-swiper-dots-horizontal {
+    bottom: 90rpx;
+    left: 100rpx;
+    position: absolute;
+    z-index: 99
+}
+
+.custom-info {
+    background-color: #fff;
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+    padding: 32rpx 24rpx 16rpx;
+    position: relative
+}
+
+.avatar {
+    border-radius: 100%;
+    height: 64rpx;
+    overflow: hidden;
+    width: 64rpx
+}
+
+.level-info {
+    left: -10rpx;
+    position: relative;
+    width: 370rpx
+}
+
+.level-tag {
+    border-radius: 100rpx;
+    font-size: 22rpx;
+    margin-left: 8rpx;
+    padding: 4rpx 16rpx;
+    word-break: keep-all
+}
+
+.level-1 {
+    background: #eef5ff;
+    color: #4074ff
+}
+
+.level-2 {
+    background: #fff5e4;
+    color: #ff9f00
+}
+
+.level-3 {
+    background: #f9eeff;
+    color: #b271fc
+}
+
+.level-4 {
+    background: #333;
+    color: #ffeabf
+}
+
+.coupon-tag {
+    border-radius: 4rpx;
+    padding: 2rpx 8rpx;
+    position: absolute;
+    right: 0;
+    top: 8rpx
+}
+
+.middle-ad {
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    font-size: 0;
+    overflow: hidden
+}
+
+.to-order wx-image {
+    height: 330rpx;
+    width: 50%
+}
+
+.line {
+    background: rgba(51,51,51,.08);
+    height: 112rpx;
+    left: 50%;
+    position: absolute;
+    top: calc(50% - 56rpx);
+    width: 1rpx
+}
+
+.magnet {
+    -webkit-box-pack: start;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start
+}
+
+.magnet-img {
+    height: 198rpx;
+    width: 25%
+}
+
+.hot-suggest {
+    background: transparent;
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    position: relative;
+    z-index: 1
+}
+
+.suggest-bg {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1
+}
+
+.suggest-goods {
+    -webkit-overflow-scrolling: touch;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    overflow-x: scroll
+}
+
+.suggest-goods-item {
+    background: #fff;
+    border: 1rpx solid #fcd9dd;
+    border-radius: 16rpx;
+    padding: 24rpx
+}
+
+.suggest-goods-img {
+    border-radius: 16rpx;
+    height: 220rpx;
+    width: 220rpx
+}
+
+.joint-close-icon {
+    position: absolute;
+    right: 40rpx
+}
+
+.privacy-confirm {
+    padding: 40rpx;
+    width: 478rpx
+}
+
+.privacy-confirm-agree {
+    -webkit-box-pack: start;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start
+}
+
+.splash {
+    background: #fff;
+    height: 100vh;
+    left: 0;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: 999
+}
+
+.splash-timer {
+    background: rgba(0,0,0,.4);
+    border-radius: 76rpx;
+    bottom: 100rpx;
+    color: #fff;
+    height: 64rpx;
+    line-height: 64rpx;
+    position: absolute;
+    right: 24rpx;
+    text-align: center;
+    width: 148rpx
+}
+
+.timer-txt {
+    display: inline-block;
+    text-align: center;
+    width: 24rpx
+}
+
+.shadow {
+    box-shadow: 0 6rpx 12rpx 0 rgba(6,0,39,.05)
+}
+
+.custom-container {
+    border-radius: var(--card-radius);
+    overflow: hidden
+}
+
+.index-app_collect {
+    background: rgba(0,0,0,.8);
+    border-radius: 16rpx;
+    height: 76rpx;
+    line-height: 76rpx;
+    position: fixed;
+    width: 534rpx
+}
+
+.index-app_collect .triangle-up::before {
+    top: 10rpx
+}
+
+.index-app_collect .text-line {
+    background-color: #e5e6eb;
+    display: inline-block;
+    height: 22rpx;
+    position: relative;
+    width: 1rpx
+}
+
+.index-app_collect .close-img {
+    height: 32rpx;
+    width: 32rpx
+}
+
+.index-progress {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex
+}
+
+.index-progress .index-progress_bar {
+    margin-right: 8rpx;
+    width: 276rpx
+}
+
+.task-area {
+    height: 220rpx
+}
+
+.disagree {
+    background: #fff;
+    color: #777;
+    margin-top: 16rpx
+}

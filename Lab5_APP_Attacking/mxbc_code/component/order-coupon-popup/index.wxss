@@ -1,0 +1,32 @@
+.coupon-detail {
+    background: #f4f4f7;
+    position: relative
+}
+
+.coupon-detail .icon-close {
+    position: absolute;
+    right: 30rpx
+}
+
+.coupon-list {
+    height: 800rpx;
+    overflow: hidden scroll
+}
+
+.coupon-item {
+    background: #fff;
+    border-radius: var(--card-radius);
+    margin: 0 24rpx 24rpx;
+    padding: 32rpx
+}
+
+.tag {
+    background: var(--bg-theme-light-color);
+    border-radius: var(--tag-radius);
+    color: var(--theme-light-color);
+    display: inline-block;
+    font-size: 20rpx;
+    margin-right: 8rpx;
+    margin-top: 12rpx;
+    padding: 4rpx 8rpx
+}
