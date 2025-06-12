@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-# Generate 97 bytes of 0x37
-dumb_bytes = bytes([0x37] * 97)
+# Generate 80 bytes of 0x37
+dumb_bytes = bytes([0x37] * 80)
 
 # Write to file
 with open('dumb.txt', 'wb') as f:
